@@ -8,6 +8,7 @@ const RootLayout = () => {
       <Text>Fraud Watch!</Text>
       <StatusBar style="auto" />
       <Link href="/dashboard" style={{ color: 'blue' }}>Go to Dashboard</Link>
+      <Link href="/quiz" style={{ color: 'pink' }}>Go to Quizzes</Link>
     </View>
   )
 }

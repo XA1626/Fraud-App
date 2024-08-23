@@ -27,7 +27,7 @@ const CreateUser = ({ onAccountCreated, onAlreadyHaveAccount }) => {
     const validatePassword = (text) => {
         const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/;
         if (!passwordRegex.test(text)) {
-            setPasswordError('Password must be 8 characters long, contain an uppercase letter, a symbol, and a number.');
+            setPasswordError('Password must be 8+ characters long, contain an uppercase letter, a symbol, and a number.');
         } else {
             setPasswordError('');
         }

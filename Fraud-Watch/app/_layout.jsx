@@ -1,19 +1,9 @@
-import { StyleSheet, View } from 'react-native';
-import { Stack } from 'expo-router';
-import Dashboard from './dashboard';  // Import the Dashboard component
-
+import { StyleSheet, Text, View } from 'react-native';
+import { Slot, Stack } from 'expo-router';
 const RootLayout = () => {
-  return (
-    <View style={styles.container}>
-      <Dashboard />
-    </View>
-  );
-};
-
-export default RootLayout;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
+    return (
+        <Stack>
+            <Stack.Screen name="index" options={{ headerShown:false }} />
+        </Stack>
+    )
+}

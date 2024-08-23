@@ -5,7 +5,7 @@ import Dashboard from './dashboard';  // Import the Dashboard component
 const RootLayout = () => {
   return (
     <View style={styles.container}>
-      <Dashboard />  // Render the Dashboard directly
+      <Dashboard />
     </View>
   );
 };

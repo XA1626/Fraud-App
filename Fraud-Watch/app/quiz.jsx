@@ -1071,20 +1071,1728 @@ const questionsByCategory = {
       },
       
     ],
-    'Charity scams': [],
-    'Bank fraud': [],
-    'Insurance fraud': [],
-    'Blackmail scams': [],
-    'Payment fraud': [],
-    'Account takeover': [],
-    'Ponzi schemes': [],
-    'Asset misappropriation': [],
-    'Bribery': [],
-    'CNP fraud': [],
-    'Employment scams': [],
-    'Grandparent scams': [],
-    'Investment fraud': [],
-    'IP infringement': [],
+    'Charity scams': [
+      {
+        type: 'True/False',
+        question: 'Charity scams involve misleading donors by pretending to be a legitimate charity.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'It is illegal to use charity donations for personal gain.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'Charity scams only affect large, well-known organizations.',
+        options: ['True', 'False'],
+        answer: 'False'
+      },
+      {
+        type: 'True/False',
+        question: 'A legitimate charity will never pressure you to donate immediately.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'Charity scammers often use emotional appeals to persuade people to donate.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'A charity scam often uses ___________ appeals to manipulate potential donors.',
+        options: ['emotional', 'rational', 'financial', 'legal'],
+        answer: 'emotional'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'To verify the legitimacy of a charity, you should check if it is registered with a ___________.',
+        options: ['government agency', 'local business', 'social media site', 'bank'],
+        answer: 'government agency'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'Charity scammers may use ___________ names that closely resemble real charities.',
+        options: ['fake', 'generic', 'famous', 'historical'],
+        answer: 'fake'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'Always ___________ before making a donation to ensure it is going to a legitimate charity.',
+        options: ['research', 'donate immediately', 'ignore', 'contact friends'],
+        answer: 'research'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'Charity scams can sometimes be identified by ___________ requests for donations through unsolicited phone calls or emails.',
+        options: ['urgent', 'timely', 'polite', 'random'],
+        answer: 'urgent'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following is a common sign of a charity scam?',
+        options: ['Promises of large returns on donations', 'Detailed financial reports available', 'Well-known and reputable organization', 'Clear contact information and transparency'],
+        answer: 'Promises of large returns on donations'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'How can you verify if a charity is legitimate?',
+        options: ['Check for registration with a government agency', 'Rely on social media reviews', 'Follow unsolicited emails', 'Trust their website only'],
+        answer: 'Check for registration with a government agency'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which tactic is often used by scammers to solicit donations?',
+        options: ['Emotional manipulation', 'Providing clear and honest information', 'Offering detailed annual reports', 'Establishing a physical office'],
+        answer: 'Emotional manipulation'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What should you do if you suspect a charity scam?',
+        options: ['Report it to the appropriate authorities', 'Ignore it', 'Share it on social media', 'Donate more to help'],
+        answer: 'Report it to the appropriate authorities'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following is NOT a common characteristic of a charity scam?',
+        options: ['Pressure to donate quickly', 'Transparency about how donations are used', 'High-pressure tactics', 'Unsolicited phone calls or emails'],
+        answer: 'Transparency about how donations are used'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What is a typical feature of a fraudulent charity website?',
+        options: ['Lack of contact information', 'Clear mission statement', 'Links to reputable sources', 'Secure donation processing'],
+        answer: 'Lack of contact information'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of these should you verify to avoid charity scams?',
+        options: ['The charity’s tax-exempt status', 'The charity’s social media followers', 'The charity’s email design', 'The charity’s advertising budget'],
+        answer: 'The charity’s tax-exempt status'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What action should you take if a charity asks for personal financial information?',
+        options: ['Do not provide the information and verify the charity’s legitimacy', 'Provide the information immediately', 'Share the information with friends for advice', 'Only provide partial information'],
+        answer: 'Do not provide the information and verify the charity’s legitimacy'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which type of donation request should raise a red flag?',
+        options: ['A request for cash donations only', 'A request for donations to a well-known charity', 'A request with detailed use of funds', 'A request through official charity channels'],
+        answer: 'A request for cash donations only'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What is a common feature of charity scams?',
+        options: ['Using a fake charity name similar to a legitimate one', 'Providing clear information about the charity’s mission', 'Offering tax deductions for donations', 'Maintaining a transparent website'],
+        answer: 'Using a fake charity name similar to a legitimate one'
+      },
+      
+    ],
+    'Bank fraud': [
+      {
+        type: 'True/False',
+        question: 'Bank fraud involves deceiving a financial institution to gain an unfair advantage or steal money.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'All forms of bank fraud are immediately detectable by banks.',
+        options: ['True', 'False'],
+        answer: 'False'
+      },
+      {
+        type: 'True/False',
+        question: 'Using someone else’s bank account information without permission is considered bank fraud.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'Bank fraud can involve both individuals and organizations.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'Making a false statement on a bank loan application is a form of bank fraud.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'Bank fraud often involves ___________ financial information to deceive the bank.',
+        options: ['false', 'real', 'updated', 'reliable'],
+        answer: 'false'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'Phishing schemes are used to obtain ___________ information for committing bank fraud.',
+        options: ['personal', 'company', 'irrelevant', 'general'],
+        answer: 'personal'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'Using stolen credit card information to make unauthorized purchases is an example of ___________.',
+        options: ['bank fraud', 'identity theft', 'tax evasion', 'charity scam'],
+        answer: 'bank fraud'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'Bank fraud can be committed through various methods including ___________ and phishing.',
+        options: ['embezzlement', 'terrorism', 'robbery', 'hacking'],
+        answer: 'hacking'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'Fraudulent ___________ to gain access to a bank account is a common tactic used in bank fraud.',
+        options: ['emails', 'letters', 'phone calls', 'visits'],
+        answer: 'emails'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following is a common method used to commit bank fraud?',
+        options: ['Phishing', 'Secure password management', 'Regular account monitoring', 'Encryption'],
+        answer: 'Phishing'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What is a common sign that someone might be attempting bank fraud?',
+        options: ['Unusual transactions on your account', 'Regular account statements', 'Frequent login attempts from your own devices', 'Routine updates from your bank'],
+        answer: 'Unusual transactions on your account'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of these actions would likely indicate bank fraud?',
+        options: ['Receiving a large sum of money without a clear source', 'Regularly saving money', 'Using an authorized bank credit card', 'Making regular deposits'],
+        answer: 'Receiving a large sum of money without a clear source'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'How can banks prevent bank fraud?',
+        options: ['By implementing multi-factor authentication', 'By ignoring suspicious activities', 'By avoiding regular updates to security protocols', 'By providing minimal customer support'],
+        answer: 'By implementing multi-factor authentication'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What should you do if you suspect bank fraud?',
+        options: ['Report it to the bank immediately', 'Ignore it', 'Share your concerns on social media', 'Contact the fraudster directly'],
+        answer: 'Report it to the bank immediately'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which method is often used by fraudsters to gain access to bank accounts?',
+        options: ['Hacking into accounts', 'Consulting financial advisors', 'Reviewing credit reports', 'Using secure passwords'],
+        answer: 'Hacking into accounts'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What type of fraud involves using false information to obtain a loan?',
+        options: ['Loan fraud', 'Mortgage fraud', 'Bank fraud', 'Investment fraud'],
+        answer: 'Bank fraud'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following is a preventive measure against bank fraud?',
+        options: ['Regularly changing passwords', 'Ignoring unusual account activity', 'Using the same password for multiple accounts', 'Avoiding two-factor authentication'],
+        answer: 'Regularly changing passwords'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of these is NOT a common tactic used in bank fraud?',
+        options: ['Phishing emails', 'Stolen credit card information', 'Direct bank transfers from legitimate sources', 'Social engineering'],
+        answer: 'Direct bank transfers from legitimate sources'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which government agency typically investigates cases of bank fraud?',
+        options: ['The Federal Bureau of Investigation (FBI)', 'The Department of Health and Human Services', 'The Environmental Protection Agency', 'The Department of Education'],
+        answer: 'The Federal Bureau of Investigation (FBI)'
+      },
+      
+    ],
+    'Insurance fraud': [
+      {
+        type: 'True/False',
+        question: 'Insurance fraud involves deceitful actions taken to obtain an undeserved insurance benefit.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'Submitting a false insurance claim is considered insurance fraud.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'Insurance fraud is only committed by individuals, not by businesses.',
+        options: ['True', 'False'],
+        answer: 'False'
+      },
+      {
+        type: 'True/False',
+        question: 'Falsifying information on an insurance application is a form of insurance fraud.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'Insurance fraud is punishable by law and can result in criminal charges.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: '__________ claims for damages that did not occur is a form of insurance fraud.',
+        options: ['Submitting', 'Honest', 'Correcting', 'Withdrawing'],
+        answer: 'Submitting'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'Providing false information about an accident to an insurance company is considered ___________.',
+        options: ['insurance fraud', 'normal practice', 'a minor error', 'insurance investigation'],
+        answer: 'insurance fraud'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: '__________ a claim for a higher amount than the actual loss is a type of insurance fraud.',
+        options: ['Inflating', 'Reducing', 'Reporting', 'Ignoring'],
+        answer: 'Inflating'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'Insurance fraud can involve both individuals and ___________.',
+        options: ['businesses', 'families', 'banks', 'schools'],
+        answer: 'businesses'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: '__________ insurance claims to cover pre-existing damages is an example of insurance fraud.',
+        options: ['Filing', 'Avoiding', 'Processing', 'Verifying'],
+        answer: 'Filing'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following is a common method of committing insurance fraud?',
+        options: ['Filing false claims', 'Providing accurate information', 'Verifying policy details', 'Updating personal information'],
+        answer: 'Filing false claims'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What is a common consequence of committing insurance fraud?',
+        options: ['Increased insurance premiums', 'Criminal charges', 'Higher policy limits', 'Faster claim processing'],
+        answer: 'Criminal charges'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which action is NOT considered insurance fraud?',
+        options: ['Filing a claim for a real accident', 'Falsifying accident details', 'Exaggerating claim amounts', 'Providing false personal information'],
+        answer: 'Filing a claim for a real accident'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following best describes "staging" an accident for insurance fraud?',
+        options: ['Creating a fake accident scene', 'Documenting an actual accident', 'Reporting a minor accident truthfully', 'Reviewing accident reports'],
+        answer: 'Creating a fake accident scene'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What type of insurance fraud involves submitting claims for damages that did not happen?',
+        options: ['False claims', 'Accurate claims', 'Standard claims', 'Legitimate claims'],
+        answer: 'False claims'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which tactic is often used by fraudsters to commit insurance fraud?',
+        options: ['Faking injuries', 'Reporting accurate injuries', 'Verifying legitimate claims', 'Providing honest information'],
+        answer: 'Faking injuries'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which type of fraud involves misrepresenting or exaggerating losses to gain a larger insurance payout?',
+        options: ['Insurance fraud', 'Identity theft', 'Bank fraud', 'Credit card fraud'],
+        answer: 'Insurance fraud'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of these actions is NOT a sign of insurance fraud?',
+        options: ['Exaggerating damage claims', 'Submitting multiple claims for the same incident', 'Providing truthful information about damages', 'Staging an accident'],
+        answer: 'Providing truthful information about damages'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which government body typically investigates cases of insurance fraud?',
+        options: ['The Department of Insurance', 'The Department of Education', 'The Department of Transportation', 'The Environmental Protection Agency'],
+        answer: 'The Department of Insurance'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following is a preventative measure against insurance fraud?',
+        options: ['Maintaining accurate records', 'Ignoring suspicious activities', 'Using unverified contractors', 'Filing claims without documentation'],
+        answer: 'Maintaining accurate records'
+      },
+      
+    ],
+    'Blackmail scams': [
+      {
+        type: 'True/False',
+        question: 'Blackmail scams involve threatening to expose personal or sensitive information unless a payment is made.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'It is illegal to blackmail someone for money or other benefits.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'Blackmail scams can only occur online and not in person.',
+        options: ['True', 'False'],
+        answer: 'False'
+      },
+      {
+        type: 'True/False',
+        question: 'Ignoring a blackmail threat is a recommended strategy.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'Paying a blackmailer guarantees that they will not continue to demand more money.',
+        options: ['True', 'False'],
+        answer: 'False'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: '__________ is a tactic used in blackmail scams to coerce victims into paying money.',
+        options: ['Threatening exposure', 'Offering rewards', 'Giving discounts', 'Providing help'],
+        answer: 'Threatening exposure'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'Blackmail scams can involve threats of ___________ personal or sensitive information.',
+        options: ['exposing', 'protecting', 'sharing', 'ignoring'],
+        answer: 'exposing'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'It is advisable to ___________ the demands of a blackmailer and report the scam to authorities.',
+        options: ['ignore', 'accept', 'negotiate', 'delay'],
+        answer: 'ignore'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'Blackmail threats can come via ___________, email, or in person.',
+        options: ['phone', 'postal mail', 'fax', 'social media'],
+        answer: 'phone'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'Paying a blackmailer often leads to ___________ demands for more money or other benefits.',
+        options: ['increased', 'decreased', 'same', 'no'],
+        answer: 'increased'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What is a common method used by blackmailers to force victims to comply?',
+        options: ['Threatening to release sensitive information', 'Offering free services', 'Providing rewards for compliance', 'Offering discounts'],
+        answer: 'Threatening to release sensitive information'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which action is recommended when dealing with a blackmail scam?',
+        options: ['Ignoring the threat', 'Paying the blackmailer', 'Negotiating with the blackmailer', 'Reporting to authorities'],
+        answer: 'Reporting to authorities'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following is NOT a typical method used in blackmail scams?',
+        options: ['Threatening exposure of personal information', 'Offering financial rewards', 'Using extortion techniques', 'Demanding money for silence'],
+        answer: 'Offering financial rewards'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What is a potential outcome of paying a blackmailer?',
+        options: ['The threats stop immediately', 'The blackmailer may continue to demand more money', 'The blackmailer will disappear permanently', 'The blackmailer will provide a refund'],
+        answer: 'The blackmailer may continue to demand more money'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following is a common type of blackmail scam?',
+        options: ['Threatening to share private photos', 'Offering legitimate investments', 'Providing discounts on services', 'Offering free information'],
+        answer: 'Threatening to share private photos'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'How can you best protect yourself from blackmail scams?',
+        options: ['Keeping personal information secure', 'Sharing information freely', 'Ignoring online security measures', 'Responding to blackmail demands'],
+        answer: 'Keeping personal information secure'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What should you do if you receive a blackmail threat?',
+        options: ['Report it to the authorities', 'Pay the demanded amount', 'Try to negotiate with the blackmailer', 'Ignore it and do nothing'],
+        answer: 'Report it to the authorities'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following is a warning sign of a blackmail scam?',
+        options: ['Threats of exposure', 'Offers of free services', 'Notifications of legitimate transactions', 'Updates on account status'],
+        answer: 'Threats of exposure'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which approach is NOT effective in dealing with blackmail scams?',
+        options: ['Paying the blackmailer', 'Ignoring the threat', 'Reporting the scam to authorities', 'Seeking advice from trusted sources'],
+        answer: 'Paying the blackmailer'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Blackmail scams can occur through which of the following methods?',
+        options: ['Email', 'Phone calls', 'Text messages', 'All of the above'],
+        answer: 'All of the above'
+      },
+      
+    ],
+    'Payment fraud': [
+      {
+        type: 'True/False',
+        question: 'Payment fraud involves unauthorized transactions made with someone else\'s payment information.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'Using a stolen credit card for online purchases is considered payment fraud.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'Payment fraud can only occur with credit cards and not with debit cards.',
+        options: ['True', 'False'],
+        answer: 'False'
+      },
+      {
+        type: 'True/False',
+        question: 'Phishing scams can be used to collect payment information for fraud.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'It is not necessary to report payment fraud to your bank if you resolve it on your own.',
+        options: ['True', 'False'],
+        answer: 'False'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: '__________ fraud involves the use of stolen or unauthorized payment information to make transactions.',
+        options: ['Payment', 'Identity', 'Bank', 'Investment'],
+        answer: 'Payment'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'Using someone else’s credit card details without permission is a type of __________.',
+        options: ['payment fraud', 'identity theft', 'check fraud', 'charity scam'],
+        answer: 'payment fraud'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'A common method to obtain payment information for fraud is through __________ scams.',
+        options: ['phishing', 'investment', 'employment', 'sweepstakes'],
+        answer: 'phishing'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'In case of suspected payment fraud, it is important to __________ the incident to your bank or financial institution.',
+        options: ['report', 'ignore', 'delay', 'accept'],
+        answer: 'report'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'Payment fraud can be perpetrated through __________ transactions made without the cardholder’s knowledge.',
+        options: ['unauthorized', 'authorized', 'secure', 'verifiable'],
+        answer: 'unauthorized'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following is a common sign of payment fraud?',
+        options: ['Unusual transactions on your statement', 'Regularly reviewing your bank account', 'Maintaining a secure password', 'Receiving promotional offers from your bank'],
+        answer: 'Unusual transactions on your statement'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What should you do if you suspect payment fraud on your account?',
+        options: ['Report it to your bank', 'Ignore it and hope it resolves', 'Attempt to resolve it with the fraudster directly', 'Wait until your next statement'],
+        answer: 'Report it to your bank'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which method is commonly used by fraudsters to steal payment information?',
+        options: ['Phishing emails', 'Personal secure transactions', 'Direct bank contact', 'Legitimate financial advice'],
+        answer: 'Phishing emails'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which type of card is often targeted in payment fraud?',
+        options: ['Credit cards', 'Prepaid cards', 'Debit cards', 'All of the above'],
+        answer: 'All of the above'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'How can you protect yourself from payment fraud?',
+        options: ['Regularly monitor your account statements', 'Use weak passwords', 'Ignore suspicious activities', 'Share your card details with others'],
+        answer: 'Regularly monitor your account statements'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What action can help prevent payment fraud?',
+        options: ['Using multi-factor authentication', 'Sharing your PIN with trusted friends', 'Storing card details on multiple websites', 'Using simple passwords'],
+        answer: 'Using multi-factor authentication'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following is NOT a typical feature of payment fraud?',
+        options: ['Unauthorized transactions', 'Phishing schemes', 'Secure payment methods', 'Fraudulent charges'],
+        answer: 'Secure payment methods'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What is a common consequence of payment fraud for victims?',
+        options: ['Loss of money', 'Increased account balance', 'Better credit score', 'Additional rewards'],
+        answer: 'Loss of money'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which technology helps protect against payment fraud?',
+        options: ['Encryption', 'Weak security protocols', 'Shared passwords', 'Unverified sources'],
+        answer: 'Encryption'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What should you avoid to reduce the risk of payment fraud?',
+        options: ['Using secure websites for transactions', 'Reusing passwords across sites', 'Keeping your personal information confidential', 'Regularly updating your security settings'],
+        answer: 'Reusing passwords across sites'
+      },
+      
+    ],
+    'Account takeover': [
+      {
+        type: 'True/False',
+        question: 'Account takeover involves unauthorized access to a user’s account by an attacker.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'Changing your password frequently can help prevent account takeover.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'Account takeover can only happen with financial accounts and not with social media accounts.',
+        options: ['True', 'False'],
+        answer: 'False'
+      },
+      {
+        type: 'True/False',
+        question: 'Phishing emails are a common method used for account takeover.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'Enabling multi-factor authentication can significantly reduce the risk of account takeover.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: '__________ is a method where attackers gain unauthorized access to an individual’s account by using stolen credentials.',
+        options: ['Account takeover', 'Phishing', 'Ransomware', 'Malware'],
+        answer: 'Account takeover'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'Using __________ for your online accounts helps prevent unauthorized access and account takeover.',
+        options: ['multi-factor authentication', 'simple passwords', 'public Wi-Fi', 'shared accounts'],
+        answer: 'multi-factor authentication'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'One common sign of account takeover is __________ activity on your account that you did not initiate.',
+        options: ['unusual', 'normal', 'expected', 'regular'],
+        answer: 'unusual'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: '_____________ is a technique often used in account takeover where attackers impersonate legitimate entities to trick users.',
+        options: ['Phishing', 'Encryption', 'Firewalls', 'Backup'],
+        answer: 'Phishing'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'Regularly updating your passwords and monitoring account activity can help protect against __________.',
+        options: ['account takeover', 'software updates', 'system maintenance', 'network security'],
+        answer: 'account takeover'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following is a common method used for account takeover?',
+        options: ['Phishing attacks', 'Using strong passwords', 'Regular account monitoring', 'Secure login practices'],
+        answer: 'Phishing attacks'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What is an effective way to prevent account takeover?',
+        options: ['Enabling multi-factor authentication', 'Using the same password for multiple accounts', 'Ignoring account activity', 'Sharing passwords with friends'],
+        answer: 'Enabling multi-factor authentication'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which action is NOT recommended to prevent account takeover?',
+        options: ['Using complex passwords', 'Keeping passwords private', 'Reusing passwords across different sites', 'Updating passwords regularly'],
+        answer: 'Reusing passwords across different sites'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What might indicate that your account has been taken over?',
+        options: ['Receiving unexpected login notifications', 'Using strong security questions', 'Regularly updating your password', 'Setting up security alerts'],
+        answer: 'Receiving unexpected login notifications'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following is a sign of account takeover?',
+        options: ['Changes to account details that you did not make', 'Using a secure password', 'Regularly checking account activity', 'Activating two-factor authentication'],
+        answer: 'Changes to account details that you did not make'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What should you do if you suspect your account has been taken over?',
+        options: ['Immediately report it to the service provider', 'Change your password and do nothing', 'Ignore the issue', 'Share your situation on social media'],
+        answer: 'Immediately report it to the service provider'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following is NOT a common technique used in account takeover?',
+        options: ['Phishing', 'Brute force attacks', 'Using strong encryption', 'Password guessing'],
+        answer: 'Using strong encryption'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which measure helps in detecting account takeover?',
+        options: ['Monitoring account activity regularly', 'Using a single password for multiple accounts', 'Ignoring security alerts', 'Sharing passwords with others'],
+        answer: 'Monitoring account activity regularly'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What type of authentication can help protect your account from takeover?',
+        options: ['Two-factor authentication', 'Simple password', 'Password reuse', 'Public Wi-Fi'],
+        answer: 'Two-factor authentication'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following should be avoided to prevent account takeover?',
+        options: ['Using public Wi-Fi for login', 'Enabling multi-factor authentication', 'Keeping your password confidential', 'Regularly updating your password'],
+        answer: 'Using public Wi-Fi for login'
+      },
+      
+    ],
+    'Ponzi schemes': [
+      {
+        type: 'True/False',
+        question: 'A Ponzi scheme is a type of investment scam where returns are paid to earlier investors using new investors’ money.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'In a Ponzi scheme, returns are generated from legitimate business activities and profits.',
+        options: ['True', 'False'],
+        answer: 'False'
+      },
+      {
+        type: 'True/False',
+        question: 'Ponzi schemes eventually collapse when it becomes difficult to recruit new investors.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'All investments that promise high returns with little risk are Ponzi schemes.',
+        options: ['True', 'False'],
+        answer: 'False'
+      },
+      {
+        type: 'True/False',
+        question: 'Ponzi schemes are named after Charles Ponzi, who famously used this method to defraud investors in the early 20th century.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'A Ponzi scheme is a type of ___________ where returns are paid to earlier investors using new investors’ money.',
+        options: ['fraud', 'investment', 'loan', 'insurance'],
+        answer: 'fraud'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'Ponzi schemes often promise high returns with ___________ risk.',
+        options: ['low', 'high', 'moderate', 'minimal'],
+        answer: 'low'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'The scheme named after ___________ is known for paying returns to investors from new investors’ contributions.',
+        options: ['Charles Ponzi', 'Bernie Madoff', 'Bernard Madoff', 'Frank Abagnale'],
+        answer: 'Charles Ponzi'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'Ponzi schemes typically collapse when it becomes ___________ to recruit new investors.',
+        options: ['difficult', 'easy', 'necessary', 'profitable'],
+        answer: 'difficult'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'Investors in a Ponzi scheme often receive returns that seem ___________ at first.',
+        options: ['legitimate', 'fraudulent', 'unrealistic', 'unpredictable'],
+        answer: 'legitimate'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following best describes a Ponzi scheme?',
+        options: ['An investment that pays returns from new investors’ money', 'A legitimate investment in stocks', 'A type of insurance policy', 'A savings account with high interest'],
+        answer: 'An investment that pays returns from new investors’ money'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What often leads to the collapse of a Ponzi scheme?',
+        options: ['Increased number of new investors', 'Difficulty in recruiting new investors', 'High returns on investment', 'Successful business operations'],
+        answer: 'Difficulty in recruiting new investors'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Who was the most famous perpetrator of a Ponzi scheme?',
+        options: ['Charles Ponzi', 'Warren Buffet', 'Elon Musk', 'Mark Zuckerberg'],
+        answer: 'Charles Ponzi'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following is NOT a characteristic of a Ponzi scheme?',
+        options: ['Promises of high returns with low risk', 'Returns paid from new investors’ contributions', 'Investment in a legitimate business', 'Eventually collapses'],
+        answer: 'Investment in a legitimate business'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which sign may indicate a Ponzi scheme?',
+        options: ['High returns with little risk', 'Diversified investment portfolio', 'Regular financial audits', 'Transparency in business operations'],
+        answer: 'High returns with little risk'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What is a common feature of Ponzi schemes?',
+        options: ['Paying returns using money from new investors', 'Investing in various assets', 'Providing regular dividends from profits', 'Having a registered business'],
+        answer: 'Paying returns using money from new investors'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'How do Ponzi schemes typically attract investors?',
+        options: ['Offering guaranteed returns', 'Providing detailed investment plans', 'Having a registered financial advisor', 'Reporting accurate financial information'],
+        answer: 'Offering guaranteed returns'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What usually happens when a Ponzi scheme is exposed?',
+        options: ['The scheme collapses', 'It continues to thrive', 'It transitions to a legitimate business', 'It gets regulated'],
+        answer: 'The scheme collapses'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which action can help protect against Ponzi schemes?',
+        options: ['Conducting thorough research on investments', 'Investing in high-return schemes', 'Ignoring warning signs of fraud', 'Relying on unverified investment advice'],
+        answer: 'Conducting thorough research on investments'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Ponzi schemes are often difficult to detect because they often disguise themselves as __________.',
+        options: ['legitimate investments', 'loan services', 'government programs', 'insurance policies'],
+        answer: 'legitimate investments'
+      },
+      
+    ],
+    'Asset misappropriation': [
+      {
+        type: 'True/False',
+        question: 'Asset misappropriation involves the theft or misuse of an organization’s assets by an employee.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'Asset misappropriation can only occur in large corporations and not in small businesses.',
+        options: ['True', 'False'],
+        answer: 'False'
+      },
+      {
+        type: 'True/False',
+        question: 'Using company resources for personal use without authorization is a form of asset misappropriation.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'Embezzlement is a form of asset misappropriation.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'Asset misappropriation is only considered a crime if it involves a large amount of money.',
+        options: ['True', 'False'],
+        answer: 'False'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: '__________ is the act of stealing or misusing company assets for personal gain.',
+        options: ['Asset misappropriation', 'Fraudulent reporting', 'Tax evasion', 'Bribery'],
+        answer: 'Asset misappropriation'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'A common example of asset misappropriation is __________ funds from a company’s bank account.',
+        options: ['embezzling', 'reporting', 'investing', 'borrowing'],
+        answer: 'embezzling'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: '__________ is when an employee uses company property for personal purposes without permission.',
+        options: ['Misappropriation', 'Fraud', 'Extortion', 'Forgery'],
+        answer: 'Misappropriation'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: '__________ is a specific type of asset misappropriation involving the diversion of funds.',
+        options: ['Embezzlement', 'Forgery', 'Bribery', 'Larceny'],
+        answer: 'Embezzlement'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'Asset misappropriation can occur in both __________ and private sector organizations.',
+        options: ['public', 'government', 'corporate', 'nonprofit'],
+        answer: 'public'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following is a form of asset misappropriation?',
+        options: ['Embezzling company funds', 'Improper tax deductions', 'Inflating sales reports', 'Falsifying inventory records'],
+        answer: 'Embezzling company funds'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which action is NOT typically associated with asset misappropriation?',
+        options: ['Using company resources for personal gain', 'Falsifying financial statements', 'Improperly reporting income', 'Donating to charity'],
+        answer: 'Donating to charity'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What is a common preventive measure against asset misappropriation?',
+        options: ['Regular audits', 'Allowing unrestricted access to financial records', 'Not tracking employee expenses', 'Ignoring red flags'],
+        answer: 'Regular audits'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What does asset misappropriation typically involve?',
+        options: ['Theft or misuse of company assets', 'Providing incorrect tax information', 'Submitting false insurance claims', 'Bribing officials'],
+        answer: 'Theft or misuse of company assets'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following is a sign of potential asset misappropriation?',
+        options: ['Unexplained discrepancies in financial records', 'Accurate financial reporting', 'Regularly updated financial statements', 'Transparent company operations'],
+        answer: 'Unexplained discrepancies in financial records'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What is an example of asset misappropriation?',
+        options: ['An employee taking office supplies for personal use', 'An employee attending a work-related conference', 'An employee working extra hours', 'An employee reporting overtime accurately'],
+        answer: 'An employee taking office supplies for personal use'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following is NOT a method of asset misappropriation?',
+        options: ['Embezzling funds', 'Falsifying financial records', 'Over-reporting sales', 'Reporting accurate expenses'],
+        answer: 'Reporting accurate expenses'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'How can organizations minimize the risk of asset misappropriation?',
+        options: ['Implementing strong internal controls', 'Allowing unrestricted access to financial systems', 'Ignoring employee behavior', 'Reducing audit frequency'],
+        answer: 'Implementing strong internal controls'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which term describes the act of an employee diverting company funds for personal use?',
+        options: ['Embezzlement', 'Bribery', 'Extortion', 'Forgery'],
+        answer: 'Embezzlement'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following is a typical consequence of asset misappropriation?',
+        options: ['Termination of employment', 'Promotion', 'Bonus', 'Public recognition'],
+        answer: 'Termination of employment'
+      },
+      
+    ],
+    'Bribery': [
+      {
+        type: 'True/False',
+        question: 'Bribery involves offering something of value to influence someone’s actions or decisions.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'Offering a gift to a business partner is considered bribery.',
+        options: ['True', 'False'],
+        answer: 'False'
+      },
+      {
+        type: 'True/False',
+        question: 'Bribery can occur in both public and private sectors.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'It is not considered bribery if the recipient is aware of and accepts the offered benefit.',
+        options: ['True', 'False'],
+        answer: 'False'
+      },
+      {
+        type: 'True/False',
+        question: 'Bribery is only illegal if the bribe involves a significant amount of money.',
+        options: ['True', 'False'],
+        answer: 'False'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: '__________ is the act of offering something of value to influence someone’s behavior or decisions.',
+        options: ['Bribery', 'Extortion', 'Fraud', 'Embezzlement'],
+        answer: 'Bribery'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'Offering a __________ to a public official to secure a favorable decision is considered bribery.',
+        options: ['gift', 'loan', 'sponsorship', 'consultation'],
+        answer: 'gift'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'Bribery can be directed towards both __________ and private sector employees.',
+        options: ['public officials', 'business owners', 'consumers', 'vendors'],
+        answer: 'public officials'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: '__________ is considered a form of bribery when it involves influencing official decisions.',
+        options: ['Kickbacks', 'Charitable donations', 'Promotional offers', 'Bonuses'],
+        answer: 'Kickbacks'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'In legal terms, a bribe is often referred to as a __________ payment.',
+        options: ['corrupt', 'legitimate', 'permissible', 'transparent'],
+        answer: 'corrupt'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following is a common example of bribery?',
+        options: ['Offering money to a government official for favorable treatment', 'Providing a discount to a loyal customer', 'Giving a promotional gift to a client', 'Paying for an employee’s training'],
+        answer: 'Offering money to a government official for favorable treatment'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which action is NOT typically considered bribery?',
+        options: ['Providing a bribe to influence a decision', 'Offering a standard business gift to a client', 'Paying a commission to a sales agent', 'Offering extra perks to win a contract'],
+        answer: 'Offering a standard business gift to a client'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What is the main purpose of a bribe?',
+        options: ['To gain an unfair advantage', 'To build a business relationship', 'To increase sales', 'To enhance customer satisfaction'],
+        answer: 'To gain an unfair advantage'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following is a consequence of engaging in bribery?',
+        options: ['Legal penalties', 'Increased business opportunities', 'Positive reputation', 'Enhanced business relationships'],
+        answer: 'Legal penalties'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What type of payment is considered bribery?',
+        options: ['A payment made to influence someone’s actions', 'A payment for a legitimate service', 'A payment for business expenses', 'A payment for a product purchase'],
+        answer: 'A payment made to influence someone’s actions'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which sector can bribery occur in?',
+        options: ['Only public sector', 'Only private sector', 'Both public and private sectors', 'Neither sector'],
+        answer: 'Both public and private sectors'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which term describes offering money to someone in exchange for favoring you?',
+        options: ['Bribery', 'Charity', 'Business promotion', 'Sponsorship'],
+        answer: 'Bribery'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following is an example of indirect bribery?',
+        options: ['Offering a bribe through an intermediary', 'Directly handing over cash to a decision-maker', 'Providing gifts to influence a decision', 'Paying for travel expenses for a client'],
+        answer: 'Offering a bribe through an intermediary'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What type of gift is most likely to be considered a bribe?',
+        options: ['A valuable item given to influence a decision', 'A gift given during the holidays', 'A promotional item with the company logo', 'A small token of appreciation'],
+        answer: 'A valuable item given to influence a decision'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following actions is typically NOT a sign of bribery?',
+        options: ['Discreet payments to officials', 'Publicly announced business promotions', 'Undisclosed gifts to decision-makers', 'Excessive entertainment expenses'],
+        answer: 'Publicly announced business promotions'
+      },
+      
+    ],
+    'CNP fraud': [
+      {
+        type: 'True/False',
+        question: 'CNP fraud occurs when a credit card is used without the cardholder’s physical presence.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'CNP fraud can only occur during online transactions.',
+        options: ['True', 'False'],
+        answer: 'False'
+      },
+      {
+        type: 'True/False',
+        question: 'Using stolen card details for a telephone order is an example of CNP fraud.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'CNP fraud is always detectable through physical card verification methods.',
+        options: ['True', 'False'],
+        answer: 'False'
+      },
+      {
+        type: 'True/False',
+        question: 'A cardholder’s PIN is required for CNP transactions.',
+        options: ['True', 'False'],
+        answer: 'False'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'CNP fraud involves using a card’s details without the cardholder’s __________.',
+        options: ['physical presence', 'email confirmation', 'password', 'phone number'],
+        answer: 'physical presence'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'A common example of CNP fraud is making an online __________ using stolen card information.',
+        options: ['purchase', 'phone call', 'bank transfer', 'mail order'],
+        answer: 'purchase'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'To prevent CNP fraud, merchants often use __________ verification methods during transactions.',
+        options: ['address', 'phone number', 'two-factor authentication', 'card swipe'],
+        answer: 'two-factor authentication'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'CNP fraud can occur in __________ transactions where the cardholder is not physically present.',
+        options: ['in-person', 'phone', 'email', 'online'],
+        answer: 'online'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'One way to detect CNP fraud is to monitor for __________ patterns in transaction data.',
+        options: ['unusual', 'regular', 'expected', 'consistent'],
+        answer: 'unusual'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following is an example of CNP fraud?',
+        options: ['Using a credit card number to make an online purchase', 'Swiping a credit card in a store', 'Using a debit card with a PIN at an ATM', 'Making a purchase with a gift card'],
+        answer: 'Using a credit card number to make an online purchase'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What is a common prevention measure for CNP fraud?',
+        options: ['Address verification system (AVS)', 'Cardholder’s signature verification', 'Physical card inspection', 'PIN authentication'],
+        answer: 'Address verification system (AVS)'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following is NOT typically used to prevent CNP fraud?',
+        options: ['CVV code', 'Address verification', 'Card swipe technology', 'Two-factor authentication'],
+        answer: 'Card swipe technology'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which type of transaction is most vulnerable to CNP fraud?',
+        options: ['In-person transactions', 'Mail-order transactions', 'ATM transactions', 'Phone transactions'],
+        answer: 'Phone transactions'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What does CVV stand for in the context of card transactions?',
+        options: ['Card Verification Value', 'Credit Verification Vault', 'Card Validity Verification', 'Customer Verification Value'],
+        answer: 'Card Verification Value'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What is a sign of potential CNP fraud in transaction data?',
+        options: ['Frequent small transactions', 'A sudden large transaction', 'Consistent spending patterns', 'Regular transactions within usual limits'],
+        answer: 'A sudden large transaction'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which technology helps in reducing the risk of CNP fraud?',
+        options: ['Tokenization', 'Magnetic stripe technology', 'Physical card verification', 'Signature matching'],
+        answer: 'Tokenization'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'How can consumers protect themselves from CNP fraud?',
+        options: ['Regularly monitoring account statements', 'Using the same password for all accounts', 'Storing card details on multiple websites', 'Sharing card information via email'],
+        answer: 'Regularly monitoring account statements'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What is often used to verify identity in CNP transactions?',
+        options: ['Two-factor authentication', 'PIN code', 'Signature', 'Physical card swipe'],
+        answer: 'Two-factor authentication'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which is an example of a non-CNP transaction?',
+        options: ['Swiping a card at a store', 'Making a phone order', 'Using card details for online shopping', 'Entering card information in an email'], 
+        answer: 'Swiping a card at a store'
+      },
+      
+    ],
+    'Employment scams': [
+      {
+        type: 'True/False',
+        question: 'Employment scams often involve fake job offers to collect personal information from job seekers.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'Legitimate employers will always ask for personal information, such as Social Security numbers, in the initial job application.',
+        options: ['True', 'False'],
+        answer: 'False'
+      },
+      {
+        type: 'True/False',
+        question: 'Employment scams can include job offers that require payment for training or materials.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'A common sign of an employment scam is a job offer without a formal interview process.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'Employment scams always involve positions with high salaries for little work.',
+        options: ['True', 'False'],
+        answer: 'False'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'Employment scams may involve job offers that require you to pay for __________ or materials upfront.',
+        options: ['training', 'insurance', 'credentials', 'registration'],
+        answer: 'training'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'Receiving a job offer without a formal interview process could be a sign of an __________ scam.',
+        options: ['employment', 'investment', 'charity', 'insurance'],
+        answer: 'employment'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'A typical red flag for an employment scam is being asked to provide personal information, such as a __________ number, before you have been hired.',
+        options: ['Social Security', 'driver’s license', 'passport', 'credit card'],
+        answer: 'Social Security'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'Job offers that require you to send money for __________ are likely part of an employment scam.',
+        options: ['training', 'benefits', 'taxes', 'insurance'],
+        answer: 'training'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'Scammers often use __________ job descriptions to attract job seekers and gather their personal information.',
+        options: ['vague', 'specific', 'detailed', 'honest'],
+        answer: 'vague'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following is a common characteristic of employment scams?',
+        options: ['Unrealistically high salaries for minimal work', 'Detailed job descriptions and a formal interview process', 'Request for professional references', 'Requirement for background checks'],
+        answer: 'Unrealistically high salaries for minimal work'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What should you do if a job offer requires payment for training or materials?',
+        options: ['Pay the required amount to secure the job', 'Research the company and offer to verify its legitimacy', 'Immediately accept the offer without further investigation', 'Ignore the offer and continue job searching'],
+        answer: 'Research the company and offer to verify its legitimacy'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which action is NOT a sign of an employment scam?',
+        options: ['Asking for personal information before a formal interview', 'Providing a detailed job description', 'Offering a job without an interview', 'Requiring payment for job-related materials'],
+        answer: 'Providing a detailed job description'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What is a typical red flag for an employment scam?',
+        options: ['An offer of a high salary without any qualifications required', 'A request for a formal interview', 'A job description outlining specific responsibilities', 'A company email address for correspondence'],
+        answer: 'An offer of a high salary without any qualifications required'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following might indicate a job offer is a scam?',
+        options: ['Requests for personal financial information early in the process', 'Professional communication and a clear job role', 'A thorough interview and onboarding process', 'A legitimate company website'],
+        answer: 'Requests for personal financial information early in the process'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'If you receive an unsolicited job offer, what should be your first step?',
+        options: ['Accept the offer immediately', 'Verify the legitimacy of the company and offer', 'Provide personal information to the employer', 'Ignore the offer and move on'],
+        answer: 'Verify the legitimacy of the company and offer'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which is NOT typically involved in an employment scam?',
+        options: ['Asking for a fee for job placement', 'Offering a position with vague job responsibilities', 'Requesting a detailed resume', 'Providing a legitimate employment contract'],
+        answer: 'Providing a legitimate employment contract'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What should you be cautious about if a job offer seems too good to be true?',
+        options: ['The salary offered', 'The required qualifications', 'The job description', 'The request for personal information upfront'],
+        answer: 'The request for personal information upfront'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What is an unusual practice for a legitimate job offer?',
+        options: ['Asking for personal details such as Social Security number before hiring', 'Providing a detailed job description and responsibilities', 'Conducting a formal interview', 'Offering a competitive salary'],
+        answer: 'Asking for personal details such as Social Security number before hiring'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of these should NOT be asked before offering a job?',
+        options: ['Social Security number', 'Previous job experience', 'References', 'Interview schedule'],
+        answer: 'Social Security number'
+      },
+      
+    ],
+    'Grandparent scams': [
+      {
+        type: 'True/False',
+        question: 'Grandparent scams typically involve a caller pretending to be a grandchild in distress.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'In grandparent scams, the scammer usually requests money for a supposed emergency.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'Grandparent scams often use high-pressure tactics to convince the victim to send money quickly.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'Scammers in grandparent scams usually provide detailed and accurate information about the grandchild’s situation.',
+        options: ['True', 'False'],
+        answer: 'False'
+      },
+      {
+        type: 'True/False',
+        question: 'Grandparent scams are less common now due to increased awareness and preventive measures.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'In a grandparent scam, the caller often pretends to be a __________ who is in urgent need of money.',
+        options: ['grandchild', 'friend', 'neighbor', 'colleague'],
+        answer: 'grandchild'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'The scammer may use a __________ story to create a sense of urgency and pressure the victim to act quickly.',
+        options: ['false', 'true', 'unusual', 'common'],
+        answer: 'false'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'Grandparent scams often involve requests for money to cover supposed __________ such as medical bills or legal fees.',
+        options: ['expenses', 'gifts', 'vacations', 'repairs'],
+        answer: 'expenses'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'Victims of grandparent scams are often asked to send money via __________ or other untraceable methods.',
+        options: ['wire transfer', 'check', 'credit card', 'cash'],
+        answer: 'wire transfer'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'A common tactic in grandparent scams is to use __________ names or urgent requests to prevent the victim from verifying the story.',
+        options: ['fake', 'real', 'common', 'familiar'],
+        answer: 'fake'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What is a typical characteristic of a grandparent scam?',
+        options: ['A caller claiming to be a grandchild in urgent need', 'An email offering free gifts', 'A legitimate job offer', 'A survey request'],
+        answer: 'A caller claiming to be a grandchild in urgent need'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which method is commonly used by scammers in grandparent scams to receive money?',
+        options: ['Wire transfer', 'Direct deposit', 'Credit card', 'Check'],
+        answer: 'Wire transfer'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What is a red flag that a call might be a grandparent scam?',
+        options: ['The caller asks for personal verification', 'The caller claims to be in a serious emergency', 'The caller provides detailed information about a family member', 'The caller offers a prize or gift'],
+        answer: 'The caller claims to be in a serious emergency'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'How should one respond to a suspicious call claiming to be from a grandchild in distress?',
+        options: ['Immediately send money', 'Verify the caller’s identity by contacting the grandchild directly', 'Ignore the call and delete it', 'Call the number back to confirm'],
+        answer: 'Verify the caller’s identity by contacting the grandchild directly'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What is a common tactic used by scammers to create urgency in grandparent scams?',
+        options: ['Offering a reward for quick action', 'Creating a fake emergency situation', 'Providing a legitimate problem that requires immediate attention', 'Offering a free consultation'],
+        answer: 'Creating a fake emergency situation'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following should you NOT do if you suspect a grandparent scam?',
+        options: ['Send money quickly to help the supposed grandchild', 'Report the scam to authorities', 'Verify the grandchild’s whereabouts with other family members', 'Be cautious about sharing personal information'],
+        answer: 'Send money quickly to help the supposed grandchild'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What type of information is often exaggerated or fabricated in grandparent scams?',
+        options: ['The identity of the grandchild', 'The details of a legitimate emergency', 'The grandchild’s contact information', 'The amount of money needed for an emergency'],
+        answer: 'The details of a legitimate emergency'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which action can help prevent falling victim to a grandparent scam?',
+        options: ['Ignoring all unsolicited calls', 'Confirming the caller’s claims with family members', 'Sending money through untraceable methods', 'Providing personal information to the caller'],
+        answer: 'Confirming the caller’s claims with family members'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What is often used by scammers to sound more convincing in grandparent scams?',
+        options: ['Fake urgency and emotional appeal', 'Detailed information about family members', 'A professional tone and formal language', 'A legitimate phone number and address'],
+        answer: 'Fake urgency and emotional appeal'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of these is NOT a common element of a grandparent scam?',
+        options: ['A call from someone pretending to be a grandchild', 'A request for immediate payment to an unfamiliar bank account', 'A promise of a large reward for your help', 'A verification process involving other family members'],
+        answer: 'A verification process involving other family members'
+      },
+      
+    ],
+    'Investment fraud': [
+      {
+        type: 'True/False',
+        question: 'Investment fraud involves deceiving investors to gain financial benefits illegally.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'Ponzi schemes are a form of investment fraud where returns are paid using new investors money.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'Investment fraud always involves physical investment in real estate or stocks.',
+        options: ['True', 'False'],
+        answer: 'False'
+      },
+      {
+        type: 'True/False',
+        question: 'A guaranteed high return with no risk is a common indicator of investment fraud.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'Investment fraud can be committed through misleading investment opportunities and false information.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'A scheme where returns to earlier investors are paid using the capital from newer investors is called a __________.',
+        options: ['Ponzi scheme', 'Pyramid scheme', 'Pump-and-dump', 'Shell game'],
+        answer: 'Ponzi scheme'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'Investment fraud often involves promises of __________ returns with little or no risk.',
+        options: ['high', 'low', 'moderate', 'variable'],
+        answer: 'high'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'In investment fraud, scammers may use __________ to make their schemes seem more legitimate.',
+        options: ['fake testimonials', 'real bank statements', 'official documents', 'public records'],
+        answer: 'fake testimonials'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'A common red flag for investment fraud is the lack of __________ about how the investment works.',
+        options: ['transparency', 'profit', 'risk', 'regulation'],
+        answer: 'transparency'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'Investors should be cautious of opportunities that involve __________ pressure tactics.',
+        options: ['high', 'low', 'no', 'reasonable'],
+        answer: 'high'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following is a common tactic used in investment fraud?',
+        options: ['Guaranteeing high returns with no risk', 'Providing detailed investment reports', 'Offering transparent fees', 'Regulated investment options'],
+        answer: 'Guaranteeing high returns with no risk'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What is a characteristic feature of a Ponzi scheme?',
+        options: ['Using new investor money to pay returns to earlier investors', 'Investing in legitimate business opportunities', 'Providing audited financial statements', 'Offering returns based on market performance'],
+        answer: 'Using new investor money to pay returns to earlier investors'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following should raise suspicion about an investment opportunity?',
+        options: ['A consistent track record of returns', 'High-pressure sales tactics', 'Transparency about fees and risks', 'Regulatory compliance'],
+        answer: 'High-pressure sales tactics'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What action is advisable if you suspect an investment opportunity might be fraudulent?',
+        options: ['Invest as much as possible quickly', 'Research the investment thoroughly', 'Ignore the red flags', 'Accept the offer without question'],
+        answer: 'Research the investment thoroughly'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following is NOT a typical indicator of investment fraud?',
+        options: ['Promises of guaranteed returns', 'Vague descriptions of how returns are generated', 'Requests for upfront fees', 'Detailed risk assessments'],
+        answer: 'Detailed risk assessments'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'How can investors protect themselves from investment fraud?',
+        options: ['Verify the legitimacy of the investment with regulatory authorities', 'Avoid all investments to be safe', 'Only invest in unregulated opportunities', 'Follow unsolicited investment advice'],
+        answer: 'Verify the legitimacy of the investment with regulatory authorities'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which type of scheme involves falsifying investment performance to attract new investors?',
+        options: ['Pump-and-dump', 'Ponzi scheme', 'Pyramid scheme', 'Shell game'],
+        answer: 'Pump-and-dump'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following is a common sign of a fraudulent investment opportunity?',
+        options: ['Transparency about how the investment works', 'High returns with little or no risk', 'A strong reputation and regulatory oversight', 'Clear and honest communication'],
+        answer: 'High returns with little or no risk'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What should you do if an investment opportunity seems too good to be true?',
+        options: ['Conduct thorough due diligence', 'Invest immediately to secure the opportunity', 'Avoid seeking additional opinions', 'Ignore any concerns'],
+        answer: 'Conduct thorough due diligence'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following might be a tactic used in a fraudulent investment scheme?',
+        options: ['Offering high returns without explaining the investment strategy', 'Providing a detailed business plan', 'Requiring registration with financial authorities', 'Offering a money-back guarantee'],
+        answer: 'Offering high returns without explaining the investment strategy'
+      },
+      
+    ],
+    'IP infringement': [
+      {
+        type: 'True/False',
+        question: 'Intellectual Property (IP) infringement occurs when someone uses IP without permission.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'IP infringement only applies to physical copies of intellectual property, not digital copies.',
+        options: ['True', 'False'],
+        answer: 'False'
+      },
+      {
+        type: 'True/False',
+        question: 'Using someone else’s patented invention without authorization is considered IP infringement.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'Trademark infringement can occur if a company uses a logo similar to an existing trademarked logo.',
+        options: ['True', 'False'],
+        answer: 'True'
+      },
+      {
+        type: 'True/False',
+        question: 'Copyright infringement is limited to reproducing works but does not include public performance or distribution.',
+        options: ['True', 'False'],
+        answer: 'False'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: '__________ infringement involves unauthorized use of copyrighted material.',
+        options: ['Copyright', 'Patent', 'Trademark', 'Design'],
+        answer: 'Copyright'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'A patent grants the inventor exclusive rights to an invention for a period of __________.',
+        options: ['20 years', '10 years', '50 years', '5 years'],
+        answer: '20 years'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'Trademark infringement can occur when a business uses a mark that is __________ to an existing registered trademark.',
+        options: ['confusingly similar', 'exactly the same', 'substantially different', 'legally permitted'],
+        answer: 'confusingly similar'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'Copyright protection applies to original works of __________, including literature, music, and art.',
+        options: ['authorship', 'invention', 'branding', 'design'],
+        answer: 'authorship'
+      },
+      {
+        type: 'Fill-in-the-Blank',
+        question: 'A __________ is a legal right granted for an invention that provides exclusive use to the inventor.',
+        options: ['patent', 'trademark', 'copyright', 'trade secret'],
+        answer: 'patent'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following is NOT a type of intellectual property?',
+        options: ['Patent', 'Copyright', 'Trademark', 'Financial Security'],
+        answer: 'Financial Security'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What must be proven for a case of copyright infringement?',
+        options: ['Unauthorized use of copyrighted material', 'Original creation of material', 'Patent registration', 'Trademark similarity'],
+        answer: 'Unauthorized use of copyrighted material'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which type of IP protection is used for brand names and logos?',
+        options: ['Trademark', 'Patent', 'Copyright', 'Trade secret'],
+        answer: 'Trademark'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following can be protected by copyright?',
+        options: ['Software algorithms', 'Business methods', 'Literary works', 'Designs'],
+        answer: 'Literary works'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What does a patent protect?',
+        options: ['Brand names', 'Inventions', 'Artistic works', 'Trade secrets'],
+        answer: 'Inventions'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following is an example of IP infringement?',
+        options: ['Creating a similar product based on patent information', 'Using a patented invention without permission', 'Designing a new product using public domain information', 'Trademarking an original brand name'],
+        answer: 'Using a patented invention without permission'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following is typically a defense against IP infringement claims?',
+        options: ['Independent creation', 'Use of similar trademarks', 'Unregistered patents', 'Copying copyrighted work'],
+        answer: 'Independent creation'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'What can be a consequence of IP infringement?',
+        options: ['Legal penalties', 'Financial rewards', 'Patent rights', 'Copyright extensions'],
+        answer: 'Legal penalties'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'How long does copyright protection last for works created after January 1, 1978?',
+        options: ['Life of the author plus 70 years', '20 years from creation', '50 years from publication', 'Indefinitely'],
+        answer: 'Life of the author plus 70 years'
+      },
+      {
+        type: 'Multiple Choice',
+        question: 'Which of the following is a method to prevent IP infringement?',
+        options: ['Registering the IP with appropriate authorities', 'Keeping IP information secret', 'Ignoring unauthorized use', 'Using IP without protection'],
+        answer: 'Registering the IP with appropriate authorities'
+      },
+      
+    ],
   };
 
 const Quiz = () => {

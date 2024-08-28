@@ -1,16 +1,15 @@
 import React, { useRef, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Animated } from 'react-native';
 import { Link } from 'expo-router';
-import { FontAwesome } from '@expo/vector-icons';  // Import icons
-import { LinearGradient } from 'expo-linear-gradient';  // Import LinearGradient
+import { FontAwesome } from '@expo/vector-icons';
 
 const Dashboard = () => {
   const [hovered, setHovered] = useState(false);
-  const scaleAnim = useRef(new Animated.Value(1)).current;  // Start with normal scale
+  const scaleAnim = useRef(new Animated.Value(1)).current;
 
   const handleMouseEnter = () => {
     Animated.timing(scaleAnim, {
-      toValue: 1.05,  // Slightly scale up the button
+      toValue: 1.05,
       duration: 300,
       useNativeDriver: true,
     }).start();
@@ -19,7 +18,7 @@ const Dashboard = () => {
 
   const handleMouseLeave = () => {
     Animated.timing(scaleAnim, {
-      toValue: 1,  // Return to normal scale
+      toValue: 1,
       duration: 300,
       useNativeDriver: true,
     }).start();
@@ -28,10 +27,7 @@ const Dashboard = () => {
 
   return (
     <View style={styles.container}>
-      <LinearGradient
-        colors={['#ffe4e1', '#ffffff']} // Light pink to white gradient
-        style={styles.gradientBackground}
-      >
+      <View style={styles.background}>
         <TouchableOpacity
           style={styles.settingsIcon}
           onPress={() => {}}
@@ -92,7 +88,7 @@ const Dashboard = () => {
             </Link>
           </TouchableOpacity>
         </View>
-      </LinearGradient>
+      </View>
     </View>
   );
 };
@@ -102,21 +98,24 @@ export default Dashboard;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    position: 'relative',  // Relative positioning to place the settings icon
+    position: 'relative',
+    margin: 0,
+    padding: 0,
   },
-  gradientBackground: {
+  background: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
     height: '100%',
+    backgroundColor: '#ffffff', // Solid white background
   },
   settingsIcon: {
     position: 'absolute',
     top: 20,
     right: 20,
-    zIndex: 1,  // Ensure the icon is on top of other elements
-    backgroundColor: '#fff',  // Button background for better visibility
+    zIndex: 1,
+    backgroundColor: '#fff',
     padding: 10,
     borderRadius: 50,
     shadowColor: '#000',
@@ -127,7 +126,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 30,
-    color: '#ff69b4', // Update title color to match the theme
+    color: '#ff69b4',
     fontWeight: 'bold',
     marginBottom: 20,
   },
@@ -144,7 +143,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     borderRadius: 10,
     margin: 10,
-    width: '40%',  // Adjust width for grid layout
+    width: '40%',
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
@@ -153,10 +152,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 5,
     elevation: 5,
-    transform: [{ scale: 1 }],  // Ensure consistent scaling
+    transform: [{ scale: 1 }],
   },
   buttonText: {
-    color: '#ff69b4',  // Updated color for contrast
+    color: '#ff69b4',
     fontSize: 16,
     textAlign: 'center',
     fontWeight: 'bold',

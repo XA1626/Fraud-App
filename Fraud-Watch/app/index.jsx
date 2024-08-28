@@ -1,12 +1,14 @@
-
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, LogBox } from 'react-native';
 import SplashScreen from './splashscreen';
 import LoginPage from './loginpage';
 import Dashboard from './dashboard';
 import CreateUser from './createuser';
+import UrlChecker from './urlchecker'; // Import the UrlChecker component
+
 const App = () => {
     const [currentScreen, setCurrentScreen] = useState('SplashScreen');
+
     useEffect(() => {
         const timer = setTimeout(() => {
             console.log("Navigating to LoginPage");
@@ -14,6 +16,7 @@ const App = () => {
         }, 2000); // Splash screen duration
         return () => clearTimeout(timer); // Clear the timer if the component unmounts
     }, []);
+
     const renderScreen = () => {
         switch (currentScreen) {
             case 'LoginPage':
@@ -32,7 +35,7 @@ const App = () => {
                 );
             case 'Dashboard':
                 console.log("Rendering Dashboard");
-                return <Dashboard />;
+                return <Dashboard onNavigate={(screen) => setCurrentScreen(screen)} />;
             case 'CreateUser':
                 console.log("Rendering CreateUser");
                 return (
@@ -47,17 +50,22 @@ const App = () => {
                         }}
                     />
                 );
+            case 'UrlChecker':
+                console.log("Rendering UrlChecker");
+                return <UrlChecker />;
             default:
                 console.log("Rendering SplashScreen");
                 return <SplashScreen />;
         }
     };
+
     return (
         <View style={styles.container}>
             {renderScreen()}
         </View>
     );
 };
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -66,5 +74,5 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
 });
+
 export default App;
-    

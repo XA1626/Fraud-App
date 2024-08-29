@@ -2892,11 +2892,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   buttonText: {
-    color: 'white',
+    color: 'black',
     fontSize: 16,
   },
   categoryButton: {
-    backgroundColor: 'lightpink',
+    backgroundColor: 'green',
     padding: 15,
     marginBottom: 10,
     alignItems: 'center',

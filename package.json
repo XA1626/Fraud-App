@@ -1,5 +1,29 @@
 {
   "dependencies": {
-    "firebase": "^10.13.0"
+<<<<<<< Updated upstream
+    "@expo/metro-runtime": "~3.2.3",
+    "@react-navigation/native": "^6.1.18",
+    "expo": "^51.0.32",
+    "expo-router": "~3.5.23",
+    "firebase": "^10.13.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-native": "^0.74.5",
+    "react-native-safe-area-context": "^4.11.0",
+    "react-native-screens": "^3.34.0",
+    "react-native-web": "^0.19.10"
+  },
+  "devDependencies": {
+    "webpack": "^5.94.0",
+    "webpack-cli": "^5.1.4"
+=======
+    "expo": "^51.0.32",
+    "firebase": "^10.13.0",
+    "metro": "^0.80.12",
+    "react-native": "^0.74.5",
+    "react-native-web": "~0.19.10",
+    "react-dom": "18.2.0",
+    "@expo/metro-runtime": "~3.2.3"
+>>>>>>> Stashed changes
   }
 }

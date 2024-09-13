@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -7,12 +6,13 @@ const SplashScreen = () => {
     useEffect(() => {
         setTimeout(() => {
             navigation.replace('LoginPage');
-        }, 2000); // Adjust the timing as needed
+        }, 5000); // Adjust the timing as needed
     }, [navigation]);
     return (
         <View style={styles.container}>
             <Image
-                source={require('../assets/fraudwatchlogo.png')}
+                source={require('../assets/splashscreenvedio.mp4')}
+
                 style={styles.logo}
             />
         </View>

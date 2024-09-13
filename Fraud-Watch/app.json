@@ -1,8 +1,7 @@
 {
   "expo": {
     "name": "Fraud Watch",
-    "scheme": "Fraud Watch",
-    "slug": "Fraud Watch",
+    "slug": "fraud-watch",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -22,9 +21,13 @@
       }
     },
     "web": {
-      "bundler": "metro",
       "favicon": "./assets/favicon.png"
     },
+<<<<<<< Updated upstream
+    "entryPoint": "./Fraud Watch/app/index.jsx",  
+=======
+    "entryPoint": "./app/index.jsx", 
+>>>>>>> Stashed changes
     "plugins": [
       "expo-router"
     ]

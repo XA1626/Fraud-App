@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { View, TextInput, Button, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { collection, addDoc } from 'firebase/firestore';
@@ -128,5 +127,3 @@ const styles = StyleSheet.create({
     },
 });
 export default CreateUser;
-
-

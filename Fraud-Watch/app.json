@@ -23,7 +23,11 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
+<<<<<<< Updated upstream
     "entryPoint": "./Fraud Watch/app/index.jsx",  
+=======
+    "entryPoint": "./app/index.jsx", 
+>>>>>>> Stashed changes
     "plugins": [
       "expo-router"
     ]

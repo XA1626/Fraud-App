@@ -1,15 +1,15 @@
-
 import React, { useState } from 'react';
 import { View, TextInput, Button, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
-import { sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from './firebase';
+
 const LoginPage = ({ onLogin, onCreateUser }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [loginAttempts, setLoginAttempts] = useState(0); // Track login attempts
+
     const handleLogin = async () => {
         if (!email || !password) {
             setErrorMessage('Please fill in both email and password.');
@@ -37,6 +37,7 @@ const LoginPage = ({ onLogin, onCreateUser }) => {
             }
         }
     };
+
     const handleForgotPassword = () => {
         if (!email) {
             setErrorMessage('Please enter your email address to reset your password.');
@@ -50,6 +51,7 @@ const LoginPage = ({ onLogin, onCreateUser }) => {
                 setErrorMessage('Error sending password reset email.');
             });
     };
+
     return (
         <View style={styles.container}>
             <Image
@@ -72,9 +74,9 @@ const LoginPage = ({ onLogin, onCreateUser }) => {
                 secureTextEntry
             />
             {errorMessage ? <Text style={[styles.errorText, errorMessage === 'Login successful!' && styles.successText]}>{errorMessage}</Text> : null}
-            <Button title="LOGIN" onPress={handleLogin} color="#1E90FF" />
+            <Button title="LOGIN" onPress={handleLogin} color="#ff69b4" />
             <TouchableOpacity onPress={onCreateUser}>
-                <Text style={styles.createUserText}>Create user</Text>
+                <Text style={styles.createUserText}>Create User</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={handleForgotPassword}>
                 <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
@@ -82,13 +84,14 @@ const LoginPage = ({ onLogin, onCreateUser }) => {
         </View>
     );
 };
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         padding: 16,
-        backgroundColor: '#fff',
+        backgroundColor: '#ffffff', // White background for consistency
     },
     logo: {
         width: 200,
@@ -108,20 +111,21 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     successText: {
-        color: 'green', // Change success message color to green
+        color: '#ff69b4', // Match success message color with theme
     },
     forgotPasswordText: {
-        color: 'blue',
+        color: '#ff69b4', // Match color with theme
         textDecorationLine: 'underline',
         marginTop: 16,
         fontSize: 14, // Reduced font size
     },
     createUserText: {
-        color: 'blue',
+        color: '#ff69b4', // Match color with theme
         textDecorationLine: 'underline',
         marginTop: 16,
         fontSize: 14, // Reduced font size
-        textTransform: 'capitalize', // Transform to capitalize first letter
+        textTransform: 'capitalize', // Capitalize first letter
     },
 });
+
 export default LoginPage;

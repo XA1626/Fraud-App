@@ -1,75 +1,113 @@
 import React, { useEffect, useState } from 'react';
-import { db } from './firebase'; // Ensure this import path is correct
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { db } from './firebase'; // Ensure this points to your firebase setup
+import { collection, getDocs } from 'firebase/firestore';
 
 const Quiz = () => {
-    const [category, setCategory] = useState('');
-    const [questions, setQuestions] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [selectedCategory, setSelectedCategory] = useState(''); // Stores the ID of the selected category
+    const [categories, setCategories] = useState([]); // Stores the fetched categories
+    const [questions, setQuestions] = useState([]); // Stores the fetched questions for the selected category
+    const [loading, setLoading] = useState(false); // Loading state
 
-    // Function to handle fetching questions based on the category
+    // Fetch categories from Firestore on component mount
     useEffect(() => {
-        if (category) {
+        const fetchCategories = async () => {
+            setLoading(true);
+            console.log("Fetching categories...");
+            try {
+                const categoriesCol = collection(db, 'Quizzes', 'FraudWatchQuiz', 'Categories');
+                const snapshot = await getDocs(categoriesCol);
+                
+                if (snapshot.empty) {
+                    console.log("No categories found in the database.");
+                } else {
+                    const categoriesList = snapshot.docs.map(doc => ({
+                        id: doc.id,
+                        ...doc.data()
+                    }));
+                    console.log("Categories fetched: ", categoriesList); // Debugging log
+                    setCategories(categoriesList);
+                }
+            } catch (error) {
+                console.error("Error fetching categories:", error); // Error handling
+            }
+            setLoading(false);
+        };
+
+        fetchCategories();
+    }, []);
+
+    // Fetch questions when a category is selected
+    useEffect(() => {
+        if (selectedCategory) {
             const fetchQuestions = async () => {
                 setLoading(true);
+                console.log("Fetching questions for category: ", selectedCategory); // Debugging log
                 try {
-                    const questionsCol = query(collection(db, 'Quiz'), where('category', '==', category));
+                    const questionsCol = collection(db, 'Quizzes', 'FraudWatchQuiz', 'Categories', selectedCategory, 'Questions');
                     const snapshot = await getDocs(questionsCol);
-                    if (!snapshot.empty) {
-                        const questionsList = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                        setQuestions(questionsList);
-                        console.log("Questions fetched:", questionsList); // Debugging log
-                    } else {
-                        console.log("No questions found for category:", category); // Debugging log
-                    }
+                    const questionsList = snapshot.docs.map(doc => ({
+                        id: doc.id,
+                        ...doc.data()
+                    }));
+                    console.log("Questions fetched: ", questionsList); // Debugging log
+                    setQuestions(questionsList);
                 } catch (error) {
-                    console.error("Failed to fetch questions:", error); // Error handling
+                    console.error("Error fetching questions:", error);
                 }
                 setLoading(false);
             };
+
             fetchQuestions();
         }
-    }, [category]);
+    }, [selectedCategory]);
 
-    // Function to handle category selection
-    const handleCategorySelect = (selectedCategory) => {
-        setCategory(selectedCategory);
+    const handleCategorySelect = (categoryId) => {
+        console.log("Category selected: ", categoryId); // Debugging log
+        setSelectedCategory(categoryId);
     };
 
-    // Initial category selection view
-    if (!category) {
+    // If no category has been selected, display the category buttons
+    if (!selectedCategory) {
         return (
             <div>
                 <h1>Select a Quiz Category</h1>
-                <button onClick={() => handleCategorySelect('Payroll fraud')}>Payroll Fraud</button>
-                {/* You can add more buttons for other categories as needed */}
+                {loading && <p>Loading categories...</p>}
+                {!loading && categories.length === 0 && <p>No categories found.</p>}
+                {!loading && categories.length > 0 && (
+                    categories.map(cat => (
+                        <button key={cat.id} onClick={() => handleCategorySelect(cat.id)}>
+                            {cat.name}
+                        </button>
+                    ))
+                )}
             </div>
         );
     }
 
-    // Loading state
-    if (loading) return <p>Loading questions...</p>;
-
-    // Display the questions or a no-questions-found message
+    // Loading and question display state
     return (
         <div>
-            <h1>{category} Quiz</h1>
-            {questions.length > 0 ? (
-                questions.map((question) => (
-                    <div key={question.id}>
-                        <h4>{question.question}</h4>
-                        <ul>
-                            {question.options.map((option, index) => (
-                                <li key={index}>{option}</li>
-                            ))}
-                        </ul>
-                    </div>
-                ))
-            ) : (
-                <p>No questions found</p> // Displayed if no questions are fetched
+            {loading ? <p>Loading questions...</p> : (
+                <div>
+                    <h1>Questions for {selectedCategory}</h1>
+                    {questions.length > 0 ? (
+                        questions.map(question => (
+                            <div key={question.id}>
+                                <h4>{question.question}</h4>
+                                <ul>
+                                    {question.options.map(option => (
+                                        <li key={option}>{option}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ))
+                    ) : <p>No questions available for this category.</p>}
+                    <button onClick={() => setSelectedCategory('')}>Back to Categories</button>
+                </div>
             )}
         </div>
     );
 };
 
 export default Quiz;
+

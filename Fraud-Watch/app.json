@@ -1,7 +1,8 @@
 {
   "expo": {
     "name": "Fraud Watch",
-    "slug": "fraud-watch",
+    "scheme": "Fraud Watch",
+    "slug": "Fraud Watch",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -12,22 +13,20 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.fraudwatch.app"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.fraudwatch.app"
     },
     "web": {
+      "bundler": "metro",
       "favicon": "./assets/favicon.png"
     },
-<<<<<<< Updated upstream
-    "entryPoint": "./Fraud Watch/app/index.jsx",  
-=======
-    "entryPoint": "./app/index.jsx", 
->>>>>>> Stashed changes
     "plugins": [
       "expo-router"
     ]

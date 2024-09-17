@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, StatusBar } from 'react-native';
-import { Link } from 'expo-router';
+import { View, StyleSheet, Text, StatusBar } from 'react-native';
 import SplashScreen from './splashscreen';
 import LoginPage from './loginpage';
 import Dashboard from './dashboard';
 import CreateUser from './createuser';
 import UrlChecker from './urlchecker'; // Import the UrlChecker component
+import Settings from './settings'; // Import the Settings component
+import Newsfeed from './newsfeed'; // Import the Newsfeed component
+import { Platform } from 'react-native';
+
+const isWeb = Platform.OS === 'web';
 
 const App = () => {
     const [currentScreen, setCurrentScreen] = useState('SplashScreen');
@@ -37,16 +41,20 @@ const App = () => {
             case 'Dashboard':
                 console.log("Rendering Dashboard");
                 return (
-                    <View style={styles.container}>
-                        <Text style={styles.title}>🎉 Fraud Watch! 🎉</Text>
-                        <StatusBar style="auto" />
-                        <TouchableOpacity style={styles.button}>
-                            <Link href="/dashboard" style={styles.buttonText}>💥 Dashboard 💥</Link>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.button}>
-                            <Link href="/newsfeed" style={styles.buttonText}>🔥 Newsfeed 🔥</Link>
-                        </TouchableOpacity>
-                    </View>
+                    <Dashboard
+                        onNavigate={(screen) => {
+                            if (screen === 'Settings') {
+                                console.log("Navigating to Settings");
+                                setCurrentScreen('Settings');
+                            } else if (screen === 'UrlChecker') {
+                                console.log("Navigating to UrlChecker");
+                                setCurrentScreen('UrlChecker');
+                            } else if (screen === 'Newsfeed') {
+                                console.log("Navigating to Newsfeed");
+                                setCurrentScreen('Newsfeed');
+                            }
+                        }}
+                    />
                 );
             case 'CreateUser':
                 console.log("Rendering CreateUser");
@@ -65,6 +73,23 @@ const App = () => {
             case 'UrlChecker':
                 console.log("Rendering UrlChecker");
                 return <UrlChecker />;
+            case 'Settings':
+                console.log("Rendering Settings");
+                return (
+                    <Settings
+                        onNavigateBack={() => {
+                            console.log("Navigating back to Dashboard");
+                            setCurrentScreen('Dashboard');
+                        }}
+                        onLogout={() => {
+                            console.log("Logging out, navigating to LoginPage");
+                            setCurrentScreen('LoginPage'); // Log out and go back to the login screen
+                        }}
+                    />
+                );
+            case 'Newsfeed':
+                console.log("Rendering Newsfeed");
+                return <Newsfeed />; // Render the Newsfeed component
             default:
                 console.log("Rendering SplashScreen");
                 return <SplashScreen />;
@@ -81,13 +106,10 @@ const App = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#ffccf9', // Vibrant pink background
+        backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
         padding: 20,
-        borderWidth: 5,
-        borderColor: '#ff66b2', // Bright pink border
-        borderRadius: 20,
     },
     title: {
         fontSize: 36,

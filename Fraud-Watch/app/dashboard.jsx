@@ -1,163 +1,185 @@
-  import React, { useRef, useState } from 'react';
-  import { StyleSheet, Text, View, TouchableOpacity, Animated } from 'react-native';
-  import { Link } from 'expo-router';
-  import { FontAwesome } from '@expo/vector-icons';
+import React, { useState, useEffect } from 'react';
+import { ScrollView, View, Text, StyleSheet, Image, TouchableOpacity, TextInput } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { FontAwesome } from '@expo/vector-icons'; 
+import { fetchUserProfile } from './firebase'; // Import Firebase function to fetch user profile
 
-  const Dashboard = () => {
-    const [hovered, setHovered] = useState(false);
-    const scaleAnim = useRef(new Animated.Value(1)).current;
+const Dashboard = ({ onNavigate }) => {
+    const [userName, setUserName] = useState(''); // State to hold the fetched username
+    const [searchText, setSearchText] = useState('');
+    const [filteredFeatures, setFilteredFeatures] = useState(['URL Checker', 'Cybersecurity News', 'Quiz', 'Gmail Integration']);
 
-    const handleMouseEnter = () => {
-      Animated.timing(scaleAnim, {
-        toValue: 1.05,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-      setHovered(true);
-    };
+    // Fetch user's profile from Firestore when the component mounts
+    useEffect(() => {
+        fetchUserProfile(setUserName); // Calls Firebase function to get the user's name
+    }, []);
 
-    const handleMouseLeave = () => {
-      Animated.timing(scaleAnim, {
-        toValue: 1,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-      setHovered(false);
+    // Function to handle searching among features
+    const handleSearch = (text) => {
+        setSearchText(text);
+        const features = ['URL Checker', 'Cybersecurity News', 'Quiz', 'Gmail Integration'];
+        const filtered = features.filter(feature => feature.toLowerCase().includes(text.toLowerCase()));
+        setFilteredFeatures(filtered);
     };
 
     return (
-      <View style={styles.container}>
-        <View style={styles.background}>
-          <TouchableOpacity
-            style={styles.settingsIcon}
-            onPress={() => {}}
-          >
-            <Link href="/settings">
-              <FontAwesome name="cog" size={24} color="#ff69b4" />
-            </Link>
-          </TouchableOpacity>
+        <View style={styles.container}>
+            {/* Wrapping content in ScrollView */}
+            <ScrollView contentContainerStyle={styles.scrollContainer}>
+                {/* Header with Gradient */}
+                <LinearGradient
+                    colors={['#7130f1', '#e66f26']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    style={styles.header}
+                >
+                    <View style={styles.headerContent}>
+                        <Image source={require('../assets/logo.png')} style={styles.logo} />
+                        <View style={styles.headerTextContainer}>
+                            <Text style={styles.title}>Fraud Watch</Text>
+                            <Text style={styles.welcomeText}>Welcome, {userName || 'User'}!</Text> {/* Display user's name */}
+                        </View>
+                    </View>
+                </LinearGradient>
 
-          <Text style={styles.title}>Dashboard</Text>
+                {/* Search Bar */}
+                <View style={styles.searchContainer}>
+                    <FontAwesome name="search" size={20} color="#333" />
+                    <TextInput
+                        style={styles.searchInput}
+                        placeholder="Search"
+                        value={searchText}
+                        onChangeText={handleSearch}
+                    />
+                </View>
 
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={[styles.button, { transform: [{ scale: scaleAnim }] }]}
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-            >
-              <Link href="/quiz" style={styles.buttonText}>
-                <FontAwesome name="question-circle" size={24} color="#ff69b4" style={styles.icon} />
-                Quiz
-              </Link>
-            </TouchableOpacity>
+                {/* Features */}
+                {filteredFeatures.includes('URL Checker') && (
+                    <TouchableOpacity style={styles.featureButton} onPress={() => onNavigate('UrlChecker')}>
+                        <Image source={require('../assets/url-checker.png')} style={styles.featureImage} />
+                        <Text style={styles.featureText}>URL Checker</Text>
+                    </TouchableOpacity>
+                )}
 
-            <TouchableOpacity
-              style={[styles.button, { transform: [{ scale: scaleAnim }] }]}
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-            >
-              <Link href="/newsfeed" style={styles.buttonText}>
-                <FontAwesome name="newspaper-o" size={24} color="#ff69b4" style={styles.icon} />
-                Newsfeed
-              </Link>
-            </TouchableOpacity>
+                {filteredFeatures.includes('Cybersecurity News') && (
+                    <TouchableOpacity style={styles.featureButton} onPress={() => onNavigate('Newsfeed')}>
+                        <Image source={require('../assets/cyber-news.png')} style={styles.featureImage} />
+                        <Text style={styles.featureText}>Cybersecurity News</Text>
+                    </TouchableOpacity>
+                )}
 
-            <TouchableOpacity
-              style={[styles.button, { transform: [{ scale: scaleAnim }] }]}
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-            >
-              <Link href="/urlchecker" style={styles.buttonText}>
-    <FontAwesome name="link" size={24} color="#ff69b4" style={styles.icon} />
-    URL Checking
-  </Link>
+                {filteredFeatures.includes('Quiz') && (
+                    <TouchableOpacity style={styles.featureButton} onPress={() => onNavigate('Quiz')}>
+                        <Image source={require('../assets/quiz.png')} style={styles.featureImage} />
+                        <Text style={styles.featureText}>Quiz</Text>
+                    </TouchableOpacity>
+                )}
 
-            </TouchableOpacity>
+                {filteredFeatures.includes('Gmail Integration') && (
+                    <TouchableOpacity style={styles.featureButton} onPress={() => onNavigate('GmailIntegration')}>
+                        <Image source={require('../assets/gmail.png')} style={styles.featureImage} />
+                        <Text style={styles.featureText}>Gmail Integration</Text>
+                    </TouchableOpacity>
+                )}
 
-            <TouchableOpacity
-              style={[styles.button, { transform: [{ scale: scaleAnim }] }]}
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-            >
-              <Link href="/notification-alerts" style={styles.buttonText}>
-                <FontAwesome name="bell" size={24} color="#ff69b4" style={styles.icon} />
-                Notification Alerts
-              </Link>
-            </TouchableOpacity>
-          </View>
+                {/* Divider Line */}
+                <View style={styles.divider} />
+            </ScrollView>
+
+            {/* Bottom Navigation Icons */}
+            <View style={styles.bottomNav}>
+                <TouchableOpacity onPress={() => onNavigate('Dashboard')}>
+                    <FontAwesome name="home" size={24} color="#000" />
+                </TouchableOpacity>
+                <FontAwesome name="comments" size={24} color="#000" />
+                <TouchableOpacity onPress={() => onNavigate('Settings')}> {/* Navigate to Settings page */}
+                    <FontAwesome name="cog" size={24} color="#000" />
+                </TouchableOpacity>
+            </View>
         </View>
-      </View>
     );
-  };
+};
 
-  export default Dashboard;
-
-  const styles = StyleSheet.create({
+// Styles for the dashboard components
+const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      position: 'relative',
-      margin: 0,
-      padding: 0,
+        flex: 1,
+        backgroundColor: '#fff',
+        padding: 16,
     },
-    background: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      width: '100%',
-      height: '100%',
-      backgroundColor: '#ffffff', // Solid white background
+    scrollContainer: {
+        paddingBottom: 20, // Add padding to prevent content from being cut off
     },
-    settingsIcon: {
-      position: 'absolute',
-      top: 20,
-      right: 20,
-      zIndex: 1,
-      backgroundColor: '#fff',
-      padding: 10,
-      borderRadius: 50,
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.3,
-      shadowRadius: 3,
-      elevation: 5,
+    header: {
+        height: 120,
+        paddingHorizontal: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    headerContent: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        width: '100%',
+    },
+    logo: {
+        width: 50,
+        height: 50,
+    },
+    headerTextContainer: {
+        marginLeft: 10,
     },
     title: {
-      fontSize: 30,
-      color: '#ff69b4',
-      fontWeight: 'bold',
-      marginBottom: 20,
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#fff',
     },
-    buttonContainer: {
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      justifyContent: 'center',
-      width: '100%',
-      paddingHorizontal: 20,
+    welcomeText: {
+        fontSize: 14, 
+        color: '#fff',
     },
-    button: {
-      backgroundColor: '#fff',
-      paddingVertical: 15,
-      paddingHorizontal: 30,
-      borderRadius: 10,
-      margin: 10,
-      width: '40%',
-      alignItems: 'center',
-      justifyContent: 'center',
-      flexDirection: 'row',
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.3,
-      shadowRadius: 5,
-      elevation: 5,
-      transform: [{ scale: 1 }],
+    searchContainer: {
+        flexDirection: 'row',
+        padding: 10,
+        backgroundColor: '#f0f0f0',
+        borderRadius: 10,
+        marginVertical: 10,
+        alignItems: 'center',
     },
-    buttonText: {
-      color: '#ff69b4',
-      fontSize: 16,
-      textAlign: 'center',
-      fontWeight: 'bold',
+    searchInput: {
+        marginLeft: 10,
+        color: '#333',
+        fontSize: 16,
+        flex: 1,
     },
-    icon: {
-      marginRight: 10,
+    featureButton: {
+        width: '100%',
+        height: 120,
+        marginVertical: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-  });
+    featureImage: {
+        width: '100%',
+        height: '80%',
+        borderRadius: 10,
+    },
+    featureText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        marginTop: 8,
+    },
+    divider: {
+        height: 1,
+        backgroundColor: '#ccc',
+        marginVertical: 10,
+    },
+    bottomNav: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        padding: 20,
+        backgroundColor: '#fff',
+    },
+});
+
+export default Dashboard;

@@ -7,91 +7,85 @@ import CreateUser from './createuser';
 import UrlChecker from './urlchecker'; // Import the UrlChecker component
 import Settings from './settings'; // Import the Settings component
 import Newsfeed from './newsfeed'; // Import the Newsfeed component
+import Account from './account';  // Import the Account component
 import { Platform } from 'react-native';
+import { firebase } from './firebase'; // Import Firebase config (assuming it is set up)
 
 const isWeb = Platform.OS === 'web';
 
 const App = () => {
     const [currentScreen, setCurrentScreen] = useState('SplashScreen');
+    const [userData, setUserData] = useState(null); // Hold the logged-in user's data
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            console.log("Navigating to LoginPage");
             setCurrentScreen('LoginPage');
         }, 2000); // Splash screen duration
-        return () => clearTimeout(timer); // Clear the timer if the component unmounts
+        return () => clearTimeout(timer);
     }, []);
+
+    const handleLogin = (user) => {
+        setUserData(user); // Save logged-in user data
+        setCurrentScreen('Dashboard');
+    };
+
+    const handleLogout = () => {
+        setUserData(null); // Clear user data on logout
+        setCurrentScreen('LoginPage');
+    };
 
     const renderScreen = () => {
         switch (currentScreen) {
             case 'LoginPage':
-                console.log("Rendering LoginPage");
                 return (
                     <LoginPage
-                        onLogin={() => {
-                            console.log("Login successful, navigating to Dashboard");
-                            setCurrentScreen('Dashboard');
+                        onLogin={(user) => {
+                            handleLogin(user); // Call the login handler with user data
                         }}
-                        onCreateUser={() => {
-                            console.log("Navigating to CreateUser");
-                            setCurrentScreen('CreateUser');
-                        }}
+                        onCreateUser={() => setCurrentScreen('CreateUser')}
                     />
                 );
             case 'Dashboard':
-                console.log("Rendering Dashboard");
                 return (
                     <Dashboard
                         onNavigate={(screen) => {
                             if (screen === 'Settings') {
-                                console.log("Navigating to Settings");
                                 setCurrentScreen('Settings');
                             } else if (screen === 'UrlChecker') {
-                                console.log("Navigating to UrlChecker");
                                 setCurrentScreen('UrlChecker');
                             } else if (screen === 'Newsfeed') {
-                                console.log("Navigating to Newsfeed");
                                 setCurrentScreen('Newsfeed');
                             }
                         }}
                     />
                 );
             case 'CreateUser':
-                console.log("Rendering CreateUser");
                 return (
                     <CreateUser
-                        onAccountCreated={() => {
-                            console.log("Account created, navigating to LoginPage");
-                            setCurrentScreen('LoginPage');
-                        }}
-                        onAlreadyHaveAccount={() => {
-                            console.log("Navigating back to LoginPage");
-                            setCurrentScreen('LoginPage');
-                        }}
+                        onAccountCreated={() => setCurrentScreen('LoginPage')}
+                        onAlreadyHaveAccount={() => setCurrentScreen('LoginPage')}
                     />
                 );
             case 'UrlChecker':
-                console.log("Rendering UrlChecker");
                 return <UrlChecker />;
             case 'Settings':
-                console.log("Rendering Settings");
                 return (
                     <Settings
-                        onNavigateBack={() => {
-                            console.log("Navigating back to Dashboard");
-                            setCurrentScreen('Dashboard');
-                        }}
-                        onLogout={() => {
-                            console.log("Logging out, navigating to LoginPage");
-                            setCurrentScreen('LoginPage'); // Log out and go back to the login screen
-                        }}
+                        onNavigateBack={() => setCurrentScreen('Dashboard')}
+                        onNavigateToAccount={() => setCurrentScreen('Account')} // Navigate to Account screen
+                        onLogout={handleLogout} // Handle logout
+                    />
+                );
+            case 'Account':
+                return (
+                    <Account
+                        userData={userData} // Pass user data to Account component
+                        onNavigateBack={() => setCurrentScreen('Settings')}
                     />
                 );
             case 'Newsfeed':
-                console.log("Rendering Newsfeed");
-                return <Newsfeed />; // Render the Newsfeed component
+                return <Newsfeed />;
             default:
-                console.log("Rendering SplashScreen");
                 return <SplashScreen />;
         }
     };

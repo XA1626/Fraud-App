@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, doc, getDoc } from "firebase/firestore";  // Firestore for storing user profiles
+import { getFirestore, doc, getDoc, onSnapshot } from "firebase/firestore";  // Firestore for storing user profiles
 import { getAuth, onAuthStateChanged } from "firebase/auth";  // Firebase Auth for user profiles
 
 // Firebase configuration
@@ -18,19 +18,35 @@ const app = initializeApp(firebaseConfig);
 const firestore = getFirestore(app);  // Firestore initialization
 const auth = getAuth(app);  // Firebase Auth initialization
 
-// Function to fetch user profile from Firebase Auth and Firestore
-export const fetchUserProfile = (setUserData) => {
-  onAuthStateChanged(auth, async (user) => {
-    if (user) {
-      const userDocRef = doc(firestore, "User", user.uid);  // Correct path to Firestore
-      const userDocSnap = await getDoc(userDocRef);
+// Function to fetch user profile from Firestore (non-real-time)
+export const fetchUserProfile = async (uid) => {
+  const userDocRef = doc(firestore, "User", uid);  // Fetch document with uid as document ID
+  const userDocSnap = await getDoc(userDocRef);
 
-      if (userDocSnap.exists()) {
-        const userData = userDocSnap.data();  // Get Firestore data like username
-        setUserData(userData.username);  // Set the username from Firestore
-      }
+  if (userDocSnap.exists()) {
+    return userDocSnap.data();  // Return Firestore data (e.g., username, email)
+  } else {
+    throw new Error("User not found in Firestore!");
+  }
+};
+
+// Function to fetch user profile from Firestore in real-time
+export const fetchUserProfileRealTime = (uid, callback) => {
+  const userDocRef = doc(firestore, "User", uid);  // Fetch document with uid as document ID
+
+  // Real-time listener using onSnapshot
+  const unsubscribe = onSnapshot(userDocRef, (docSnap) => {
+    if (docSnap.exists()) {
+      callback(docSnap.data());  // Pass Firestore data (e.g., username, email) to the callback
+    } else {
+      console.error("User not found in Firestore!");
     }
+  }, (error) => {
+    console.error("Error fetching real-time updates:", error);
   });
+
+  // Return the unsubscribe function to stop listening when not needed
+  return unsubscribe;
 };
 
 export { firestore, auth };

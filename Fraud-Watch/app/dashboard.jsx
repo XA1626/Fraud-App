@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollView, View, Text, StyleSheet, Image, TouchableOpacity, TextInput } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { FontAwesome } from '@expo/vector-icons'; 
-import { fetchUserProfile } from './firebase'; // Import Firebase function to fetch user profile
+import { FontAwesome } from '@expo/vector-icons';
 
-const Dashboard = ({ onNavigate }) => {
-    const [userName, setUserName] = useState(''); // State to hold the fetched username
+const Dashboard = ({ userData, onNavigate }) => { 
     const [searchText, setSearchText] = useState('');
     const [filteredFeatures, setFilteredFeatures] = useState(['URL Checker', 'Cybersecurity News', 'Quiz', 'Gmail Integration']);
 
-    // Fetch user's profile from Firestore when the component mounts
     useEffect(() => {
-        fetchUserProfile(setUserName); // Calls Firebase function to get the user's name
-    }, []);
+        // Optional: Add any effect to handle changes in userData if needed
+    }, [userData]);
 
     // Function to handle searching among features
     const handleSearch = (text) => {
@@ -24,9 +21,7 @@ const Dashboard = ({ onNavigate }) => {
 
     return (
         <View style={styles.container}>
-            {/* Wrapping content in ScrollView */}
             <ScrollView contentContainerStyle={styles.scrollContainer}>
-                {/* Header with Gradient */}
                 <LinearGradient
                     colors={['#7130f1', '#e66f26']}
                     start={{ x: 0, y: 0 }}
@@ -37,12 +32,11 @@ const Dashboard = ({ onNavigate }) => {
                         <Image source={require('../assets/logo.png')} style={styles.logo} />
                         <View style={styles.headerTextContainer}>
                             <Text style={styles.title}>Fraud Watch</Text>
-                            <Text style={styles.welcomeText}>Welcome, {userName || 'User'}!</Text> {/* Display user's name */}
+                            <Text style={styles.welcomeText}>Welcome, {userData?.username || 'User'}!</Text> 
                         </View>
                     </View>
                 </LinearGradient>
 
-                {/* Search Bar */}
                 <View style={styles.searchContainer}>
                     <FontAwesome name="search" size={20} color="#333" />
                     <TextInput
@@ -53,7 +47,6 @@ const Dashboard = ({ onNavigate }) => {
                     />
                 </View>
 
-                {/* Features */}
                 {filteredFeatures.includes('URL Checker') && (
                     <TouchableOpacity style={styles.featureButton} onPress={() => onNavigate('UrlChecker')}>
                         <Image source={require('../assets/url-checker.png')} style={styles.featureImage} />
@@ -82,17 +75,15 @@ const Dashboard = ({ onNavigate }) => {
                     </TouchableOpacity>
                 )}
 
-                {/* Divider Line */}
                 <View style={styles.divider} />
             </ScrollView>
 
-            {/* Bottom Navigation Icons */}
             <View style={styles.bottomNav}>
                 <TouchableOpacity onPress={() => onNavigate('Dashboard')}>
                     <FontAwesome name="home" size={24} color="#000" />
                 </TouchableOpacity>
                 <FontAwesome name="comments" size={24} color="#000" />
-                <TouchableOpacity onPress={() => onNavigate('Settings')}> {/* Navigate to Settings page */}
+                <TouchableOpacity onPress={() => onNavigate('Settings')}>
                     <FontAwesome name="cog" size={24} color="#000" />
                 </TouchableOpacity>
             </View>
@@ -100,7 +91,6 @@ const Dashboard = ({ onNavigate }) => {
     );
 };
 
-// Styles for the dashboard components
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -108,7 +98,7 @@ const styles = StyleSheet.create({
         padding: 16,
     },
     scrollContainer: {
-        paddingBottom: 20, // Add padding to prevent content from being cut off
+        paddingBottom: 20,
     },
     header: {
         height: 120,

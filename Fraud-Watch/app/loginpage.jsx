@@ -29,7 +29,7 @@ const LoginPage = ({ onLogin, onCreateUser }) => {
             setErrorMessage('Login successful!');
             setTimeout(() => {
                 setErrorMessage('');
-                onLogin();
+                onLogin(user);
             }, 1000);
         } catch (error) {
             setLoginAttempts(prev => prev + 1);

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 
-const Settings = ({ onNavigateBack, onLogout }) => {
+const Settings = ({ onNavigateBack, onNavigateToAccount, onLogout }) => {
   const [searchText, setSearchText] = useState('');
 
   // List of settings
@@ -40,7 +40,15 @@ const Settings = ({ onNavigateBack, onLogout }) => {
 
       {/* Dynamically rendered settings based on search */}
       {filteredSettings.map((setting, index) => (
-        <TouchableOpacity key={index} style={styles.settingItem}>
+        <TouchableOpacity 
+          key={index} 
+          style={styles.settingItem} 
+          onPress={() => {
+            if (setting.name === 'Account') {
+              onNavigateToAccount(); // Navigate to Account screen when "Account" is clicked
+            }
+          }}
+        >
           <FontAwesome name={setting.icon} size={24} color="black" />
           <Text style={styles.settingText}>{setting.name}</Text>
         </TouchableOpacity>

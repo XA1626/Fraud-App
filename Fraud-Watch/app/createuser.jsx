@@ -1,45 +1,71 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, TextInput, Button, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { doc, setDoc } from 'firebase/firestore';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth, firestore } from './firebase'; // Ensure you import Firebase Auth and Firestore
+import { firestore, auth } from './firebase';  // Import Firestore and Firebase Authentication
 
-const CreateAccount = ({ navigation }) => {
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
+const CreateUser = ({ onAccountCreated, onAlreadyHaveAccount }) => {
     const [email, setEmail] = useState('');
+    const [firstName, setFirstName] = useState('');  // Added first name state
+    const [lastName, setLastName] = useState('');    // Added last name state
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [emailError, setEmailError] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+    const [accountExistsError, setAccountExistsError] = useState('');
 
-    // Function to handle account creation
-    const handleCreateAccount = async () => {
-        if (password !== confirmPassword) {
-            alert('Passwords do not match');
-            return;
+    // Email validation
+    const validateEmail = (text) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(text)) {
+            setEmailError('Please enter a valid email address.');
+        } else {
+            setEmailError('');
+            setAccountExistsError('');  // Clear account exists error when a valid email is entered
         }
+        setEmail(text);
+    };
 
-        try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
+    // Password validation
+    const validatePassword = (text) => {
+        const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+        if (!passwordRegex.test(text)) {
+            setPasswordError('Password must be 8+ characters long, contain an uppercase letter, a symbol, and a number.');
+        } else {
+            setPasswordError('');
+        }
+        setPassword(text);
+    };
 
-            // Save additional user data to Firestore
-            await firestore.collection('User').doc(user.uid).set({
-                firstName,
-                lastName,
-                email
-            });
+    const handleCreateAccount = async () => {
+        if (!emailError && !passwordError && password === confirmPassword) {
+            try {
+                // Create a new user with Firebase Authentication
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
 
-            alert('Account created successfully');
-            navigation.navigate('Login'); // Navigate back to login after successful creation
-        } catch (error) {
-            alert(error.message);
+                // Save user data to Firestore, using `uid` as the document ID
+                const userDocRef = doc(firestore, 'User', user.uid);  // Use `uid` as document ID
+                await setDoc(userDocRef, {
+                    uid: user.uid,  // Save the `uid` field (optional, since it's the document ID)
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    createdAt: new Date(),
+                });
+
+                onAccountCreated(user);  // Perform any additional steps (e.g., navigate to dashboard)
+            } catch (error) {
+                setAccountExistsError(error.message);  // Display error if something goes wrong
+            }
         }
     };
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Create Account</Text>
-
-            {/* First Name */}
+            <Text style={styles.title}>Create your account</Text>
+            
+            {/* First Name Field */}
             <TextInput
                 style={styles.input}
                 placeholder="First Name"
@@ -47,7 +73,7 @@ const CreateAccount = ({ navigation }) => {
                 onChangeText={setFirstName}
             />
 
-            {/* Last Name */}
+            {/* Last Name Field */}
             <TextInput
                 style={styles.input}
                 placeholder="Last Name"
@@ -55,41 +81,46 @@ const CreateAccount = ({ navigation }) => {
                 onChangeText={setLastName}
             />
 
-            {/* Email */}
+            {/* Email Field */}
             <TextInput
                 style={styles.input}
                 placeholder="Email"
                 value={email}
-                onChangeText={setEmail}
-                keyboardType="email-address"
+                onChangeText={validateEmail}
             />
+            {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
+            {accountExistsError ? <Text style={styles.errorText}>{accountExistsError}</Text> : null}
 
-            {/* Password */}
+            {/* Password Field */}
             <TextInput
                 style={styles.input}
-                placeholder="Enter Password"
+                placeholder="Password"
                 value={password}
-                onChangeText={setPassword}
+                onChangeText={validatePassword}
                 secureTextEntry
             />
+            {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
 
-            {/* Re-enter Password */}
+            {/* Confirm Password Field */}
             <TextInput
                 style={styles.input}
-                placeholder="Re-enter Password"
+                placeholder="Confirm password"
                 value={confirmPassword}
                 onChangeText={setConfirmPassword}
                 secureTextEntry
             />
 
             {/* Create Account Button */}
-            <TouchableOpacity style={styles.button} onPress={handleCreateAccount}>
-                <Text style={styles.buttonText}>Create Account</Text>
-            </TouchableOpacity>
+            <Button
+                title="Create your account"
+                onPress={handleCreateAccount}
+                color="#6A0DAD"
+                disabled={!!emailError || !!passwordError || !email || !firstName || !lastName || !password || password !== confirmPassword}
+            />
 
-            {/* Already have account? */}
-            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                <Text style={styles.loginLink}>Already have an account?</Text>
+            {/* Already Have Account Link */}
+            <TouchableOpacity onPress={onAlreadyHaveAccount}>
+                <Text style={styles.alreadyAccountText}>Already have an account?</Text>
             </TouchableOpacity>
         </View>
     );
@@ -98,39 +129,33 @@ const CreateAccount = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 20,
         justifyContent: 'center',
+        alignItems: 'center',
+        padding: 16,
         backgroundColor: '#fff',
     },
     title: {
         fontSize: 24,
         fontWeight: 'bold',
-        textAlign: 'center',
-        marginBottom: 20,
+        marginBottom: 24,
     },
     input: {
+        width: '100%',
+        padding: 10,
+        marginBottom: 12,
         borderWidth: 1,
         borderColor: '#ccc',
         borderRadius: 5,
-        padding: 10,
-        marginBottom: 15,
     },
-    button: {
-        backgroundColor: '#6A0DAD',
-        paddingVertical: 15,
-        borderRadius: 5,
-        alignItems: 'center',
+    errorText: {
+        color: 'red',
+        marginBottom: 10,
     },
-    buttonText: {
-        color: '#fff',
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-    loginLink: {
-        marginTop: 20,
-        color: '#6A0DAD',
-        textAlign: 'center',
+    alreadyAccountText: {
+        color: 'blue',
+        textDecorationLine: 'underline',
+        marginTop: 16,
     },
 });
 
-export default CreateAccount;
+export default CreateUser;

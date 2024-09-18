@@ -5,7 +5,6 @@ import { updateEmail } from 'firebase/auth';
 import { firestore, auth, storage } from './firebase'; // Added Firebase storage
 import { FontAwesome } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker'; // For image uploading
-import * as ImageManipulator from 'expo-image-manipulator'; // For image cropping and manipulation
 import { LinearGradient } from 'expo-linear-gradient'; // For gradient line
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'; // Firebase Storage functions
 
@@ -21,38 +20,23 @@ const Account = ({ onNavigateBack, userData }) => {
     try {
       let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [1, 1], // Ensure square aspect for a circular profile picture
-        quality: 1,
+        allowsEditing: true, // Let the user edit the image before selection
+        aspect: [1, 1], // Square aspect ratio
+        quality: 1, // Full quality image
       });
   
-      // Log the result to ensure it has the correct structure
-      console.log("Image Picker Result:", result);
-  
-      if (!result.canceled && result.uri) {
-        // Pass the `uri` to the crop function
-        const croppedImage = await cropImage(result.uri);
-        uploadImage(croppedImage.uri); // Upload the cropped image
+      // Ensure the result is valid before proceeding
+      if (!result.canceled && result.assets && result.assets.length > 0) {
+        const selectedImageUri = result.assets[0].uri;
+        console.log("Selected Image URI: ", selectedImageUri); // Log the URI for debugging
+        uploadImage(selectedImageUri); // Proceed with the upload
       } else {
-        console.error('Error: No image selected or image picker returned unexpected format');
+        console.error("No image selected or image picker returned an unexpected format.");
+        Alert.alert("Error", "No image selected or image picker returned an unexpected format.");
       }
     } catch (error) {
       console.error('Error selecting image:', error);
-    }
-  };
-  
-  // Crop image function
-  const cropImage = async (uri) => {
-    try {
-      const croppedImage = await ImageManipulator.manipulateAsync(
-        uri,
-        [{ resize: { width: 300, height: 300 } }],
-        { compress: 1, format: ImageManipulator.SaveFormat.JPEG }
-      );
-      return croppedImage;
-    } catch (error) {
-      console.error("Error cropping image:", error);
-      throw new Error("Failed to crop image");
+      Alert.alert("Error", "Something went wrong while selecting the image.");
     }
   };
   
@@ -83,30 +67,32 @@ const Account = ({ onNavigateBack, userData }) => {
       setUploading(false); // Reset uploading state
     }
   };
+  
+// Function to handle updating Firestore fields
+const handleUpdateProfile = async () => {
+  if (uploading) {
+    Alert.alert('Please wait until the image upload finishes.');
+    return;
+  }
 
-  // Function to handle updating Firestore fields
-  const handleUpdateProfile = async () => {
-    if (uploading) {
-      Alert.alert('Please wait until the image upload finishes.');
-      return;
-    }
+  try {
+    const userDocRef = doc(firestore, 'User', userData.uid);
 
-    try {
-      const userDocRef = doc(firestore, 'User', userData.uid);
+    await updateDoc(userDocRef, {
+      firstName: firstName,
+      lastName: lastName,
+      dateOfBirth: dateOfBirth,
+      profilePic: profilePic, // Update profile picture if available
+    });
 
-      await updateDoc(userDocRef, {
-        firstName: firstName,
-        lastName: lastName,
-        dateOfBirth: dateOfBirth,
-        profilePic: profilePic, // Update profile picture if available
-      });
+    Alert.alert('Profile Updated', 'Profile saved successfully'); // Show success message
+  } catch (error) {
+    console.error('Error updating profile: ', error);
+    Alert.alert('Error', 'Failed to update profile');
+  }
+};
 
-      Alert.alert('Profile updated successfully');
-    } catch (error) {
-      console.error('Error updating profile: ', error);
-      Alert.alert('Failed to update profile');
-    }
-  };
+
 
   // Function to handle email change
   const handleChangeEmail = async () => {

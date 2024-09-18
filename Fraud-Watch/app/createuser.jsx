@@ -1,133 +1,95 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
-import { updateDoc, doc } from 'firebase/firestore';
-import { updateEmail } from 'firebase/auth';
-import { firestore, auth } from './firebase'; 
-import { FontAwesome } from '@expo/vector-icons'; 
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth, firestore } from './firebase'; // Ensure you import Firebase Auth and Firestore
 
-const Account = ({ onNavigateBack, userData }) => {
-    const [firstName, setFirstName] = useState(userData?.firstName || '');
-    const [lastName, setLastName] = useState(userData?.lastName || '');
-    const [dateOfBirth, setDateOfBirth] = useState(userData?.dateOfBirth || '');
-    const [email, setEmail] = useState(userData?.email || '');
-    const [profileImage, setProfileImage] = useState(userData?.profileImage || null);
+const CreateAccount = ({ navigation }) => {
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
 
-    // Handle image picking
-    const pickImage = async () => {
-        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if (status !== 'granted') {
-            alert('Camera roll permissions are required to change profile picture.');
+    // Function to handle account creation
+    const handleCreateAccount = async () => {
+        if (password !== confirmPassword) {
+            alert('Passwords do not match');
             return;
         }
 
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            aspect: [1, 1], // Square image
-            quality: 1,
-        });
-
-        if (!result.canceled) {
-            setProfileImage(result.uri); // Set selected image
-        }
-    };
-
-    // Save profile data to Firestore
-    const handleSaveProfile = async () => {
         try {
-            const userDocRef = doc(firestore, 'User', userData.uid);
-            
-            await updateDoc(userDocRef, {
-                firstName: firstName,
-                lastName: lastName,
-                dateOfBirth: dateOfBirth,
-                email: email,
-                profileImage: profileImage, // Save profile image URL
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+
+            // Save additional user data to Firestore
+            await firestore.collection('User').doc(user.uid).set({
+                firstName,
+                lastName,
+                email
             });
 
-            // Update the email in Firebase Auth as well
-            const user = auth.currentUser;
-            if (user && user.email !== email) {
-                await updateEmail(user, email);
-            }
-
-            alert('Profile updated successfully!');
+            alert('Account created successfully');
+            navigation.navigate('Login'); // Navigate back to login after successful creation
         } catch (error) {
-            console.error('Error updating profile: ', error);
-            alert('Failed to update profile.');
+            alert(error.message);
         }
     };
 
     return (
         <View style={styles.container}>
-            {/* Back button */}
-            <TouchableOpacity onPress={onNavigateBack} style={styles.backButton}>
-                <FontAwesome name="arrow-left" size={24} color="black" />
-            </TouchableOpacity>
-
-            {/* Profile Image */}
-            <TouchableOpacity onPress={pickImage}>
-                {profileImage ? (
-                    <Image source={{ uri: profileImage }} style={styles.profilePicture} />
-                ) : (
-                    <FontAwesome name="user-circle" size={100} color="gray" style={styles.profileIcon} />
-                )}
-            </TouchableOpacity>
-
-            {/* Divider Line */}
-            <View style={styles.dividerLine}></View>
-
-            <Text style={styles.title}>Account Details</Text>
+            <Text style={styles.title}>Create Account</Text>
 
             {/* First Name */}
-            <View style={styles.inputContainer}>
-                <Text>First Name</Text>
-                <TextInput
-                    style={styles.input}
-                    value={firstName}
-                    onChangeText={setFirstName}
-                />
-                <FontAwesome name="pencil" size={18} color="black" />
-            </View>
+            <TextInput
+                style={styles.input}
+                placeholder="First Name"
+                value={firstName}
+                onChangeText={setFirstName}
+            />
 
             {/* Last Name */}
-            <View style={styles.inputContainer}>
-                <Text>Last Name</Text>
-                <TextInput
-                    style={styles.input}
-                    value={lastName}
-                    onChangeText={setLastName}
-                />
-                <FontAwesome name="pencil" size={18} color="black" />
-            </View>
-
-            {/* Date of Birth */}
-            <View style={styles.inputContainer}>
-                <Text>Date of Birth</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="YYYY-MM-DD"
-                    value={dateOfBirth}
-                    onChangeText={setDateOfBirth}
-                />
-                <FontAwesome name="pencil" size={18} color="black" />
-            </View>
+            <TextInput
+                style={styles.input}
+                placeholder="Last Name"
+                value={lastName}
+                onChangeText={setLastName}
+            />
 
             {/* Email */}
-            <View style={styles.inputContainer}>
-                <Text>Email</Text>
-                <TextInput
-                    style={styles.input}
-                    value={email}
-                    onChangeText={setEmail}
-                />
-                <FontAwesome name="pencil" size={18} color="black" />
-            </View>
+            <TextInput
+                style={styles.input}
+                placeholder="Email"
+                value={email}
+                onChangeText={setEmail}
+                keyboardType="email-address"
+            />
 
-            {/* Save Button */}
-            <TouchableOpacity onPress={handleSaveProfile} style={styles.saveButton}>
-                <Text style={styles.saveButtonText}>Save Profile</Text>
+            {/* Password */}
+            <TextInput
+                style={styles.input}
+                placeholder="Enter Password"
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry
+            />
+
+            {/* Re-enter Password */}
+            <TextInput
+                style={styles.input}
+                placeholder="Re-enter Password"
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+                secureTextEntry
+            />
+
+            {/* Create Account Button */}
+            <TouchableOpacity style={styles.button} onPress={handleCreateAccount}>
+                <Text style={styles.buttonText}>Create Account</Text>
+            </TouchableOpacity>
+
+            {/* Already have account? */}
+            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                <Text style={styles.loginLink}>Already have an account?</Text>
             </TouchableOpacity>
         </View>
     );
@@ -137,29 +99,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
+        justifyContent: 'center',
         backgroundColor: '#fff',
-    },
-    backButton: {
-        position: 'absolute',
-        top: 40,
-        left: 20,
-    },
-    profileIcon: {
-        alignSelf: 'center',
-        marginTop: 40,
-    },
-    profilePicture: {
-        width: 100,
-        height: 100,
-        borderRadius: 50,
-        alignSelf: 'center',
-        marginTop: 40,
-    },
-    dividerLine: {
-        height: 4,
-        width: '100%',
-        backgroundColor: 'linear-gradient(to right, #7130f1, #e66f26)',
-        marginVertical: 20,
     },
     title: {
         fontSize: 24,
@@ -167,31 +108,29 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginBottom: 20,
     },
-    inputContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        marginBottom: 20,
-    },
     input: {
         borderWidth: 1,
         borderColor: '#ccc',
         borderRadius: 5,
         padding: 10,
-        flex: 1,
-        marginRight: 10,
+        marginBottom: 15,
     },
-    saveButton: {
+    button: {
         backgroundColor: '#6A0DAD',
-        padding: 15,
-        borderRadius: 10,
+        paddingVertical: 15,
+        borderRadius: 5,
         alignItems: 'center',
     },
-    saveButtonText: {
+    buttonText: {
         color: '#fff',
         fontSize: 16,
         fontWeight: 'bold',
     },
+    loginLink: {
+        marginTop: 20,
+        color: '#6A0DAD',
+        textAlign: 'center',
+    },
 });
 
-export default Account;
+export default CreateAccount;

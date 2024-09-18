@@ -32,7 +32,7 @@ const Dashboard = ({ userData, onNavigate }) => {
                         <Image source={require('../assets/logo.png')} style={styles.logo} />
                         <View style={styles.headerTextContainer}>
                             <Text style={styles.title}>Fraud Watch</Text>
-                            <Text style={styles.welcomeText}>Welcome, {userData?.username || 'User'}!</Text> 
+                            <Text style={styles.welcomeText}>Welcome, {userData?.firstName || 'User'}!</Text> 
                         </View>
                     </View>
                 </LinearGradient>

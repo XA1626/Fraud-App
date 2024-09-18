@@ -1,9 +1,9 @@
-
 import React, { useState } from 'react';
 import { View, TextInput, Button, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { collection, addDoc } from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { firestore, auth } from './firebase';  // Import Firestore and Firebase Authentication
+
 const CreateUser = ({ onAccountCreated, onAlreadyHaveAccount }) => {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');  // Added username state
@@ -12,6 +12,7 @@ const CreateUser = ({ onAccountCreated, onAlreadyHaveAccount }) => {
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [accountExistsError, setAccountExistsError] = useState('');
+
     // Email validation
     const validateEmail = (text) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -23,6 +24,7 @@ const CreateUser = ({ onAccountCreated, onAlreadyHaveAccount }) => {
         }
         setEmail(text);
     };
+
     // Password validation
     const validatePassword = (text) => {
         const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/;
@@ -33,25 +35,30 @@ const CreateUser = ({ onAccountCreated, onAlreadyHaveAccount }) => {
         }
         setPassword(text);
     };
+
     const handleCreateAccount = async () => {
         if (!emailError && !passwordError && password === confirmPassword) {
             try {
                 // Create a new user with Firebase Authentication
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
-                // Save user data to Firestore
-                await addDoc(collection(firestore, 'User'), {
-                    uid: user.uid,
+
+                // Save user data to Firestore, using `uid` as the document ID
+                const userDocRef = doc(firestore, 'User', user.uid);  // Use `uid` as document ID
+                await setDoc(userDocRef, {
+                    uid: user.uid,  // Save the `uid` field (optional, since it's the document ID)
                     username: username,
                     email: email,
                     createdAt: new Date(),
                 });
+
                 onAccountCreated(user);  // Perform any additional steps (e.g., navigate to dashboard)
             } catch (error) {
                 setAccountExistsError(error.message);  // Display error if something goes wrong
             }
         }
     };
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Create your account</Text>
@@ -96,6 +103,7 @@ const CreateUser = ({ onAccountCreated, onAlreadyHaveAccount }) => {
         </View>
     );
 };
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -127,6 +135,5 @@ const styles = StyleSheet.create({
         marginTop: 16,
     },
 });
+
 export default CreateUser;
-
-

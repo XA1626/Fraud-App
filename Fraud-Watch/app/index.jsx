@@ -1,72 +1,113 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, StatusBar } from 'react-native';
-import { Link } from 'expo-router';
+import { View, StyleSheet, Text, StatusBar, Platform } from 'react-native';
 import SplashScreen from './splashscreen';
 import LoginPage from './loginpage';
 import Dashboard from './dashboard';
 import CreateUser from './createuser';
 import UrlChecker from './urlchecker'; // Import the UrlChecker component
+import Settings from './settings'; // Import the Settings component
+import Newsfeed from './newsfeed'; // Import the Newsfeed component
+import Account from './account';  // Import the Account component
+import { firebase } from './firebase'; // Import Firebase config (assuming it is set up)
+import { fetchUserProfile } from './firebase'; // Import the function to fetch profile
+
+
+const isWeb = Platform.OS === 'web';
 
 const App = () => {
     const [currentScreen, setCurrentScreen] = useState('SplashScreen');
+    const [userData, setUserData] = useState(null); // Hold the logged-in user's data
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            console.log("Navigating to LoginPage");
             setCurrentScreen('LoginPage');
         }, 2000); // Splash screen duration
-        return () => clearTimeout(timer); // Clear the timer if the component unmounts
+        return () => clearTimeout(timer);
     }, []);
 
+    // Updated handleLogin to integrate fetchUserProfile
+    const handleLogin = async (user) => {
+        if (user && user.uid) { // Ensure user is not undefined
+            try {
+                const userProfile = await fetchUserProfile(user.uid); // Fetch profile from Firestore
+    
+                if (!userProfile) {
+                    console.error('Error: User profile not found in Firestore');
+                    return; // Stop if no profile found
+                }
+    
+                const completeUser = { ...user, ...userProfile }; // Merge Firebase user with Firestore profile
+                setUserData(completeUser); // Save complete user data (email + username)
+                setCurrentScreen('Dashboard'); // Open dashboard
+            } catch (error) {
+                console.error("Error fetching user profile: ", error);
+            }
+        } else {
+            console.error("Invalid user data");
+        }
+    };
+
+    // Function to handle logout
+    const handleLogout = () => {
+        setUserData(null); // Clear user data on logout
+        setCurrentScreen('LoginPage');
+    };
+
+    // Function to render the current screen based on the app state
     const renderScreen = () => {
         switch (currentScreen) {
             case 'LoginPage':
-                console.log("Rendering LoginPage");
                 return (
                     <LoginPage
-                        onLogin={() => {
-                            console.log("Login successful, navigating to Dashboard");
-                            setCurrentScreen('Dashboard');
+                        onLogin={(user) => {
+                            handleLogin(user); // Pass user data to login handler
                         }}
-                        onCreateUser={() => {
-                            console.log("Navigating to CreateUser");
-                            setCurrentScreen('CreateUser');
-                        }}
+                        onCreateUser={() => setCurrentScreen('CreateUser')}
                     />
                 );
             case 'Dashboard':
-                console.log("Rendering Dashboard");
                 return (
-                    <View style={styles.container}>
-                        <Text style={styles.title}>🎉 Fraud Watch! 🎉</Text>
-                        <StatusBar style="auto" />
-                        <TouchableOpacity style={styles.button}>
-                            <Link href="/dashboard" style={styles.buttonText}>💥 Dashboard 💥</Link>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.button}>
-                            <Link href="/newsfeed" style={styles.buttonText}>🔥 Newsfeed 🔥</Link>
-                        </TouchableOpacity>
-                    </View>
-                );
-            case 'CreateUser':
-                console.log("Rendering CreateUser");
-                return (
-                    <CreateUser
-                        onAccountCreated={() => {
-                            console.log("Account created, navigating to LoginPage");
-                            setCurrentScreen('LoginPage');
-                        }}
-                        onAlreadyHaveAccount={() => {
-                            console.log("Navigating back to LoginPage");
-                            setCurrentScreen('LoginPage');
+                    <Dashboard
+                        userData={userData} // Pass user data to Dashboard
+                        onNavigate={(screen) => {
+                            if (screen === 'Settings') {
+                                setCurrentScreen('Settings');
+                            } else if (screen === 'UrlChecker') {
+                                setCurrentScreen('UrlChecker');
+                            } else if (screen === 'Newsfeed') {
+                                setCurrentScreen('Newsfeed');
+                            }
                         }}
                     />
                 );
+            case 'CreateUser':
+                return (
+                    <CreateUser
+                        onAccountCreated={() => setCurrentScreen('LoginPage')}
+                        onAlreadyHaveAccount={() => setCurrentScreen('LoginPage')}
+                    />
+                );
             case 'UrlChecker':
-                console.log("Rendering UrlChecker");
                 return <UrlChecker />;
+            case 'Settings':
+                return (
+                    <Settings
+                        userData={userData} // Pass user data to Settings
+                        onNavigateBack={() => setCurrentScreen('Dashboard')}
+                        onNavigateToAccount={() => setCurrentScreen('Account')} // Navigate to Account screen
+                        onLogout={handleLogout} // Handle logout
+                    />
+                );
+            case 'Account':
+                return (
+                    <Account
+                        userData={userData} // Pass user data to Account
+                        onNavigateBack={() => setCurrentScreen('Settings')}
+                    />
+                );  
+            case 'Newsfeed':
+                return <Newsfeed />;
             default:
-                console.log("Rendering SplashScreen");
                 return <SplashScreen />;
         }
     };
@@ -81,13 +122,10 @@ const App = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#ffccf9', // Vibrant pink background
+        backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
         padding: 20,
-        borderWidth: 5,
-        borderColor: '#ff66b2', // Bright pink border
-        borderRadius: 20,
     },
     title: {
         fontSize: 36,

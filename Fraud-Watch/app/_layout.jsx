@@ -1,17 +1,21 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Slot, Stack } from 'expo-router';
 
 const RootLayout = () => {
     return (
-        <Stack>
-            <Stack.Screen name="index" options={{ headerShown:false }} />
-            {/* Ensure other Stack.Screen entries are here if needed */}
-        </Stack>
-    )
-}
-
-export default RootLayout;
+        <View style={styles.container}>
+            <Stack>
+                <Stack.Screen name="index" options={{ headerShown: false }} />
+            </Stack>
+        </View>
+    );
+};
 
 const styles = StyleSheet.create({
-    // Add any global styles you might need for the layout
+    container: {
+        flex: 1,
+        backgroundColor: 'transparent', // Set to transparent or any default color you prefer
+    },
 });
+
+export default RootLayout;

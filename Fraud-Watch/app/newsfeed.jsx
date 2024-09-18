@@ -25,6 +25,7 @@ const Newsfeed = () => {
       console.error(error);
       setLoading(false);
     }
+  
   };
 
   const handleSearch = () => {

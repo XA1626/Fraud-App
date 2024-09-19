@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, FlatList, ActivityIndicator, TouchableOpacity, Linking, TextInput, Button } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, Image, FlatList, ActivityIndicator, TouchableOpacity, Linking, TextInput } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
 
-const Newsfeed = () => {
+const Newsfeed = ({ onNavigateBack }) => {
   const [news, setNews] = useState([]);
   const [filteredNews, setFilteredNews] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -41,90 +42,124 @@ const Newsfeed = () => {
   };
 
   const renderItem = ({ item }) => (
-    <TouchableOpacity onPress={() => handlePress(item.url)} style={styles.newsItem}>
-      <Image source={{ uri: item.urlToImage }} style={styles.thumbnail} />
+    <TouchableOpacity onPress={() => handlePress(item.url)} style={styles.featureButton}>
+      <Image source={{ uri: item.urlToImage }} style={styles.featureImage} />
       <View style={styles.textContainer}>
-        <Text style={styles.title}>{item.title}</Text>
+        <Text style={styles.title} numberOfLines={2}>{item.title}</Text>
       </View>
     </TouchableOpacity>
   );
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Cybersecurity News</Text>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={onNavigateBack} style={styles.backButton}>
+          <Text style={styles.backButtonText}>Back</Text>
+        </TouchableOpacity>
+        <Text style={styles.headerText}>Cybersecurity News</Text>
+      </View>
+      
       <View style={styles.searchContainer}>
+        <FontAwesome name="search" size={20} color="#333" />
         <TextInput
           style={styles.searchInput}
-          placeholder="Search..."
+          placeholder="Search for news..."
           value={searchQuery}
           onChangeText={setSearchQuery}
+          returnKeyType="search"
+          onSubmitEditing={handleSearch}
         />
-        <Button title="Search" onPress={handleSearch} color="#ff66b2" />
       </View>
+
       {loading ? (
-        <ActivityIndicator size="large" color="#ff66b2" />
+        <ActivityIndicator size="large" color="#007AFF" />
       ) : (
-        <FlatList
-          data={filteredNews}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.url}
-        />
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <FlatList
+            data={filteredNews}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.url}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.flatListContent}
+          />
+        </ScrollView>
       )}
     </View>
   );
 };
 
-export default Newsfeed;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffe6f0',
-    padding: 20,
+    backgroundColor: '#fff',
+    padding: 10, // Adjusted padding for a more compact layout
   },
   header: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#ff66b2',
-    marginBottom: 20,
+    height: 80, // Reduced height for a more compact header
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  backButton: {
+    position: 'absolute',
+    left: 20,
+    top: 20,
+    padding: 10,
+    backgroundColor: '#007AFF',
+    borderRadius: 5,
+  },
+  backButtonText: {
+    color: '#FFF',
+    fontSize: 16,
+  },
+  headerText: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: '#333',
     textAlign: 'center',
   },
   searchContainer: {
     flexDirection: 'row',
-    marginBottom: 20,
+    padding: 8, // Reduced padding for compactness
+    backgroundColor: '#f0f0f0',
+    borderRadius: 10,
+    marginVertical: 10,
+    alignItems: 'center',
   },
   searchInput: {
+    marginLeft: 10,
+    color: '#333',
+    fontSize: 16,
     flex: 1,
-    borderColor: '#ff66b2',
-    borderWidth: 1,
-    borderRadius: 5,
-    padding: 10,
-    marginRight: 10,
   },
-  newsItem: {
-    flexDirection: 'row',
-    marginBottom: 15,
-    backgroundColor: '#fff',
+  featureButton: {
+    width: '100%',
+    height: 100, // Reduced height for news items
+    marginVertical: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FFF',
     borderRadius: 10,
-    padding: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
+  },
+  featureImage: {
+    width: '100%',
+    height: '60%', // Adjusted image height
+    borderRadius: 10,
   },
   textContainer: {
     flex: 1,
     justifyContent: 'center',
   },
-  thumbnail: {
-    width: 100,
-    height: 100,
-    borderRadius: 10,
-    marginRight: 10,
-  },
   title: {
-    fontSize: 16,
+    fontSize: 14, // Reduced font size for compactness
     fontWeight: 'bold',
     color: '#333',
   },
+  scrollContainer: {
+    paddingBottom: 20,
+  },
+  flatListContent: {
+    paddingHorizontal: 20,
+  },
 });
+
+export default Newsfeed;

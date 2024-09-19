@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 
-const Settings = ({ onNavigateBack, onNavigateToAccount, onLogout, userData }) => {
+const Settings = ({ onNavigateBack, onNavigateToAccount, onLogout }) => {
   const [searchText, setSearchText] = useState('');
 
   // List of settings
@@ -25,12 +25,6 @@ const Settings = ({ onNavigateBack, onNavigateToAccount, onLogout, userData }) =
           <FontAwesome name="arrow-left" size={24} color="black" />
         </TouchableOpacity>
         <Text style={styles.headerText}>Settings</Text>
-      </View>
-
-      {/* Display User Info */}
-      <View style={styles.userInfoContainer}>
-        <Text style={styles.userName}>{userData?.username || 'User'}</Text>
-        <Text style={styles.userEmail}>{userData?.email || 'user@example.com'}</Text>
       </View>
 
       {/* Search Bar */}
@@ -86,18 +80,6 @@ const styles = StyleSheet.create({
     fontSize: 24, 
     fontWeight: 'bold',
     marginLeft: 10,
-  },
-  userInfoContainer: {
-    marginBottom: 20,
-    alignItems: 'center',
-  },
-  userName: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  userEmail: {
-    fontSize: 14,
-    color: '#777',
   },
   searchContainer: {
     flexDirection: 'row',

@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, doc, getDoc, onSnapshot } from "firebase/firestore";  // Firestore for storing user profiles
 import { getAuth, onAuthStateChanged } from "firebase/auth";  // Firebase Auth for user profiles
+import { getStorage } from "firebase/storage";  // Firebase Storage for file uploads
 
 // Firebase configuration
 const firebaseConfig = {
@@ -17,6 +18,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const firestore = getFirestore(app);  // Firestore initialization
 const auth = getAuth(app);  // Firebase Auth initialization
+const storage = getStorage(app);  // Firebase Storage initialization
 
 // Function to fetch user profile from Firestore (non-real-time)
 export const fetchUserProfile = async (uid) => {
@@ -49,5 +51,5 @@ export const fetchUserProfileRealTime = (uid, callback) => {
   return unsubscribe;
 };
 
-export { firestore, auth };
+export { firestore, auth, storage };  // Added storage export
 export default app;

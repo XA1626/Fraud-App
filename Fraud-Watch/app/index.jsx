@@ -8,9 +8,9 @@ import UrlChecker from './urlchecker'; // Import the UrlChecker component
 import Settings from './settings'; // Import the Settings component
 import Newsfeed from './newsfeed'; // Import the Newsfeed component
 import Account from './account';  // Import the Account component
+import Quiz from './quiz';  // Import the Quiz component
 import { firebase } from './firebase'; // Import Firebase config (assuming it is set up)
 import { fetchUserProfile } from './firebase'; // Import the function to fetch profile
-
 
 const isWeb = Platform.OS === 'web';
 
@@ -76,6 +76,8 @@ const App = () => {
                                 setCurrentScreen('UrlChecker');
                             } else if (screen === 'Newsfeed') {
                                 setCurrentScreen('Newsfeed');
+                            } else if (screen === 'Quiz') {
+                                setCurrentScreen('Quiz');  // Navigate to Quiz screen
                             }
                         }}
                     />
@@ -107,6 +109,8 @@ const App = () => {
                 );  
             case 'Newsfeed':
                 return <Newsfeed />;
+            case 'Quiz':  // Add this case to render the Quiz screen
+                return <Quiz />;
             default:
                 return <SplashScreen />;
         }

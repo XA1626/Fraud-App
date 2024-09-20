@@ -5,7 +5,7 @@ import { FontAwesome } from '@expo/vector-icons';
 
 const Dashboard = ({ userData, onNavigate }) => { 
     const [searchText, setSearchText] = useState('');
-    const [filteredFeatures, setFilteredFeatures] = useState(['URL Checker', 'Cybersecurity News', 'Quiz', 'Gmail Integration']);
+    const [filteredFeatures, setFilteredFeatures] = useState(['URL Checker', 'Cybersecurity News', 'Quiz', 'Gmail Integration', 'Fake User Generator']);
 
     useEffect(() => {
         // Optional: Add any effect to handle changes in userData if needed
@@ -14,7 +14,7 @@ const Dashboard = ({ userData, onNavigate }) => {
     // Function to handle searching among features
     const handleSearch = (text) => {
         setSearchText(text);
-        const features = ['URL Checker', 'Cybersecurity News', 'Quiz', 'Gmail Integration'];
+        const features = ['URL Checker', 'Cybersecurity News', 'Quiz', 'Gmail Integration', 'Fake User Generator'];
         const filtered = features.filter(feature => feature.toLowerCase().includes(text.toLowerCase()));
         setFilteredFeatures(filtered);
     };
@@ -72,6 +72,13 @@ const Dashboard = ({ userData, onNavigate }) => {
                     <TouchableOpacity style={styles.featureButton} onPress={() => onNavigate('GmailIntegration')}>
                         <Image source={require('../assets/gmail.png')} style={styles.featureImage} />
                         <Text style={styles.featureText}>Gmail Integration</Text>
+                    </TouchableOpacity>
+                )}
+
+                {filteredFeatures.includes('Fake User Generator') && (
+                    <TouchableOpacity style={styles.featureButton} onPress={() => onNavigate('FakeUserGenerator')}>
+                        <Image source={require('../assets/fakeusergen.png')} style={styles.featureImage} />
+                        <Text style={styles.featureText}>Fake User Generator</Text>
                     </TouchableOpacity>
                 )}
 

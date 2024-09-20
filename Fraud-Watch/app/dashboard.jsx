@@ -5,7 +5,7 @@ import { FontAwesome } from '@expo/vector-icons';
 
 const Dashboard = ({ userData, onNavigate }) => { 
     const [searchText, setSearchText] = useState('');
-    const [filteredFeatures, setFilteredFeatures] = useState(['URL Checker', 'Cybersecurity News', 'Quiz', 'Gmail Integration']);
+    const [filteredFeatures, setFilteredFeatures] = useState(['URL Checker', 'Cybersecurity News', 'Quiz', 'Gmail Integration', 'Cybersecurity Awareness Calendar']);
 
     useEffect(() => {
         // Optional: Add any effect to handle changes in userData if needed
@@ -74,6 +74,13 @@ const Dashboard = ({ userData, onNavigate }) => {
                         <Text style={styles.featureText}>Gmail Integration</Text>
                     </TouchableOpacity>
                 )}
+
+                {filteredFeatures.includes('Cybersecurity Awareness Calendar') && (
+                <TouchableOpacity style={styles.featureButton} onPress={() => onNavigate('CyberCalendar')}>             
+                    <Image source={require('../assets/calendar.png')} style={styles.featureImage} />
+                    <Text style={styles.featureText}>Cybersecurity Awareness Calendar</Text>
+                 </TouchableOpacity>
+                    )}
 
                 <View style={styles.divider} />
             </ScrollView>

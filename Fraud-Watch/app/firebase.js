@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, doc, getDoc, onSnapshot } from "firebase/firestore";  // Firestore for storing user profiles
+import { getFirestore, doc, getDoc, onSnapshot, collection, getDocs, addDoc } from "firebase/firestore";  // Firestore for storing user profiles and events
 import { getAuth, onAuthStateChanged } from "firebase/auth";  // Firebase Auth for user profiles
 import { getStorage } from "firebase/storage";  // Firebase Storage for file uploads
 
@@ -51,5 +51,46 @@ export const fetchUserProfileRealTime = (uid, callback) => {
   return unsubscribe;
 };
 
-export { firestore, auth, storage };  // Added storage export
+// **New Function**: Function to fetch event data from Firestore (non-real-time)
+export const fetchEvents = async () => {
+  const eventsCollectionRef = collection(firestore, "events");  // Reference to 'events' collection
+  const snapshot = await getDocs(eventsCollectionRef);
+  
+  const events = [];
+  snapshot.forEach((doc) => {
+    events.push({ id: doc.id, ...doc.data() });  // Add event data with document ID
+  });
+  
+  return events;
+};
+
+// **New Function**: Real-time event listener using onSnapshot (if needed)
+export const fetchEventsRealTime = (callback) => {
+  const eventsCollectionRef = collection(firestore, "events");
+
+  const unsubscribe = onSnapshot(eventsCollectionRef, (snapshot) => {
+    const events = [];
+    snapshot.forEach((doc) => {
+      events.push({ id: doc.id, ...doc.data() });
+    });
+    callback(events);
+  }, (error) => {
+    console.error("Error fetching real-time updates:", error);
+  });
+
+  return unsubscribe;  // Return unsubscribe function to stop real-time listener when not needed
+};
+
+// **New Function**: Function to add event data to Firestore
+export const addEvent = async (eventData) => {
+  const eventsCollectionRef = collection(firestore, "events");
+  try {
+    const docRef = await addDoc(eventsCollectionRef, eventData);
+    console.log("Event added with ID: ", docRef.id);
+  } catch (e) {
+    console.error("Error adding event: ", e);
+  }
+};
+
+export { firestore, auth, storage };  // Export everything, including Firestore, Auth, and Storage
 export default app;

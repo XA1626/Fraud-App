@@ -83,8 +83,15 @@ const App = () => {
                         onAlreadyHaveAccount={() => setCurrentScreen('LoginPage')}
                     />
                 );
-            case 'UrlChecker':
-                return <UrlChecker onNavigate={setCurrentScreen} />;
+
+            case "UrlChecker":
+                    return (
+                      <UrlChecker
+                        onNavigateBack={() => setCurrentScreen("Dashboard")} // Navigate back to Dashboard
+                        onNavigate={setCurrentScreen} // Flexibility to navigate to other screens
+                      />
+                ); 
+            
             case 'Settings':
                 return (
                     <Settings
@@ -105,7 +112,7 @@ const App = () => {
                     return (
                         <Newsfeed onNavigateBack={() => setCurrentScreen('Dashboard')} />
                     );
-                    
+
             case 'Resource':
                 return <Resource onBack={() => setCurrentScreen('Dashboard')} />;
             case 'FakeUserGenerator':

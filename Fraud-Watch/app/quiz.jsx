@@ -44,7 +44,9 @@ const Quiz = ({ onNavigateBack }) => {
                 if (!snapshot.empty) {
                     const questionsList = snapshot.docs.map(doc => ({
                         id: doc.id,
-                        ...doc.data()
+                        question: doc.data().question,
+                        options: doc.data().options,
+                        correctAnswer: doc.data().answer // Adjusted to match Firestore structure
                     }));
                     setQuestions(questionsList);
                     setCurrentQuestionIndex(0);
@@ -222,7 +224,4 @@ const styles = StyleSheet.create({
 });
 
 export default Quiz;
-
-
-
 

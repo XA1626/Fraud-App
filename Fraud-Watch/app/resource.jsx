@@ -55,6 +55,12 @@ const Resource = ({ onBack }) => {
         setShowBookmarks(!showBookmarks); // 북마크 목록 토글
     };
 
+    // 텍스트에서 **를 제거하고 볼드 처리
+    const formatResult = (text) => {
+        const formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        return { __html: formattedText }; // HTML로 렌더링
+    };
+
     return (
         <div style={{
             display: 'flex',
@@ -174,7 +180,7 @@ const Resource = ({ onBack }) => {
             }}>
                 <h3 style={{ margin: '0 0 10px', fontSize: '18px' }}>Results:</h3>
                 <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word', margin: 0 }}>
-                    {result || 'Your results will appear here.'}
+                    <span dangerouslySetInnerHTML={formatResult(result)} />
                 </pre>
             </div>
         </div>

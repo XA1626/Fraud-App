@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, TouchableOpacity, ActivityIndicator } from 'rea
 import { firestore } from './firebase'; // Ensure this points to your Firebase setup
 import { collection, getDocs } from 'firebase/firestore';
 
-const Quiz = () => {
+const Quiz = ({ navigation }) => {  // Accept navigation as a prop
     const [selectedCategory, setSelectedCategory] = useState(''); // Category ID
     const [selectedCategoryName, setSelectedCategoryName] = useState(''); // Category Name
     const [categories, setCategories] = useState([]); // List of categories
@@ -86,6 +86,11 @@ const Quiz = () => {
         setQuizResult(`Quiz ended. You got ${correctCount} out of ${questions.length} correct.`);
     };
 
+    // Go back to the dashboard (main menu)
+    const goBackToDashboard = () => {
+        navigation.navigate('Dashboard');  // Navigates back to the dashboard screen
+    };
+
     // Render category selection screen
     if (!selectedCategory) {
         return (
@@ -96,6 +101,10 @@ const Quiz = () => {
                         <Text style={styles.categoryButtonText}>{cat.name}</Text>
                     </TouchableOpacity>
                 ))}
+                {/* Go Back to Dashboard Button */}
+                <TouchableOpacity onPress={goBackToDashboard} style={styles.goBackButton}>
+                    <Text style={styles.goBackButtonText}>Go Back to Dashboard</Text>
+                </TouchableOpacity>
             </View>
         );
     }
@@ -142,74 +151,76 @@ const Quiz = () => {
                 <Text style={styles.buttonText}>Back to Categories</Text>
             </TouchableOpacity>
         </View>
-    );
+        
+    );        
 };
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1, // Fills the available screen space
-        justifyContent: 'center', // Centers content vertically
-        alignItems: 'center', // Centers content horizontally
-        backgroundColor: '#000', // Sets a black background
-        padding: 20, // Adds padding inside the container
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#000',
+        padding: 20,
     },
     title: {
-        fontSize: 36, // Sets the title text size to 36px
-        color: '#fff', // Sets the text color to white
-        marginBottom: 20, // Adds space below the title
+        fontSize: 36,
+        color: '#fff',
+        marginBottom: 20,
     },
     questionText: {
-        fontSize: 30, // Sets the question text size to 50px for better readability
-        color: '#0FFEF6', // Ensures the question text color is white
-        marginBottom: 10, // Adds space below the question text
-        fontFamily: 'Arial', // Assuming you have this font integrated in your project (React Native doesn't support all web fonts)
+        fontSize: 30,
+        color: '#0FFEF6',
+        marginBottom: 10,
+        fontFamily: 'Arial',
         textAlign: 'center',
-        fontWeight: 'normal' // Normal font weight; change as needed
     },
     QsentenceText: {
-        fontSize: 34, // For the actual question sentence
-        color: '#fff', // Different color for the sentence
-        fontStyle: 'italic', // Optional styling to differentiate it
+        fontSize: 34,
+        color: '#fff',
+        fontStyle: 'italic',
     },
-    /*glowOnHover: {
-        width: 220, // Sets the button width to 220px
-        height: 50, // Sets the button height to 50px
-        backgroundColor: '#111', // Sets the button background to dark gray
-        justifyContent: 'center', // Centers text vertically inside the button
-        alignItems: 'center', // Centers text horizontally inside the button
-        borderRadius: 10, // Rounds the corners of the button
-        marginBottom: 10, // Adds space below the button
-    },*/
+    
     buttonText: {
-        color: '#fff', // Sets the button text color to white
-        fontSize: 20, // Sets the button text size to 20px
+        color: '#fff',
+        fontSize: 20,
     },
-    /*selectedText: {
-        fontWeight: 'bold', // Makes the selected option text bold
-        color: '#ff7300', // Sets the color of the selected text to a bright orange
-    },*/
+    goBackButton: {
+        width: 220,
+        height: 50,
+        backgroundColor: '#ff6347',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10,
+        marginTop: 20,
+    },
+    goBackButtonText: {
+        color: '#fff',
+        fontSize: 18,
+    },
+   
     answerText: {
-        fontSize: 18, // Sets the font size for the answer options
-        color: '#fff', // Sets the text color to white for the answer options
-        marginBottom: 10, // Adds space between each answer
-        padding: 10, // Adds padding to make the answer area easier to click/tap
-        backgroundColor: '#AE0FFE', // Dark background for answers
-        borderRadius: 5, // Rounded corners for answers
-        textAlign: 'center', // Centers the answer text
+        fontSize: 18,
+        color: '#fff',
+        marginBottom: 10,
+        padding: 10,
+        backgroundColor: '#AE0FFE',
+        borderRadius: 5,
+        textAlign: 'center',
     },
     categoryButton: {
-        width: 250, // Larger width for category buttons
-        height: 60, // Larger height for category buttons
-        backgroundColor: '#0FFE27', // Dark background for category buttons
-        justifyContent: 'center', // Centers text vertically inside the button
-        alignItems: 'center', // Centers text horizontally inside the button
-        borderRadius: 15, // More rounded corners for the category buttons
-        marginBottom: 15, // Adds more space below each category button
-        padding: 10, // Adds padding inside the button
+        width: 250,
+        height: 60,
+        backgroundColor: '#0FFE27',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 15,
+        marginBottom: 15,
+        padding: 10,
     },
     categoryButtonText: {
-        color: '#000', // Sets the text color to white
-        fontSize: 24, // Larger font size for category names
+        color: '#000',
+        fontSize: 24,
     }
 });
 

@@ -8,10 +8,9 @@ const Dashboard = ({ userData, onNavigate }) => {
     const [filteredFeatures, setFilteredFeatures] = useState(['URL Checker', 'Cybersecurity News', 'Quiz', 'Gmail Integration']);
 
     useEffect(() => {
-        // Optional: Add any effect to handle changes in userData if needed
+        // Optional: Handle changes in userData if needed
     }, [userData]);
 
-    // Function to handle searching among features
     const handleSearch = (text) => {
         setSearchText(text);
         const features = ['URL Checker', 'Cybersecurity News', 'Quiz', 'Gmail Integration'];
@@ -32,7 +31,7 @@ const Dashboard = ({ userData, onNavigate }) => {
                         <Image source={require('../assets/logo.png')} style={styles.logo} />
                         <View style={styles.headerTextContainer}>
                             <Text style={styles.title}>Fraud Watch</Text>
-                            <Text style={styles.welcomeText}>Welcome, {userData?.firstName || 'User'}!</Text> 
+                            <Text style={styles.welcomeText}>Welcome, {userData?.firstName || 'User'}!</Text>
                         </View>
                     </View>
                 </LinearGradient>
@@ -82,7 +81,9 @@ const Dashboard = ({ userData, onNavigate }) => {
                 <TouchableOpacity onPress={() => onNavigate('Dashboard')}>
                     <FontAwesome name="home" size={24} color="#000" />
                 </TouchableOpacity>
+                <TouchableOpacity onPress={() => onNavigate('ChatRoom')}>
                 <FontAwesome name="comments" size={24} color="#000" />
+                </TouchableOpacity>
                 <TouchableOpacity onPress={() => onNavigate('Settings')}>
                     <FontAwesome name="cog" size={24} color="#000" />
                 </TouchableOpacity>
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
         color: '#fff',
     },
     welcomeText: {
-        fontSize: 14, 
+        fontSize: 14,
         color: '#fff',
     },
     searchContainer: {

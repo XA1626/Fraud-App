@@ -6,6 +6,7 @@ import Dashboard from './dashboard';
 import CreateUser from './createuser';
 import UrlChecker from './urlchecker'; // Import the UrlChecker component
 import Settings from './settings'; // Import the Settings component
+import ChatRoom from './ChatRoom'; // This should work if it's in the same folder.
 import Newsfeed from './newsfeed'; // Import the Newsfeed component
 import Account from './account';  // Import the Account component
 import Quiz from './quiz';  // Import the Quiz component
@@ -78,7 +79,10 @@ const App = () => {
                                 setCurrentScreen('Newsfeed');
                             } else if (screen === 'Quiz') {
                                 setCurrentScreen('Quiz');  // Navigate to Quiz screen
+                            }else if (screen == 'ChatRoom'){
+                                setCurrentScreen('ChatRoom')
                             }
+                            
                         }}
                     />
                 );
@@ -110,7 +114,18 @@ const App = () => {
             case 'Newsfeed':
                 return <Newsfeed />;
             case 'Quiz':  // Add this case to render the Quiz screen
-                return <Quiz />;
+                return (
+                    <Quiz
+                    onNavigateBack={() => setCurrentScreen('Dashboard')}
+                    />
+                );
+            case 'ChatRoom':
+                return(
+                    <ChatRoom
+                    onNavigateBack={() => setCurrentScreen('Dashboard')}
+                    />
+                );
+
             default:
                 return <SplashScreen />;
         }

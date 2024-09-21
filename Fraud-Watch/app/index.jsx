@@ -87,8 +87,9 @@ const App = () => {
                         onAlreadyHaveAccount={() => setCurrentScreen('LoginPage')}
                     />
                 );
-            case 'UrlChecker':
-                return <UrlChecker />;
+                case 'UrlChecker':
+                    return <UrlChecker onNavigateBack={() => setCurrentScreen('Dashboard')} />;
+                
             case 'Settings':
                 return (
                     <Settings

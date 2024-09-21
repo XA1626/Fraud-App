@@ -4,11 +4,19 @@ import SplashScreen from './splashscreen';
 import LoginPage from './loginpage';
 import Dashboard from './dashboard';
 import CreateUser from './createuser';
+<<<<<<< Updated upstream
 import UrlChecker from './urlchecker';
 import Settings from './settings';
 import Newsfeed from './newsfeed';
 import Resource from './resource';
 import Account from './account'; 
+=======
+import UrlChecker from './urlchecker'; // Import the UrlChecker component
+import Settings from './settings'; // Import the Settings component
+import Newsfeed from './newsfeed'; // Import the Newsfeed component
+import Resource from './resource'; // Import the Newsfeed component
+import Account from './account';  // Import the Account component
+>>>>>>> Stashed changes
 import FakeUserGenerator from './FakeUserGenerator'; 
 import { firebase } from './firebase'; 
 import { fetchUserProfile } from './firebase';
@@ -107,6 +115,7 @@ const App = () => {
                         userData={userData}
                         onNavigateBack={() => setCurrentScreen('Settings')}
                     />
+<<<<<<< Updated upstream
                 );
                 case 'Newsfeed':
                     return (
@@ -115,6 +124,15 @@ const App = () => {
 
             case 'Resource':
                 return <Resource onBack={() => setCurrentScreen('Dashboard')} />;
+=======
+                );  
+            case 'Newsfeed':
+                return <Newsfeed />;
+
+                case 'Resource':
+    return <Resource />;
+
+>>>>>>> Stashed changes
             case 'FakeUserGenerator':
                 return <FakeUserGenerator onNavigate={setCurrentScreen} />;
             default:

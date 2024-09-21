@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import React, { useState } from 'react';
 
 const apiKey = 'AIzaSyDQLyRdEwWobwh4kZHGiduWruv6CDiNG4w';
@@ -37,11 +38,51 @@ const Resource = ({ onBack }) => {
         } catch (error) {
             console.error("Error fetching data:", error);
             setResult('An error occurred while fetching data.');
+=======
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, ActivityIndicator, TextInput, Button } from 'react-native';
+
+const Resource = () => {
+    const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [input, setInput] = useState('');
+    const apiKey = 'YOUR_API_KEY_HERE';
+
+    const fetchResources = async () => {
+        setLoading(true);
+        try {
+            const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiKey}`,
+                },
+                body: JSON.stringify({
+                    model: 'gpt-3.5-turbo',
+                    messages: [{ role: 'user', content: input }],
+                    max_tokens: 100,
+                }),
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('Error response:', errorText);
+                throw new Error('API call failed');
+            }
+
+            const json = await response.json();
+            console.log('API response:', json); // API 응답 확인
+            setData(json.choices[0].message.content);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            setData('Error fetching data.');
+>>>>>>> Stashed changes
         } finally {
             setLoading(false);
         }
     };
 
+<<<<<<< Updated upstream
     const handleBookmark = () => {
         if (result) {
             setBookmarks([...bookmarks, result]);
@@ -187,4 +228,49 @@ const Resource = ({ onBack }) => {
     );
 };
 
+=======
+    const handleSearch = () => {
+        fetchResources();
+    };
+
+    if (loading) {
+        return <ActivityIndicator size="large" color="#007AFF" />;
+    }
+
+    return (
+        <View style={styles.container}>
+            <Text style={styles.title}>Cybersecurity Resources</Text>
+            <TextInput
+                style={styles.input}
+                placeholder="Ask for resources..."
+                value={input}
+                onChangeText={setInput}
+            />
+            <Button title="Search" onPress={handleSearch} />
+            <Text>{data || 'No data available.'}</Text>
+        </View>
+    );
+};
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        padding: 20,
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 20,
+    },
+    input: {
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 5,
+        padding: 10,
+        marginBottom: 10,
+    },
+});
+
+>>>>>>> Stashed changes
 export default Resource;

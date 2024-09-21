@@ -5,7 +5,11 @@ import { FontAwesome } from '@expo/vector-icons';
 
 const Dashboard = ({ userData, onNavigate }) => { 
     const [searchText, setSearchText] = useState('');
-    const [filteredFeatures, setFilteredFeatures] = useState(['URL Checker', 'Cybersecurity News', 'Quiz', 'Gmail Integration', 'Fake User Generator']);
+<<<<<<< Updated upstream
+    const [filteredFeatures, setFilteredFeatures] = useState(['URL Checker', 'Cybersecurity News','Quiz', 'Gmail Integration', 'Fake User Generator','Resource']);
+=======
+    const [filteredFeatures, setFilteredFeatures] = useState(['URL Checker', 'Cybersecurity News',  'Quiz', 'Gmail Integration', 'Fake User Generator','Resource']);
+>>>>>>> Stashed changes
 
     useEffect(() => {
         // Optional: Add any effect to handle changes in userData if needed
@@ -60,6 +64,23 @@ const Dashboard = ({ userData, onNavigate }) => {
                         <Text style={styles.featureText}>Cybersecurity News</Text>
                     </TouchableOpacity>
                 )}
+
+<<<<<<< Updated upstream
+{filteredFeatures.includes('Resource') && (
+    <TouchableOpacity style={styles.featureButton} onPress={() => onNavigate('Resource')}>
+        <Image source={require('../assets/resource.png')} style={styles.featureImage} />
+        <Text style={styles.featureText}>Resource</Text>
+    </TouchableOpacity>
+)}
+=======
+                {filteredFeatures.includes('Resource') && (
+                      <TouchableOpacity style={styles.featureButton} onPress={() => onNavigate('Resource')}>
+                           <Image source={require('../assets/resource.png')} style={styles.featureImage} />
+                         <Text style={styles.featureText}>Resource</Text> 
+                 </TouchableOpacity>
+                )}
+>>>>>>> Stashed changes
+
 
                 {filteredFeatures.includes('Quiz') && (
                     <TouchableOpacity style={styles.featureButton} onPress={() => onNavigate('Quiz')}>

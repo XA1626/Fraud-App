@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, FlatList, ActivityIndicator, TouchableOpacity, Linking, TextInput, Button } from 'react-native';
+import { StyleSheet, Text, View, Image, FlatList, ActivityIndicator, TouchableOpacity, Linking, TextInput } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; // 아이콘을 위한 모듈 추가
 
-const Newsfeed = ({ onNavigateBack }) => { // onNavigateBack을 props로 받습니다.
+const Newsfeed = ({ onNavigateBack }) => {
   const [news, setNews] = useState([]);
   const [filteredNews, setFilteredNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
-  const [bookmarks, setBookmarks] = useState([]); // 북마크 상태 추가
-  const [showBookmarks, setShowBookmarks] = useState(false); // 북마크 보기 토글 상태
+  const [bookmarks, setBookmarks] = useState([]);
+  const [showBookmarks, setShowBookmarks] = useState(false);
 
   useEffect(() => {
     fetchNews();
@@ -44,7 +44,6 @@ const Newsfeed = ({ onNavigateBack }) => { // onNavigateBack을 props로 받습�
   };
 
   const handleBookmarkToggle = (article) => {
-    // 이미 북마크에 있으면 제거, 없으면 추가
     if (bookmarks.some(bookmark => bookmark.url === article.url)) {
       setBookmarks(bookmarks.filter(bookmark => bookmark.url !== article.url));
     } else {
@@ -83,7 +82,7 @@ const Newsfeed = ({ onNavigateBack }) => { // onNavigateBack을 props로 받습�
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={onNavigateBack} style={styles.backButton}>
-        <Text style={styles.backButtonText}>◀ Back</Text> {/* 뒤로가기 버튼 */}
+        <Ionicons name="arrow-back" size={24} color="#4A90E2" /> {/* 화살표 아이콘 */}
       </TouchableOpacity>
       <View style={styles.headerContainer}>
         <Text style={styles.header}>Cybersecurity News</Text>
@@ -98,11 +97,13 @@ const Newsfeed = ({ onNavigateBack }) => { // onNavigateBack을 props로 받습�
           value={searchQuery}
           onChangeText={setSearchQuery}
         />
-        <Button title="Search" onPress={handleSearch} color="#4A90E2" />
+        <TouchableOpacity onPress={handleSearch} style={styles.searchButton}>
+          <Text style={styles.searchButtonText}>Search</Text>
+        </TouchableOpacity>
       </View>
       {loading ? (
         <ActivityIndicator size="large" color="#4A90E2" />
-      ) : showBookmarks ? ( // 북마크 모드일 때
+      ) : showBookmarks ? (
         <FlatList
           data={bookmarks}
           renderItem={renderItem}
@@ -140,10 +141,6 @@ const styles = StyleSheet.create({
   backButton: {
     marginBottom: 20,
   },
-  backButtonText: {
-    fontSize: 16,
-    color: '#4A90E2',
-  },
   headerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -170,6 +167,15 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     marginRight: 10,
+  },
+  searchButton: {
+    backgroundColor: '#4A90E2',
+    borderRadius: 5,
+    padding: 10,
+  },
+  searchButtonText: {
+    color: '#FFFFFF',
+    fontWeight: 'bold',
   },
   content: {
     flex: 1,

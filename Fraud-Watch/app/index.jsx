@@ -8,9 +8,9 @@ import UrlChecker from './urlchecker'; // Import the UrlChecker component
 import Settings from './settings'; // Import the Settings component
 import Newsfeed from './newsfeed'; // Import the Newsfeed component
 import Account from './account';  // Import the Account component
+import FakeUserGenerator from './FakeUserGenerator'; 
 import { firebase } from './firebase'; // Import Firebase config (assuming it is set up)
 import { fetchUserProfile } from './firebase'; // Import the function to fetch profile
-
 
 const isWeb = Platform.OS === 'web';
 
@@ -76,6 +76,8 @@ const App = () => {
                                 setCurrentScreen('UrlChecker');
                             } else if (screen === 'Newsfeed') {
                                 setCurrentScreen('Newsfeed');
+                            } else if (screen === 'FakeUserGenerator') {
+                                setCurrentScreen('FakeUserGenerator');
                             }
                         }}
                     />
@@ -87,8 +89,14 @@ const App = () => {
                         onAlreadyHaveAccount={() => setCurrentScreen('LoginPage')}
                     />
                 );
-                case 'UrlChecker':
-                    return <UrlChecker onNavigateBack={() => setCurrentScreen('Dashboard')} />;
+case 'UrlChecker':
+    return (
+        <UrlChecker
+            onNavigateBack={() => setCurrentScreen('Dashboard')}  // Navigate back to Dashboard
+            onNavigate={setCurrentScreen}  // Flexibility to navigate to other screens
+        />
+    );
+
                 
             case 'Settings':
                 return (
@@ -108,6 +116,8 @@ const App = () => {
                 );  
             case 'Newsfeed':
                 return <Newsfeed />;
+            case 'FakeUserGenerator':
+                return <FakeUserGenerator onNavigate={setCurrentScreen} />;
             default:
                 return <SplashScreen />;
         }

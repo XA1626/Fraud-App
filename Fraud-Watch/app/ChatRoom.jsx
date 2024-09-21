@@ -1,66 +1,67 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, FlatList, TextInput, Button, ScrollView } from 'react-native';
-import { firestore, auth } from './firebase'; // Import Firebase setup
-import { collection, addDoc, query, orderBy, onSnapshot } from 'firebase/firestore';
+import { View, Text, StyleSheet, TextInput, Button, ScrollView, FlatList, AsyncStorage } from 'react-native';
+import { firestore, auth } from './firebase'; // Ensure these are correctly imported
+import { collection, addDoc, query, orderBy, onSnapshot, doc, getDoc } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
 
-// ChatRoom Component
 const ChatRoom = () => {
-  const [user, setUser] = useState(null); // Authenticated user
-  const [messages, setMessages] = useState([]); // Messages from Firestore
-  const [newMessage, setNewMessage] = useState(''); // Message to be sent
-  const dummy = useRef(); // For scrolling to the bottom of the chat
+  const [user, setUser] = useState(null);
+  const [userName, setUserName] = useState('');
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState('');
+  const dummy = useRef();
 
-  // Monitor authentication state and set user
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (currentUser) {
+        const userRef = doc(firestore, "User", currentUser.uid);
+        const userSnap = await getDoc(userRef);
+        if (userSnap.exists()) {
+          const userData = userSnap.data();
+          setUserName(userData.firstName); // Assuming the field is named 'firstName'
+          console.log(`Welcome ${userData.firstName}`);
+        } else {
+          console.log("No such document!");
+        }
+        setUser(currentUser);
+      } else {
+        setUser(null);
+      }
     });
     return () => unsubscribe();
   }, []);
 
-  // Fetch messages in real-time
   useEffect(() => {
-    const q = query(collection(firestore, 'messages'), orderBy('createdAt'));
+    if (user) {
+      const q = query(collection(firestore, 'messages'), orderBy('createdAt'));
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        const fetchedMessages = querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+        setMessages(fetchedMessages);
+      });
+      return () => unsubscribe();
+    }
+  }, [user]);
 
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const fetchedMessages = querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-      setMessages(fetchedMessages);
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-  // Function to send a message
   const sendMessage = async () => {
-    if (newMessage.trim() === '') return;
+    if (newMessage.trim() === '' || !userName) return;
 
     try {
       await addDoc(collection(firestore, 'messages'), {
         text: newMessage,
         createdAt: new Date(),
         uid: user.uid,
-        displayName: user.displayName || 'Anonymous'
+        displayName: userName // Use the user's first name for the message
       });
-      setNewMessage(''); // Clear input field
-      dummy.current.scrollIntoView({ behavior: 'smooth' }); // Scroll to bottom
+      setNewMessage('');
+      dummy.current.scrollIntoView({ behavior: 'smooth' });
     } catch (error) {
-      console.error('Error sending message: ', error);
+      console.error('Error sending message:', error);
     }
   };
-
-  if (!user) {
-    return (
-      <View style={styles.container}>
-        <Text>Please log in to access the chat.</Text>
-      </View>
-    );
-  }
 
   return (
     <View style={styles.container}>
       <ScrollView>
-        {/* Display messages */}
         <FlatList
           data={messages}
           renderItem={({ item }) => (
@@ -73,8 +74,6 @@ const ChatRoom = () => {
         />
         <div ref={dummy}></div>
       </ScrollView>
-
-      {/* Message input and send button */}
       <TextInput
         style={styles.input}
         placeholder="Type a message..."
@@ -123,5 +122,6 @@ const styles = StyleSheet.create({
 });
 
 export default ChatRoom;
+
 
 

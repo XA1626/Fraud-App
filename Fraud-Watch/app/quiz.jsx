@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, TouchableOpacity, ActivityIndicator } from 'rea
 import { firestore } from './firebase'; // Ensure this points to your Firebase setup
 import { collection, getDocs } from 'firebase/firestore';
 
-const Quiz = ({ navigation }) => {  // Accept navigation as a prop
+const Quiz = ({ onNavigateBack }) => {
     const [selectedCategory, setSelectedCategory] = useState(''); // Category ID
     const [selectedCategoryName, setSelectedCategoryName] = useState(''); // Category Name
     const [categories, setCategories] = useState([]); // List of categories
@@ -72,7 +72,7 @@ const Quiz = ({ navigation }) => {  // Accept navigation as a prop
         setSelectedAnswers(prev => ({ ...prev, [question.id]: answer }));
 
         if (currentQuestionIndex < questions.length - 1) {
-            setCurrentQuestionIndex(currentQuestionIndex + 1);
+            setCurrentQuestionIndex(currentQuestionIndex + 1); // Move to next question
         } else {
             handleSubmitAnswers(); // End the quiz and show results
         }
@@ -88,7 +88,9 @@ const Quiz = ({ navigation }) => {  // Accept navigation as a prop
 
     // Go back to the dashboard (main menu)
     const goBackToDashboard = () => {
-        navigation.navigate('Dashboard');  // Navigates back to the dashboard screen
+        if (onNavigateBack) {
+            onNavigateBack();  // Call the passed-in onNavigateBack prop to navigate back
+        }
     };
 
     // Render category selection screen
@@ -97,13 +99,13 @@ const Quiz = ({ navigation }) => {  // Accept navigation as a prop
             <View style={styles.container}>
                 <Text style={styles.title}>Select a Quiz Category</Text>
                 {loading ? <ActivityIndicator size="large" color="#fff" /> : categories.map(cat => (
-                    <TouchableOpacity key={cat.id} onPress={() => handleCategorySelect(cat)} style={styles.categoryButton}>
-                        <Text style={styles.categoryButtonText}>{cat.name}</Text>
+                    <TouchableOpacity key={cat.id} onPress={() => handleCategorySelect(cat)} style={styles.button}>
+                        <Text style={styles.buttonText}>{cat.name}</Text>
                     </TouchableOpacity>
                 ))}
-                {/* Go Back to Dashboard Button */}
-                <TouchableOpacity onPress={goBackToDashboard} style={styles.goBackButton}>
-                    <Text style={styles.goBackButtonText}>Go Back to Dashboard</Text>
+                {/* Back to Dashboard button with a different color */}
+                <TouchableOpacity onPress={goBackToDashboard} style={styles.backButton}>
+                    <Text style={styles.buttonText}>Back to Dashboard</Text>
                 </TouchableOpacity>
             </View>
         );
@@ -114,7 +116,7 @@ const Quiz = ({ navigation }) => {  // Accept navigation as a prop
         return (
             <View style={styles.container}>
                 <Text style={styles.title}>{quizResult}</Text>
-                <TouchableOpacity onPress={() => setSelectedCategory('')} style={styles.glowOnHover}>
+                <TouchableOpacity onPress={() => setSelectedCategory('')} style={styles.button}>
                     <Text style={styles.buttonText}>Back to Categories</Text>
                 </TouchableOpacity>
             </View>
@@ -135,24 +137,21 @@ const Quiz = ({ navigation }) => {  // Accept navigation as a prop
                     <Text style={styles.QsentenceText}>
                         {currentQuestion.question}
                     </Text>
-                    {currentQuestion.options.map((option, index) => (
-                        <TouchableOpacity key={index} onPress={() => handleAnswerSelect(option)} style={styles.glowOnHover}>
-                            <Text style={[
-                                styles.answerText,
-                                selectedAnswers[currentQuestion.id] === option ? styles.selectedText : null
-                            ]}>
-                                {option}
-                            </Text>
-                        </TouchableOpacity>
-                    ))}
+                    <View style={styles.answersContainer}>
+                        {currentQuestion.options.map((option, index) => (
+                            <TouchableOpacity key={index} onPress={() => handleAnswerSelect(option)} style={styles.answerBubble}>
+                                <Text style={styles.answerText}>{option}</Text>
+                            </TouchableOpacity>
+                        ))}
+                    </View>
                 </View>
             )}
-            <TouchableOpacity onPress={() => setSelectedCategory('')} style={styles.glowOnHover}>
+            {/* Back to Categories button */}
+            <TouchableOpacity onPress={() => setSelectedCategory('')} style={styles.backButton}>
                 <Text style={styles.buttonText}>Back to Categories</Text>
             </TouchableOpacity>
         </View>
-        
-    );        
+    );
 };
 
 const styles = StyleSheet.create({
@@ -179,50 +178,51 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: '#fff',
         fontStyle: 'italic',
-    },
-    
-    buttonText: {
-        color: '#fff',
-        fontSize: 20,
-    },
-    goBackButton: {
-        width: 220,
-        height: 50,
-        backgroundColor: '#ff6347',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 10,
-        marginTop: 20,
-    },
-    goBackButtonText: {
-        color: '#fff',
-        fontSize: 18,
-    },
-   
-    answerText: {
-        fontSize: 18,
-        color: '#fff',
-        marginBottom: 10,
-        padding: 10,
-        backgroundColor: '#AE0FFE',
-        borderRadius: 5,
         textAlign: 'center',
+        marginBottom: 20,
     },
-    categoryButton: {
+    button: {
+        backgroundColor: '#0FFEF6',
+        paddingVertical: 15,
+        paddingHorizontal: 30,
+        borderRadius: 25,
+        marginVertical: 10, // Add margin between buttons
         width: 250,
-        height: 60,
-        backgroundColor: '#0FFE27',
+        alignItems: 'center',
+    },
+    backButton: {
+        backgroundColor: '#FF6347',  // A different color for the back button (tomato red)
+        paddingVertical: 15,
+        paddingHorizontal: 30,
+        borderRadius: 25,
+        marginVertical: 10,
+        width: 250,
+        alignItems: 'center',
+    },
+    answersContainer: {
+        marginTop: 20,
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 15,
-        marginBottom: 15,
-        padding: 10,
     },
-    categoryButtonText: {
-        color: '#000',
+    answerBubble: {
+        backgroundColor: '#AE0FFE', // Bubble color
+        paddingVertical: 15,
+        paddingHorizontal: 30,
+        borderRadius: 50, // Rounded like a bubble
+        marginVertical: 10,
+        width: 250, // Ensure the bubbles are wider
+        justifyContent: 'center', // Center the text vertically
+        alignItems: 'center', // Center the text horizontally
+    },
+    answerText: {
+        color: '#fff',
         fontSize: 18,
-    }
+        textAlign: 'center', // Ensure text is centered within the bubble
+    },
 });
 
 export default Quiz;
+
+
+
 

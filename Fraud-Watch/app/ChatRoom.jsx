@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, TextInput, Button, ScrollView, FlatList } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView, FlatList } from 'react-native';
 import { firestore, auth } from './firebase';
 import { collection, addDoc, query, orderBy, onSnapshot, doc, getDoc } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';  // Hook for navigation
 
-const ChatRoom = () => {
+const ChatRoom = ({ onNavigateBack }) => {  // Accept onNavigateBack as a prop for back navigation
   const navigation = useNavigation();  // Hook for navigation
   const [user, setUser] = useState(null);
   const [userName, setUserName] = useState('');
@@ -69,6 +69,12 @@ const ChatRoom = () => {
     }
   };
 
+  const Dashboard = () => {
+    if (onNavigateBack) {
+      onNavigateBack();  // Call the passed-in onNavigateBack prop to navigate back
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>ChatRoom</Text>
@@ -91,8 +97,17 @@ const ChatRoom = () => {
         value={newMessage}
         onChangeText={setNewMessage}
       />
-      <Button title="Send" onPress={sendMessage} disabled={!newMessage.trim()} />
-      <Button title="Back" onPress={goBack} color="#f194ff" />  {/* Back button */}
+      <TouchableOpacity
+        onPress={sendMessage}
+        disabled={!newMessage.trim()}
+        style={[styles.sendbutton, !newMessage.trim() && styles.disabledButton]}>
+        <Text style={styles.buttonText}>Send</Text>
+      </TouchableOpacity>
+
+      {/* Custom styled back button */}
+      <TouchableOpacity onPress={Dashboard} style={styles.backButton}>
+        <Text style={styles.backButtonText}>Back</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -103,21 +118,23 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   header: {
-    fontSize: 24,
+    //color: '#20FE03',
+    
+    fontSize: 30,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 20,
   },
   sentMessage: {
     alignSelf: 'flex-end',
-    backgroundColor: '#DCF8C6',
+    backgroundColor: '#20FE03',
     borderRadius: 10,
     padding: 10,
     margin: 5,
   },
   receivedMessage: {
     alignSelf: 'flex-start',
-    backgroundColor: '#EAEAEA',
+    backgroundColor: '#03FEF1',
     borderRadius: 10,
     padding: 10,
     margin: 5,
@@ -137,7 +154,32 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     marginBottom: 20,
   },
+  sendbutton: {
+    backgroundColor: '#0FFEF6',
+    padding: 10,
+    borderRadius: 100,
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  disabledButton: {
+    backgroundColor: '#ccc',
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+  },
+  backButton: {
+    backgroundColor: '#FE03AA',
+    padding: 10,
+    borderRadius: 100,
+    width: 250,
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  backButtonText: {
+    color: '#fff',
+    fontSize: 18,
+  },
 });
 
 export default ChatRoom;
-

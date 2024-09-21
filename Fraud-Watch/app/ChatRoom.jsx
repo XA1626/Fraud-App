@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, TextInput, Button, ScrollView, FlatList, AsyncStorage } from 'react-native';
-import { firestore, auth } from './firebase'; // Ensure these are correctly imported
+import { View, Text, StyleSheet, TextInput, Button, ScrollView, FlatList } from 'react-native';
+import { firestore, auth } from './firebase';
 import { collection, addDoc, query, orderBy, onSnapshot, doc, getDoc } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
+import { useNavigation } from '@react-navigation/native';  // Hook for navigation
 
 const ChatRoom = () => {
+  const navigation = useNavigation();  // Hook for navigation
   const [user, setUser] = useState(null);
   const [userName, setUserName] = useState('');
   const [messages, setMessages] = useState([]);
@@ -18,8 +20,7 @@ const ChatRoom = () => {
         const userSnap = await getDoc(userRef);
         if (userSnap.exists()) {
           const userData = userSnap.data();
-          setUserName(userData.firstName); // Assuming the field is named 'firstName'
-          console.log(`Welcome ${userData.firstName}`);
+          setUserName(userData.firstName);
         } else {
           console.log("No such document!");
         }
@@ -50,7 +51,7 @@ const ChatRoom = () => {
         text: newMessage,
         createdAt: new Date(),
         uid: user.uid,
-        displayName: userName // Use the user's first name for the message
+        displayName: userName
       });
       setNewMessage('');
       dummy.current.scrollIntoView({ behavior: 'smooth' });
@@ -59,8 +60,18 @@ const ChatRoom = () => {
     }
   };
 
+  // Go back to the previous screen
+  const goBack = () => {
+    if (navigation.canGoBack()) {
+      navigation.goBack();  // Navigate back to the previous screen
+    } else {
+      console.log('No previous screen in the navigation stack');
+    }
+  };
+
   return (
     <View style={styles.container}>
+      <Text style={styles.header}>ChatRoom</Text>
       <ScrollView>
         <FlatList
           data={messages}
@@ -81,6 +92,7 @@ const ChatRoom = () => {
         onChangeText={setNewMessage}
       />
       <Button title="Send" onPress={sendMessage} disabled={!newMessage.trim()} />
+      <Button title="Back" onPress={goBack} color="#f194ff" />  {/* Back button */}
     </View>
   );
 };
@@ -89,6 +101,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 20,
   },
   sentMessage: {
     alignSelf: 'flex-end',
@@ -122,6 +140,4 @@ const styles = StyleSheet.create({
 });
 
 export default ChatRoom;
-
-
 

@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     title: {
-        fontSize: 36,
+        fontSize: 18,
         color: '#fff',
         marginBottom: 20,
     },
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     QsentenceText: {
-        fontSize: 34,
+        fontSize: 18,
         color: '#fff',
         fontStyle: 'italic',
     },
@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
     },
     categoryButtonText: {
         color: '#000',
-        fontSize: 24,
+        fontSize: 18,
     }
 });
 

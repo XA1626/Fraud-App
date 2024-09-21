@@ -4,8 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from './firebase';
-// Conditional import for CheckBox
-import CheckBox from '@react-native-community/checkbox'; // Native checkbox
+import CheckBox from '@react-native-community/checkbox'; 
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;

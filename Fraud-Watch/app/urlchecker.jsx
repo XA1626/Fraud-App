@@ -3,7 +3,6 @@ import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, StyleSheet,
 import { LinearGradient } from 'expo-linear-gradient';
 import axios from 'axios';
 
-// Replace with your Google Safe Browsing API Key
 const googleApiKey = 'AIzaSyA9qRDwAfZqca4L1imLL8A3yeLdQBEdMOY';
 
 const UrlChecker = ({ onNavigateBack }) => {
@@ -35,7 +34,7 @@ const UrlChecker = ({ onNavigateBack }) => {
     }
 
     setLoading(true);
-    setResult(null); // Clear previous results
+    setResult(null); 
     setTimeout(async () => {
       try {
         const response = await axios.post(
@@ -65,7 +64,7 @@ const UrlChecker = ({ onNavigateBack }) => {
       } finally {
         setLoading(false);
       }
-    }, 2000); // Simulate a 2-second loading time
+    }, 2000); 
   };
 
   return (
@@ -171,16 +170,16 @@ const styles = StyleSheet.create({
     padding: 8,
     marginBottom: 15,
     fontSize: 14,
-    width: 250,  // Fixed width for input
-    alignSelf: 'center',  // Center the input field
+    width: 250, 
+    alignSelf: 'center',  
   },
   analyzeButton: {
     borderRadius: 10,
     paddingVertical: 10,
     alignItems: 'center',
-    marginBottom: 10, // Moved closer to result box
-    width: 200,  // Smaller button width to make it more app-like
-    alignSelf: 'center',  // Center the button
+    marginBottom: 10, 
+    width: 200,  
+    alignSelf: 'center',  
   },
   analyzeButtonText: {
     color: '#fff',
@@ -192,22 +191,22 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     borderRadius: 20,
     padding: 10,
-    marginTop: 10, // Moved closer to the Analyze button
-    width: 250,  // Match the width of the input field
-    height: 130,  // Increased height for the result box
+    marginTop: 10, 
+    width: 250,  
+    height: 130,  
     alignSelf: 'center',
-    justifyContent: 'flex-start',  // Align text to top-left
-    // Added shadow for a better design
+    justifyContent: 'flex-start', 
+    
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 5,  // Shadow for Android
+    elevation: 5,  
   },
   resultText: {
-    fontSize: 12,  // Smaller font size
+    fontSize: 12,  
     color: 'blue',
-    textAlign: 'left',  // Align text to top-left
+    textAlign: 'left', 
   },
 });
 

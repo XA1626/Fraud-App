@@ -127,4 +127,4 @@ docs/pages/versions/*/react-native/*.diff
 !crsqlite.xcframework
 
 # iOS
-**/ios/.xcode.env.local
+**/ios/.xcode.env.localnode_modules/@react-native/community-cli-plugin/node_modules/

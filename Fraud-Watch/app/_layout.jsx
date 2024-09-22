@@ -14,7 +14,7 @@ const RootLayout = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'transparent', // Set to transparent or any default color you prefer
+        backgroundColor: 'transparent', // Set to transpzzarent or any default color you prefer
     },
 });
 

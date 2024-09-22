@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, StyleSheet, Image } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import axios from 'axios';
 
-// Replace with your Google Safe Browsing API Key
 const googleApiKey = 'AIzaSyA9qRDwAfZqca4L1imLL8A3yeLdQBEdMOY';
 
-const UrlChecker = () => {
+const UrlChecker = ({ onNavigateBack }) => {
   const [url, setUrl] = useState('');
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -26,129 +26,187 @@ const UrlChecker = () => {
     }
   };
 
-  const isSuspiciousUrl = (url) => {
-    const suspiciousPatterns = [
-      /-/,          // Hyphen in the domain
-      /login/,      // URLs containing 'login'
-      /verify/,     // URLs containing 'verify'
-      /\.ru$/,      // Domains ending in .ru (commonly used by attackers)
-      /\.xyz$/,     // Domains ending in .xyz (often associated with spam)
-    ];
-
-    return suspiciousPatterns.some((pattern) => pattern.test(url));
-  };
-
   const checkUrl = async () => {
     const normalizedUrl = normalizeUrl(url);
     if (!normalizedUrl) {
-      Alert.alert('Invalid URL', 'Please enter a valid URL.');
+      setResult('Invalid URL. Please enter a valid URL.');
       return;
     }
 
     setLoading(true);
+    setResult(null); 
+    setTimeout(async () => {
+      try {
+        const response = await axios.post(
+          `https://safebrowsing.googleapis.com/v4/threatMatches:find?key=${googleApiKey}`,
+          {
+            client: {
+              clientId: "your-client-id",
+              clientVersion: "1.0",
+            },
+            threatInfo: {
+              threatTypes: ["MALWARE", "SOCIAL_ENGINEERING"],
+              platformTypes: ["ANY_PLATFORM"],
+              threatEntryTypes: ["URL"],
+              threatEntries: [{ url: normalizedUrl }],
+            },
+          }
+        );
 
-    try {
-      console.log('Normalized URL:', normalizedUrl);
+        const data = response.data;
+        const isPhishingGoogle = data.matches && data.matches.length > 0;
+        let message = isPhishingGoogle ? 'This URL is potentially dangerous.' : 'This URL is safe.';
 
-      // First, check with Google Safe Browsing
-      const response = await axios.post(
-        `https://safebrowsing.googleapis.com/v4/threatMatches:find?key=${googleApiKey}`,
-        {
-          client: {
-            clientId: "your-client-id",
-            clientVersion: "1.0",
-          },
-          threatInfo: {
-            threatTypes: ["MALWARE", "SOCIAL_ENGINEERING"],
-            platformTypes: ["ANY_PLATFORM"],
-            threatEntryTypes: ["URL"],
-            threatEntries: [{ url: normalizedUrl }],
-          },
-        }
-      );
-
-      console.log('Response from Google Safe Browsing:', response.data);
-
-      const data = response.data;
-      const isPhishingGoogle = data.matches && data.matches.length > 0;
-      const isSuspicious = isSuspiciousUrl(normalizedUrl);
-
-      const isPhishing = isPhishingGoogle || isSuspicious;
-
-      let message = isPhishing ? 'This URL is potentially dangerous.' : 'This URL is safe.';
-
-      setResult({
-        isPhishing,
-        message: message,
-        details: data,
-      });
-    } catch (error) {
-      console.error('Error checking URL with Google Safe Browsing:', error.response ? error.response.data : error.message);
-      Alert.alert('Error', 'Unable to check the URL. Please try again later.');
-    } finally {
-      setLoading(false);
-    }
+        setResult(message);
+      } catch (error) {
+        console.error('Error checking URL:', error.response ? error.response.data : error.message);
+        setResult('Error checking the URL. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    }, 2000); 
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Check URL for Phishing</Text>
+      {/* Back Button */}
+      <TouchableOpacity onPress={onNavigateBack} style={styles.backButton}>
+        <Text style={styles.backButtonText}>←</Text>
+      </TouchableOpacity>
+
+      {/* Image */}
+      <Image source={require('../assets/link.png')} style={styles.image} />
+
+      {/* Title and Instructions */}
+      <Text style={styles.title}>Link Checker</Text>
+      <Text style={styles.subtitle}>Is this link safe?</Text>
+      
+      {/* Description with smaller font and adjusted width for 2-line text */}
+      <Text style={styles.description}>
+        Submit a URL you want to visit to detect malware, fake websites, and phishing attacks.
+      </Text>
+
+      {/* URL Input */}
       <TextInput
         style={styles.input}
-        placeholder="Enter URL"
+        placeholder="Enter your URL here"
         value={url}
         onChangeText={setUrl}
         autoCapitalize="none"
         autoCorrect={false}
       />
-      <Button title={loading ? "Checking..." : "Check URL"} onPress={checkUrl} disabled={loading} />
-      {result && (
-        <View style={styles.resultContainer}>
-          <Text style={styles.resultText}>
-            {result.message}
-          </Text>
-          {result.isPhishing && (
-            <Text style={styles.detailsText}>Details: {JSON.stringify(result.details, null, 2)}</Text>
-          )}
-        </View>
-      )}
+
+      {/* Gradient Analyze Button */}
+      <LinearGradient
+        colors={['#7130f1', '#e66f26']}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }}
+        style={styles.analyzeButton}
+      >
+        <TouchableOpacity onPress={checkUrl}>
+          <Text style={styles.analyzeButtonText}>Analyze</Text>
+        </TouchableOpacity>
+      </LinearGradient>
+
+      {/* Loading and Result in the box */}
+      <View style={styles.resultBox}>
+        {loading ? (
+          <ActivityIndicator size="large" color="#000" />
+        ) : (
+          result && <Text style={styles.resultText}>{result}</Text>
+        )}
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
-    backgroundColor: '#fff',
     flex: 1,
+    padding: 20,
     justifyContent: 'center',
+    backgroundColor: '#fff',
+  },
+  backButton: {
+    position: 'absolute',
+    top: 50,
+    left: 150,
+    padding: 10,
+  },
+  backButtonText: {
+    fontSize: 30,
+    color: '#000',
+  },
+  image: {
+    width: 60,
+    height: 60,
+    alignSelf: 'center',
+    marginBottom: 10,
   },
   title: {
     fontSize: 24,
-    marginBottom: 16,
+    fontWeight: 'bold',
     textAlign: 'center',
+    marginBottom: 5,
+  },
+  subtitle: {
+    fontSize: 20,
+    textAlign: 'center',
+    marginBottom: 5,
+  },
+  description: {
+    fontSize: 14,
+    textAlign: 'center',
+    marginBottom: 20,
+    color: '#666',
+    width: '50%',
+    alignSelf: 'center',
+    lineHeight: 20,
   },
   input: {
-    borderColor: '#ccc',
     borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 10,
     padding: 8,
-    marginBottom: 16,
-    borderRadius: 4,
-    width: '100%',
+    marginBottom: 15,
+    fontSize: 14,
+    width: 250, 
+    alignSelf: 'center',  
   },
-  resultContainer: {
-    marginTop: 16,
+  analyzeButton: {
+    borderRadius: 10,
+    paddingVertical: 10,
+    alignItems: 'center',
+    marginBottom: 10, 
+    width: 200,  
+    alignSelf: 'center',  
+  },
+  analyzeButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  resultBox: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 20,
+    padding: 10,
+    marginTop: 10, 
+    width: 250,  
+    height: 130,  
+    alignSelf: 'center',
+    justifyContent: 'flex-start', 
+    
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 5,  
   },
   resultText: {
-    fontSize: 18,
-    color: '#333',
-    textAlign: 'center',
-  },
-  detailsText: {
-    marginTop: 8,
-    fontSize: 14,
-    color: '#777',
-    textAlign: 'center',
+    fontSize: 12,  
+    color: 'blue',
+    textAlign: 'left', 
   },
 });
 

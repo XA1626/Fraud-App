@@ -129,6 +129,16 @@ const App = () => {
                     <ChatRoom
                     onNavigateBack={() => setCurrentScreen('Dashboard')}
                     />
+                );case 'FakeUserGenerator':
+                return(
+                    <FakeUserGenerator
+                    onNavigateBack={() => setCurrentScreen('Dashboard')}
+                    />
+                );
+                return(
+                    <Resource
+                    onNavigateBack={() => setCurrentScreen('Dashboard')}
+                    />
                 );
             default:
                 return <SplashScreen />;

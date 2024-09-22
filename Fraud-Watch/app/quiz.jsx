@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, ActivityIndicator, ScrollView } from 'react-native';
 import { firestore } from './firebase'; // Ensure this points to your Firebase setup
 import { collection, getDocs } from 'firebase/firestore';
 
@@ -100,11 +100,16 @@ const Quiz = ({ onNavigateBack }) => {
         return (
             <View style={styles.container}>
                 <Text style={styles.title}>Select a Quiz Category</Text>
-                {loading ? <ActivityIndicator size="large" color="#fff" /> : categories.map(cat => (
-                    <TouchableOpacity key={cat.id} onPress={() => handleCategorySelect(cat)} style={styles.button}>
-                        <Text style={styles.buttonText}>{cat.name}</Text>
-                    </TouchableOpacity>
-                ))}
+
+                {/* Scrollable list of categories */}
+                <ScrollView contentContainerStyle={styles.scrollView}>
+                    {loading ? <ActivityIndicator size="large" color="#fff" /> : categories.map(cat => (
+                        <TouchableOpacity key={cat.id} onPress={() => handleCategorySelect(cat)} style={styles.button}>
+                            <Text style={styles.buttonText}>{cat.name}</Text>
+                        </TouchableOpacity>
+                    ))}
+                </ScrollView>
+
                 {/* Back to Dashboard button with a different color */}
                 <TouchableOpacity onPress={goBackToDashboard} style={styles.backButton}>
                     <Text style={styles.buttonText}>Back to Dashboard</Text>
@@ -130,11 +135,11 @@ const Quiz = ({ onNavigateBack }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Questions for {selectedCategoryName}</Text>
+            <Text style={styles.title}> {selectedCategoryName}</Text>
             {loading || !currentQuestion ? <Text>Loading questions...</Text> : (
                 <View>
                     <Text style={styles.questionText}>
-                        Question {currentQuestionIndex + 1}:
+                        Question {currentQuestionIndex + 1}
                     </Text>
                     <Text style={styles.QsentenceText}>
                         {currentQuestion.question}
@@ -165,19 +170,19 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     title: {
-        fontSize: 18,
+        fontSize: 20,
         color: '#fff',
         marginBottom: 20,
     },
     questionText: {
-        fontSize: 30,
+        fontSize: 14,
         color: '#0FFEF6',
         marginBottom: 10,
         fontFamily: 'Arial',
         textAlign: 'center',
     },
     QsentenceText: {
-        fontSize: 18,
+        fontSize: 16,
         color: '#fff',
         fontStyle: 'italic',
         textAlign: 'center',
@@ -193,7 +198,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     backButton: {
-        backgroundColor: '#FF6347',  // A different color for the back button (tomato red)
+        backgroundColor: '#faeb00',  // A different color for the back button (tomato red)
         paddingVertical: 15,
         paddingHorizontal: 30,
         borderRadius: 25,
@@ -218,10 +223,14 @@ const styles = StyleSheet.create({
     },
     answerText: {
         color: '#fff',
-        fontSize: 18,
+        fontSize: 14,
         textAlign: 'center', // Ensure text is centered within the bubble
+    },
+    scrollView: {
+        flexGrow: 1,
+        alignItems: 'center',  // Center the items in the scrollable area
+        paddingBottom: 20,  // Add padding to avoid cut-off at the end
     },
 });
 
 export default Quiz;
-

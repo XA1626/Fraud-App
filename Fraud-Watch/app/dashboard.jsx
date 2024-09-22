@@ -98,7 +98,9 @@
                     <TouchableOpacity onPress={() => onNavigate('Dashboard')}>
                         <FontAwesome name="home" size={24} color="#000" />
                     </TouchableOpacity>
+                    <TouchableOpacity onPress={() => onNavigate('ChatRoom')}>
                     <FontAwesome name="comments" size={24} color="#000" />
+                    </TouchableOpacity>
                     <TouchableOpacity onPress={() => onNavigate('Settings')}>
                         <FontAwesome name="cog" size={24} color="#000" />
                     </TouchableOpacity>

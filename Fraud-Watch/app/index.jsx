@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text, StatusBar, Platform } from 'react-native';
 import SplashScreen from './splashscreen';
 import LoginPage from './loginpage';
 import Dashboard from './dashboard';
 import CreateUser from './createuser';
-<<<<<<< HEAD
 import UrlChecker from './urlchecker'; // Import the UrlChecker component
 import Settings from './settings'; // Import the Settings component
 import ChatRoom from './ChatRoom'; // This should work if it's in the same folder.
@@ -13,41 +12,35 @@ import Account from './account';  // Import the Account component
 import Quiz from './quiz';  // Import the Quiz component
 import { firebase } from './firebase'; // Import Firebase config (assuming it is set up)
 import { fetchUserProfile } from './firebase'; // Import the function to fetch profile
-
-const isWeb = Platform.OS === 'web';
-=======
-import UrlChecker from './urlchecker';
-import Settings from './settings';
-import Newsfeed from './newsfeed';
 import Resource from './resource';
-import Account from './account'; 
 import FakeUserGenerator from './FakeUserGenerator'; 
-import { firebase } from './firebase'; 
-import { fetchUserProfile } from './firebase';
->>>>>>> origin/main
+const isWeb = Platform.OS === 'web';
 
 const App = () => {
     const [currentScreen, setCurrentScreen] = useState('SplashScreen');
-    const [userData, setUserData] = useState(null); 
+    const [userData, setUserData] = useState(null); // Hold the logged-in user's data
 
     useEffect(() => {
         const timer = setTimeout(() => {
             setCurrentScreen('LoginPage');
-        }, 2000);
+        }, 2000); // Splash screen duration
         return () => clearTimeout(timer);
     }, []);
 
+    // Updated handleLogin to integrate fetchUserProfile
     const handleLogin = async (user) => {
-        if (user && user.uid) {
+        if (user && user.uid) { // Ensure user is not undefined
             try {
-                const userProfile = await fetchUserProfile(user.uid);
+                const userProfile = await fetchUserProfile(user.uid); // Fetch profile from Firestore
+    
                 if (!userProfile) {
                     console.error('Error: User profile not found in Firestore');
-                    return;
+                    return; // Stop if no profile found
                 }
-                const completeUser = { ...user, ...userProfile };
-                setUserData(completeUser);
-                setCurrentScreen('Dashboard');
+    
+                const completeUser = { ...user, ...userProfile }; // Merge Firebase user with Firestore profile
+                setUserData(completeUser); // Save complete user data (email + username)
+                setCurrentScreen('Dashboard'); // Open dashboard
             } catch (error) {
                 console.error("Error fetching user profile: ", error);
             }
@@ -56,24 +49,28 @@ const App = () => {
         }
     };
 
+    // Function to handle logout
     const handleLogout = () => {
-        setUserData(null);
+        setUserData(null); // Clear user data on logout
         setCurrentScreen('LoginPage');
     };
 
+    // Function to render the current screen based on the app state
     const renderScreen = () => {
         switch (currentScreen) {
             case 'LoginPage':
                 return (
                     <LoginPage
-                        onLogin={(user) => handleLogin(user)}
+                        onLogin={(user) => {
+                            handleLogin(user); // Pass user data to login handler
+                        }}
                         onCreateUser={() => setCurrentScreen('CreateUser')}
                     />
                 );
             case 'Dashboard':
                 return (
                     <Dashboard
-                        userData={userData}
+                        userData={userData} // Pass user data to Dashboard
                         onNavigate={(screen) => {
                             if (screen === 'Settings') {
                                 setCurrentScreen('Settings');
@@ -81,17 +78,14 @@ const App = () => {
                                 setCurrentScreen('UrlChecker');
                             } else if (screen === 'Newsfeed') {
                                 setCurrentScreen('Newsfeed');
-<<<<<<< HEAD
-                            } else if (screen === 'Quiz') {
-                                setCurrentScreen('Quiz');  // Navigate to Quiz screen
-                            }else if (screen == 'ChatRoom'){
-                                setCurrentScreen('ChatRoom')
-=======
                             } else if (screen === 'Resource') {
                                 setCurrentScreen('Resource');
                             } else if (screen === 'FakeUserGenerator') {
                                 setCurrentScreen('FakeUserGenerator');
->>>>>>> origin/main
+                            } else if (screen === 'Quiz') {
+                                setCurrentScreen('Quiz');  // Navigate to Quiz screen
+                            }else if (screen == 'ChatRoom'){
+                                setCurrentScreen('ChatRoom')
                             }
                             
                         }}
@@ -104,33 +98,25 @@ const App = () => {
                         onAlreadyHaveAccount={() => setCurrentScreen('LoginPage')}
                     />
                 );
-
-            case "UrlChecker":
-                return (
-                    <UrlChecker
-                        onNavigateBack={() => setCurrentScreen("Dashboard")} // Navigate back to Dashboard
-                        onNavigate={setCurrentScreen} // Flexibility to navigate to other screens
-                    />
-                ); 
-            
+            case 'UrlChecker':
+                return <UrlChecker />;
             case 'Settings':
                 return (
                     <Settings
-                        userData={userData}
+                        userData={userData} // Pass user data to Settings
                         onNavigateBack={() => setCurrentScreen('Dashboard')}
-                        onNavigateToAccount={() => setCurrentScreen('Account')}
-                        onLogout={handleLogout}
+                        onNavigateToAccount={() => setCurrentScreen('Account')} // Navigate to Account screen
+                        onLogout={handleLogout} // Handle logout
                     />
                 );
             case 'Account':
                 return (
                     <Account
-                        userData={userData}
+                        userData={userData} // Pass user data to Account
                         onNavigateBack={() => setCurrentScreen('Settings')}
                     />
-                );
+                );  
             case 'Newsfeed':
-<<<<<<< HEAD
                 return <Newsfeed />;
             case 'Quiz':  // Add this case to render the Quiz screen
                 return (
@@ -144,14 +130,6 @@ const App = () => {
                     onNavigateBack={() => setCurrentScreen('Dashboard')}
                     />
                 );
-
-=======
-                return <Newsfeed onNavigateBack={() => setCurrentScreen('Dashboard')} />;
-            case 'Resource':
-                return <Resource onBack={() => setCurrentScreen('Dashboard')} />;
-            case 'FakeUserGenerator':
-                return <FakeUserGenerator onNavigate={setCurrentScreen} />;
->>>>>>> origin/main
             default:
                 return <SplashScreen />;
         }
@@ -171,6 +149,33 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         padding: 20,
+    },
+    title: {
+        fontSize: 36,
+        fontWeight: '900',
+        color: '#ff006e', // Bold magenta text
+        textShadowColor: '#ff66b2',
+        textShadowOffset: { width: 2, height: 2 },
+        textShadowRadius: 10,
+        marginBottom: 40,
+    },
+    button: {
+        backgroundColor: '#ff66b2', // Bright pink button
+        paddingVertical: 15,
+        paddingHorizontal: 25,
+        borderRadius: 50,
+        marginVertical: 15,
+        transform: [{ rotate: '5deg' }], // Slight rotation for a dynamic look
+        shadowColor: '#000',
+        shadowOffset: { width: 5, height: 5 },
+        shadowOpacity: 0.5,
+        shadowRadius: 10,
+    },
+    buttonText: {
+        color: '#fff', // White text on button
+        fontSize: 20,
+        fontWeight: 'bold',
+        letterSpacing: 2,
     },
 });
 

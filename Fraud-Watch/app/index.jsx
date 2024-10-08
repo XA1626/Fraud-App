@@ -87,7 +87,10 @@ const App = () => {
                             }else if (screen == 'ChatRoom'){
                                 setCurrentScreen('ChatRoom')
                             }
-                            
+                            else if (screen === 'CheckEmail'){
+                                setCurrentScreen('CheckEmail')
+                            }
+                            // please ensure indentation when adding code, you keep adding it and maing it ugly -Brad
                         }}
                     />
                 );
@@ -127,6 +130,12 @@ const App = () => {
             case 'ChatRoom':
                 return(
                     <ChatRoom
+                    onNavigateBack={() => setCurrentScreen('Dashboard')}
+                    />
+                );
+            case 'CheckEmail':
+                return (
+                    <CheckEmail
                     onNavigateBack={() => setCurrentScreen('Dashboard')}
                     />
                 );

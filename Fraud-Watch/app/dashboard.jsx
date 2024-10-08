@@ -6,7 +6,7 @@
     const Dashboard = ({ userData, onNavigate }) => { 
         const [searchText, setSearchText] = useState('');
 
-        const [filteredFeatures, setFilteredFeatures] = useState(['URL Checker', 'Cybersecurity News', 'Quiz', 'Gmail Integration', 'Fake User Generator', 'Resource']);
+        const [filteredFeatures, setFilteredFeatures] = useState(['URL Checker', 'Cybersecurity News', 'Quiz', 'Gmail Integration', 'Fake User Generator', 'Resource', 'Check Email Breach']);
 
         useEffect(() => {
             // Optional: Add any effect to handle changes in userData if needed
@@ -88,6 +88,13 @@
                         <TouchableOpacity style={styles.featureButton} onPress={() => onNavigate('FakeUserGenerator')}>
                             <Image source={require('../assets/fakeusergen.png')} style={styles.featureImage} />
                             <Text style={styles.featureText}>Fake User Generator</Text>
+                        </TouchableOpacity>
+                    )}
+                    
+                    {filteredFeatures.includes('Check Email Breach') && (
+                        <TouchableOpacity style={styles.featureButton} onPress={() => onNavigate('CheckEmail')}>
+                            <Image source={require('../assets/email-check.png')} style={styles.featureImage} /> {/* Make sure to add this image */}
+                            <Text style={styles.featureText}>Check Email Breach</Text>
                         </TouchableOpacity>
                     )}
 

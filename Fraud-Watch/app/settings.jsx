@@ -8,22 +8,12 @@ import {
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 
-const Settings = ({
-  onNavigateBack,
-  onNavigateToAccount,
-  onNavigateToCustomization,
-  onLogout,
-}) => {
+const Settings = ({ onNavigateBack, onNavigateToAccount, onLogout }) => {
   const [searchText, setSearchText] = useState("");
 
   // List of settings
   const settings = [
-    { name: "Account", icon: "user", action: onNavigateToAccount },
-    {
-      name: "Customization",
-      icon: "paint-brush",
-      action: onNavigateToCustomization,
-    }, // New Customization option
+    { name: "Account", icon: "user" },
     { name: "Notifications", icon: "bell" },
     { name: "Privacy & Security", icon: "lock" },
   ];
@@ -59,7 +49,11 @@ const Settings = ({
         <TouchableOpacity
           key={index}
           style={styles.settingItem}
-          onPress={setting.action ? setting.action : null}
+          onPress={() => {
+            if (setting.name === "Account") {
+              onNavigateToAccount(); // Navigate to Account screen when "Account" is clicked
+            }
+          }}
         >
           <FontAwesome name={setting.icon} size={24} color="black" />
           <Text style={styles.settingText}>{setting.name}</Text>
@@ -77,7 +71,6 @@ const Settings = ({
   );
 };
 
-// Styles remain unchanged
 const styles = StyleSheet.create({
   container: {
     flex: 1,

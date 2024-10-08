@@ -13,7 +13,9 @@ import Quiz from './quiz';  // Import the Quiz component
 import { firebase } from './firebase'; // Import Firebase config (assuming it is set up)
 import { fetchUserProfile } from './firebase'; // Import the function to fetch profile
 import Resource from './resource';
-import FakeUserGenerator from './FakeUserGenerator'; 
+import FakeUserGenerator from './FakeUserGenerator';
+import CheckEmail from './CheckEmail';
+
 const isWeb = Platform.OS === 'web';
 
 const App = () => {

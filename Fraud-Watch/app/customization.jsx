@@ -1,52 +1,24 @@
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import React from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { FontAwesome } from "@expo/vector-icons";
 
-const themes = [
-  {
-    name: "Light",
-    backgroundColor: "#ffffff",
-    textColor: "#000000",
-    buttonColor: "#e0e0e0",
-  },
-  {
-    name: "Dark",
-    backgroundColor: "#333333",
-    textColor: "#ffffff",
-    buttonColor: "#444444",
-  },
-  {
-    name: "Blue",
-    backgroundColor: "#add8e6",
-    textColor: "#000080",
-    buttonColor: "#87cefa",
-  },
-];
-
-const Customization = ({ onThemeChange }) => {
-  const [selectedTheme, setSelectedTheme] = useState(null);
-
-  const handleThemeChange = (theme) => {
-    setSelectedTheme(theme.name);
-    onThemeChange(theme); // Pass theme data back to the parent or global state
-  };
-
+const Customization = ({ onNavigateBack }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Choose a Theme</Text>
-      {themes.map((theme, index) => (
-        <TouchableOpacity
-          key={index}
-          style={[
-            styles.themeButton,
-            {
-              backgroundColor: theme.buttonColor,
-            },
-          ]}
-          onPress={() => handleThemeChange(theme)}
-        >
-          <Text style={{ color: theme.textColor }}>{theme.name}</Text>
+      {/* Back button and Customization Title */}
+      <View style={styles.header}>
+        <TouchableOpacity onPress={onNavigateBack}>
+          <FontAwesome name="arrow-left" size={24} color="black" />
         </TouchableOpacity>
-      ))}
+        <Text style={styles.headerText}>Customization</Text>
+      </View>
+
+      {/* Empty space for future customization options */}
+      <View style={styles.content}>
+        <Text style={styles.placeholderText}>
+          Customization options coming soon...
+        </Text>
+      </View>
     </View>
   );
 };
@@ -54,21 +26,28 @@ const Customization = ({ onThemeChange }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    padding: 20,
     backgroundColor: "#fff",
   },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 20,
   },
-  themeButton: {
-    padding: 10,
-    marginVertical: 10,
-    borderRadius: 10,
-    width: 150,
+  headerText: {
+    fontSize: 28, // Larger font size for emphasis
+    fontWeight: "bold", // Bold for stronger visual impact
+    color: "#000000", // Custom color for visual appeal
+    marginLeft: 10,
+  },
+  content: {
+    flex: 1,
+    justifyContent: "center",
     alignItems: "center",
+  },
+  placeholderText: {
+    fontSize: 18,
+    color: "#888",
   },
 });
 

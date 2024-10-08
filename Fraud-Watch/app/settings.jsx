@@ -8,14 +8,20 @@ import {
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 
-const Settings = ({ onNavigateBack, onNavigateToAccount, onLogout }) => {
+const Settings = ({
+  onNavigateBack,
+  onNavigateToAccount,
+  onNavigateToCustomization,
+  onLogout,
+}) => {
   const [searchText, setSearchText] = useState("");
 
-  // List of settings
+  // List of settings, including the new "Customization" item
   const settings = [
     { name: "Account", icon: "user" },
     { name: "Notifications", icon: "bell" },
     { name: "Privacy & Security", icon: "lock" },
+    { name: "Customization", icon: "paint-brush" }, // New Customization item
   ];
 
   // Function to filter settings based on search input
@@ -52,6 +58,8 @@ const Settings = ({ onNavigateBack, onNavigateToAccount, onLogout }) => {
           onPress={() => {
             if (setting.name === "Account") {
               onNavigateToAccount(); // Navigate to Account screen when "Account" is clicked
+            } else if (setting.name === "Customization") {
+              onNavigateToCustomization(); // Navigate to Customization screen when "Customization" is clicked
             }
           }}
         >

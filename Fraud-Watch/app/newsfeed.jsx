@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, FlatList, ActivityIndicator, TouchableOpacity, Linking, TextInput } from 'react-native';
-import { Ionicons } from '@expo/vector-icons'; // 아이콘을 위한 모듈 추가
+import { StyleSheet, Text, View, Image, FlatList, ActivityIndicator, TouchableOpacity, Linking, TextInput, Share } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 const Newsfeed = ({ onNavigateBack }) => {
   const [news, setNews] = useState([]);
@@ -51,21 +51,36 @@ const Newsfeed = ({ onNavigateBack }) => {
     }
   };
 
+  const handleShare = async (url) => {
+    try {
+      await Share.share({
+        message: `${url}`,
+      });
+    } catch (error) {
+      console.error("Error sharing: ", error);
+    }
+  };
+
   const renderItem = ({ item }) => (
-    <TouchableOpacity onPress={() => handlePress(item.url)} style={styles.newsItem}>
-      <Image source={{ uri: item.urlToImage }} style={styles.thumbnail} />
-      <View style={styles.textContainer}>
-        <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.description}>{item.description}</Text>
-        <TouchableOpacity onPress={() => handleBookmarkToggle(item)}>
-          <Ionicons
-            name={bookmarks.some(bookmark => bookmark.url === item.url) ? 'bookmark' : 'bookmark-outline'}
-            size={24}
-            color="#4A90E2"
-          />
-        </TouchableOpacity>
-      </View>
-    </TouchableOpacity>
+    <View style={styles.newsItem}>
+      <TouchableOpacity onPress={() => handlePress(item.url)} style={styles.newsContent}>
+        <Image source={{ uri: item.urlToImage }} style={styles.thumbnail} />
+        <View style={styles.textContainer}>
+          <Text style={styles.title}>{item.title}</Text>
+          <Text style={styles.description}>{item.description}</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => handleShare(item.url)} style={styles.threeDotsButton}>
+        <Ionicons name="ellipsis-vertical" size={24} color="#4A90E2" />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => handleBookmarkToggle(item)} style={styles.bookmarkButton}>
+        <Ionicons
+          name={bookmarks.some(bookmark => bookmark.url === item.url) ? 'bookmark' : 'bookmark-outline'}
+          size={24}
+          color="#4A90E2"
+        />
+      </TouchableOpacity>
+    </View>
   );
 
   const renderLatestNews = () => {
@@ -82,7 +97,7 @@ const Newsfeed = ({ onNavigateBack }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={onNavigateBack} style={styles.backButton}>
-        <Ionicons name="arrow-back" size={24} color="#4A90E2" /> {/* 화살표 아이콘 */}
+        <Ionicons name="arrow-back" size={24} color="#4A90E2" />
       </TouchableOpacity>
       <View style={styles.headerContainer}>
         <Text style={styles.header}>Cybersecurity News</Text>
@@ -128,15 +143,11 @@ const Newsfeed = ({ onNavigateBack }) => {
   );
 };
 
-export default Newsfeed;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5F5F5',
     padding: 20,
-    width: '25%',  // 전체 너비를 화면의 4분의 1로 설정
-    alignSelf: 'center',  // 가운데 정렬
   },
   backButton: {
     marginBottom: 20,
@@ -222,6 +233,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderRadius: 10,
     padding: 10,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  newsContent: {
+    flexDirection: 'row',
+    flex: 1,
   },
   textContainer: {
     flex: 1,
@@ -246,4 +263,9 @@ const styles = StyleSheet.create({
   newsList: {
     flex: 1,
   },
+  threeDotsButton: {
+    padding: 10,
+  },
 });
+
+export default Newsfeed;

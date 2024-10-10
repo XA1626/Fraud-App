@@ -6,10 +6,14 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
+  Platform,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native"; // Import useNavigation for navigation control
 
-const Blacklist = () => {
+const Blacklist = ({ onNavigateBack }) => {
+  const navigation = useNavigation(); // Hook to access navigation
+
   // Sample blacklist data of known scam phone numbers
   const [blacklist, setBlacklist] = useState([
     { id: "1", number: "+1234567890" },
@@ -19,7 +23,6 @@ const Blacklist = () => {
 
   // Function to block a phone number and confirm the action
   const blockNumber = (number) => {
-    // Logic to block the number (e.g., call an API, update a blocked list, etc.)
     Alert.alert(
       "Blocked",
       `The number ${number} has been blocked from calling you.`
@@ -42,6 +45,15 @@ const Blacklist = () => {
 
   return (
     <View style={styles.container}>
+      {/* Back Button */}
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={onNavigateBack} // Navigate back to the previous screen
+      >
+        <FontAwesome name="arrow-left" size={24} color="#000" />
+        <Text style={styles.backButtonText}>Back</Text>
+      </TouchableOpacity>
+
       {/* Page Title */}
       <Text style={styles.title}>Blacklist of Known Scam Numbers</Text>
 
@@ -63,11 +75,24 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: "#fff",
   },
+  backButton: {
+    position: "absolute",
+    top: Platform.OS === "ios" ? 50 : 20, // Adjust based on platform (iOS/Android)
+    left: 20,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  backButtonText: {
+    fontSize: 18,
+    color: "#000",
+    marginLeft: 10,
+  },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 20,
     textAlign: "center",
+    marginTop: Platform.OS === "ios" ? 50 : 70, // Adjust position based on platform to avoid overlap
   },
   listContent: {
     paddingBottom: 20,

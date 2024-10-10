@@ -10,10 +10,11 @@ import ChatRoom from './ChatRoom'; // This should work if it's in the same folde
 import Newsfeed from './newsfeed'; // Import the Newsfeed component
 import Account from './account';  // Import the Account component
 import Quiz from './quiz';  // Import the Quiz component
+import Resource from './resource';
 import { firebase } from './firebase'; // Import Firebase config (assuming it is set up)
 import { fetchUserProfile } from './firebase'; // Import the function to fetch profile
-import Resource from './resource';
 import FakeUserGenerator from './FakeUserGenerator'; 
+import ScheduleConsultation from './scheduleConsultation';
 const isWeb = Platform.OS === 'web';
 
 const App = () => {
@@ -86,6 +87,8 @@ const App = () => {
                                 setCurrentScreen('Quiz');  // Navigate to Quiz screen
                             }else if (screen == 'ChatRoom'){
                                 setCurrentScreen('ChatRoom')
+                            }else if (screen == 'scheduleConsultation') {
+                            setCurrentScreen('scheduleConsultation')
                             }
                             
                         }}
@@ -135,6 +138,13 @@ const App = () => {
                     onNavigateBack={() => setCurrentScreen('Dashboard')}
                     />
                 );
+                case 'scheduleConsultation':
+                return(
+                    <ScheduleConsultation
+                    onNavigateBack={() => setCurrentScreen('Dashboard')}
+                    />
+                );
+                case 'Resource':
                 return(
                     <Resource
                     onNavigateBack={() => setCurrentScreen('Dashboard')}

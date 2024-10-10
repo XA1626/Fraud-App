@@ -6,7 +6,7 @@
     const Dashboard = ({ userData, onNavigate }) => { 
         const [searchText, setSearchText] = useState('');
 
-        const [filteredFeatures, setFilteredFeatures] = useState(['URL Checker', 'Cybersecurity News', 'Quiz', 'Gmail Integration', 'Fake User Generator', 'Resource']);
+        const [filteredFeatures, setFilteredFeatures] = useState(['URL Checker', 'Cybersecurity News', 'Quiz', 'Gmail Integration', 'Fake User Generator', 'Resource', 'scheduleConsultation']);
 
         useEffect(() => {
             // Optional: Add any effect to handle changes in userData if needed
@@ -15,7 +15,7 @@
         // Function to handle searching among features
         const handleSearch = (text) => {
             setSearchText(text);
-            const features = ['URL Checker', 'Cybersecurity News', 'Quiz', 'Gmail Integration', 'Fake User Generator'];
+            const features = ['URL Checker', 'Cybersecurity News', 'Quiz', 'Gmail Integration', 'Fake User Generator', 'scheduleConsultation', 'Resource'];
             const filtered = features.filter(feature => feature.toLowerCase().includes(text.toLowerCase()));
             setFilteredFeatures(filtered);
         };
@@ -62,12 +62,12 @@
                         </TouchableOpacity>
                     )}
 
-    {filteredFeatures.includes('Resource') && (
-        <TouchableOpacity style={styles.featureButton} onPress={() => onNavigate('Resource')}>
-            <Image source={require('../assets/resource.png')} style={styles.featureImage} />
-            <Text style={styles.featureText}>Resource</Text>
-        </TouchableOpacity>
-    )}
+                    {filteredFeatures.includes('Resource') && (
+                        <TouchableOpacity style={styles.featureButton} onPress={() => onNavigate('Resource')}>
+                            <Image source={require('../assets/resource.png')} style={styles.featureImage} />
+                            <Text style={styles.featureText}>Resource</Text>
+                        </TouchableOpacity>
+                    )}
 
 
                     {filteredFeatures.includes('Quiz') && (
@@ -88,6 +88,13 @@
                         <TouchableOpacity style={styles.featureButton} onPress={() => onNavigate('FakeUserGenerator')}>
                             <Image source={require('../assets/fakeusergen.png')} style={styles.featureImage} />
                             <Text style={styles.featureText}>Fake User Generator</Text>
+                        </TouchableOpacity>
+                    )}
+
+                    {filteredFeatures.includes('scheduleConsultation') && (
+                        <TouchableOpacity style={styles.featureButton} onPress={() => onNavigate('scheduleConsultation')}>
+                            <Image source={require('../assets/Schedule-Your-Free-Consultation.png')} style={styles.featureImage} />
+                            <Text style={styles.featureText}>scheduleConsultation</Text>
                         </TouchableOpacity>
                     )}
 

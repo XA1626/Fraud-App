@@ -86,7 +86,10 @@ const App = () => {
                 setCurrentScreen("ChatRoom");
               } else if (screen == "Blacklist") {
                 setCurrentScreen("Blacklist");
-              }
+              } else if (screen == "GmailIntegration") {
+                setCurrentScreen("GmailIntegration");
+            }
+            
             }}
           />
         );
@@ -135,6 +138,8 @@ const App = () => {
         return <Resource onNavigateBack={() => setCurrentScreen("Settings")} />;
       case "ChatRoom":
         return <ChatRoom onNavigateBack={() => setCurrentScreen("Dashboard")} />;
+      case "GmailIntegration":
+        return <GmailIntegration onNavigateBack={() => setCurrentScreen("Dashboard")} />;
       default:
         return <SplashScreen />;
     }

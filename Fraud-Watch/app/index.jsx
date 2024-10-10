@@ -1,26 +1,28 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text, StatusBar, Platform } from "react-native";
+import { View, StyleSheet, Text, Platform } from "react-native";
 import SplashScreen from "./splashscreen";
 import LoginPage from "./loginpage";
 import Dashboard from "./dashboard";
 import CreateUser from "./createuser";
-import UrlChecker from "./urlchecker"; // Import the UrlChecker component
-import Settings from "./settings"; // Import the Settings component
-import ChatRoom from "./ChatRoom"; // This should work if it's in the same folder.
-import Newsfeed from "./newsfeed"; // Import the Newsfeed component
-import Account from "./account"; // Import the Account component
-import Customization from "./customization"; // Import the Customization component
-import Quiz from "./quiz"; // Import the Quiz component
-import { firebase } from "./firebase"; // Import Firebase config (assuming it is set up)
-import { fetchUserProfile } from "./firebase"; // Import the function to fetch profile
-import Resources from "./resource";
+import UrlChecker from "./urlchecker";
+import Settings from "./settings";
+import ChatRoom from "./ChatRoom";
+import Newsfeed from "./newsfeed";
+import Account from "./account";
+import Quiz from "./quiz";
+import GmailIntegration from "./gmailintegration";
+import { useGmailAuth } from "./GmailAuth";
+import { firebase } from "./firebase";
+import { fetchUserProfile } from "./firebase";
+import Resource from "./resource";
 import FakeUserGenerator from "./FakeUserGenerator";
+import Customization from "./customization";
 import Blacklist from "./blacklist";
 const isWeb = Platform.OS === "web";
 
 const App = () => {
   const [currentScreen, setCurrentScreen] = useState("SplashScreen");
-  const [userData, setUserData] = useState(null); // Hold the logged-in user's data
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -29,21 +31,18 @@ const App = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // Updated handleLogin to integrate fetchUserProfile
   const handleLogin = async (user) => {
     if (user && user.uid) {
-      // Ensure user is not undefined
       try {
-        const userProfile = await fetchUserProfile(user.uid); // Fetch profile from Firestore
+        const userProfile = await fetchUserProfile(user.uid);
 
         if (!userProfile) {
           console.error("Error: User profile not found in Firestore");
-          return; // Stop if no profile found
+          return;
         }
-
-        const completeUser = { ...user, ...userProfile }; // Merge Firebase user with Firestore profile
-        setUserData(completeUser); // Save complete user data (email + username)
-        setCurrentScreen("Dashboard"); // Open dashboard
+        const completeUser = { ...user, ...userProfile };
+        setUserData(completeUser);
+        setCurrentScreen("Dashboard");
       } catch (error) {
         console.error("Error fetching user profile: ", error);
       }
@@ -52,28 +51,24 @@ const App = () => {
     }
   };
 
-  // Function to handle logout
   const handleLogout = () => {
-    setUserData(null); // Clear user data on logout
+    setUserData(null);
     setCurrentScreen("LoginPage");
   };
 
-  // Function to render the current screen based on the app state
   const renderScreen = () => {
     switch (currentScreen) {
       case "LoginPage":
         return (
           <LoginPage
-            onLogin={(user) => {
-              handleLogin(user); // Pass user data to login handler
-            }}
+            onLogin={(user) => handleLogin(user)}
             onCreateUser={() => setCurrentScreen("CreateUser")}
           />
         );
       case "Dashboard":
         return (
           <Dashboard
-            userData={userData} // Pass user data to Dashboard
+            userData={userData}
             onNavigate={(screen) => {
               if (screen === "Settings") {
                 setCurrentScreen("Settings");
@@ -86,7 +81,7 @@ const App = () => {
               } else if (screen === "FakeUserGenerator") {
                 setCurrentScreen("FakeUserGenerator");
               } else if (screen === "Quiz") {
-                setCurrentScreen("Quiz"); // Navigate to Quiz screen
+                setCurrentScreen("Quiz");
               } else if (screen == "ChatRoom") {
                 setCurrentScreen("ChatRoom");
               } else if (screen == "Blacklist") {
@@ -103,57 +98,43 @@ const App = () => {
           />
         );
       case "UrlChecker":
-        return (
-          <UrlChecker onNavigateBack={() => setCurrentScreen("Dashboard")} />
-        );
+        return <UrlChecker onNavigateBack={() => setCurrentScreen("Dashboard")} />;
       case "Settings":
         return (
           <Settings
-            userData={userData} // Pass user data to Settings
+            userData={userData}
             onNavigateBack={() => setCurrentScreen("Dashboard")}
-            onNavigateToAccount={() => setCurrentScreen("Account")} // Navigate to Account screen
-            onNavigateToCustomization={() => setCurrentScreen("Customization")} // Navigate to Customization screen
-            onLogout={handleLogout} // Handle logout
+            onNavigateToAccount={() => setCurrentScreen("Account")}
+            onNavigateToCustomization={() => setCurrentScreen("Customization")}
+            onLogout={handleLogout}
           />
         );
       case "Account":
         return (
           <Account
-            userData={userData} // Pass user data to Account
+            userData={userData}
             onNavigateBack={() => setCurrentScreen("Settings")}
           />
         );
       case "Blacklist":
-        return (
-          <Blacklist onNavigateBack={() => setCurrentScreen("Dashboard")} />
-        );
+        return <Blacklist onNavigateBack={() => setCurrentScreen("Dashboard")} />;
       case "Customization":
         return (
           <Customization
-            userData={userData} // Pass user data to Customization
+            userData={userData}
             onNavigateBack={() => setCurrentScreen("Settings")}
           />
         );
       case "FakeUserGenerator":
-        return (
-          <FakeUserGenerator
-            onNavigateBack={() => setCurrentScreen("Dashboard")}
-          />
-        );
+        return <FakeUserGenerator onNavigateBack={() => setCurrentScreen("Dashboard")} />;
       case "Newsfeed":
-        return (
-          <Newsfeed onNavigateBack={() => setCurrentScreen("Dashboard")} />
-        );
-      case "Quiz": // Add this case to render the Quiz screen
+        return <Newsfeed onNavigateBack={() => setCurrentScreen("Dashboard")} />;
+      case "Quiz":
         return <Quiz onNavigateBack={() => setCurrentScreen("Dashboard")} />;
       case "Resources":
-        return (
-          <Resources onNavigateBack={() => setCurrentScreen("Settings")} />
-        );
+        return <Resource onNavigateBack={() => setCurrentScreen("Settings")} />;
       case "ChatRoom":
-        return (
-          <ChatRoom onNavigateBack={() => setCurrentScreen("Dashboard")} />
-        );
+        return <ChatRoom onNavigateBack={() => setCurrentScreen("Dashboard")} />;
       default:
         return <SplashScreen />;
     }
@@ -173,26 +154,25 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 36,
     fontWeight: "900",
-    color: "#ff006e", // Bold magenta text
+    color: "#ff006e",
     textShadowColor: "#ff66b2",
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 10,
     marginBottom: 40,
   },
   button: {
-    backgroundColor: "#ff66b2", // Bright pink button
+    backgroundColor: "#ff66b2",
     paddingVertical: 15,
     paddingHorizontal: 25,
     borderRadius: 50,
     marginVertical: 15,
-    transform: [{ rotate: "5deg" }], // Slight rotation for a dynamic look
     shadowColor: "#000",
     shadowOffset: { width: 5, height: 5 },
     shadowOpacity: 0.5,
     shadowRadius: 10,
   },
   buttonText: {
-    color: "#fff", // White text on button
+    color: "#fff",
     fontSize: 20,
     fontWeight: "bold",
     letterSpacing: 2,

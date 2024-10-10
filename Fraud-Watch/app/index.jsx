@@ -10,7 +10,8 @@ import ChatRoom from './ChatRoom';
 import Newsfeed from './newsfeed'; 
 import Account from './account';  
 import Quiz from './quiz';  
-import GmailIntegration from './gmailintegration'; // Ensure the file is named exactly "gmailintegration.jsx"
+import GmailIntegration from './gmailintegration'; 
+import { useGmailAuth } from './GmailAuth'; 
 import { firebase } from './firebase'; 
 import { fetchUserProfile } from './firebase'; 
 import Resource from './resource';

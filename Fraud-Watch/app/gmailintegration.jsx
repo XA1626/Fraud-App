@@ -63,7 +63,7 @@
                         const snippet = details.data.snippet;
                         let isScam = false;
 
-                        const suspiciousPatterns = ["urgent", "immediate action", "click here", "account risk"];
+                        const suspiciousPatterns = ["urgent", "immediate action", "click here", "account risk", "get a chace to win", "$", "personal information", "creidt card details", "debit card details", "credit card", "debit card", "driver licence", "send me $", "security code", "withdraw"];
                         if (suspiciousPatterns.some((pattern) => snippet.toLowerCase().includes(pattern))) {
                             isScam = true;
                             setScamCount((prev) => prev + 1);

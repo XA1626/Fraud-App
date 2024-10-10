@@ -129,3 +129,4 @@ docs/pages/versions/*/react-native/*.diff
 # iOS
 **/ios/.xcode.env.localnode_modules/@react-native/community-cli-plugin/node_modules/
 .DS_Store
+.DS_Store

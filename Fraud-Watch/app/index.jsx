@@ -15,6 +15,7 @@ import { firebase } from "./firebase"; // Import Firebase config (assuming it is
 import { fetchUserProfile } from "./firebase"; // Import the function to fetch profile
 import Resource from "./resource";
 import FakeUserGenerator from "./FakeUserGenerator";
+import blacklist from "./blacklist";
 const isWeb = Platform.OS === "web";
 
 const App = () => {
@@ -88,6 +89,8 @@ const App = () => {
                 setCurrentScreen("Quiz"); // Navigate to Quiz screen
               } else if (screen == "ChatRoom") {
                 setCurrentScreen("ChatRoom");
+              } else if (screen == "Blacklist") {
+                setCurrentScreen("Blacklist");
               }
             }}
           />
@@ -100,7 +103,9 @@ const App = () => {
           />
         );
       case "UrlChecker":
-        return <UrlChecker />;
+        return (
+          <UrlChecker onNavigateBack={() => setCurrentScreen("Dashboard")} />
+        );
       case "Settings":
         return (
           <Settings
@@ -118,17 +123,33 @@ const App = () => {
             onNavigateBack={() => setCurrentScreen("Settings")}
           />
         );
+      case "Blacklist":
+        return (
+          <Blacklist onNavigateBack={() => setCurrentScreen("Dashboard")} />
+        );
       case "Customization":
         return (
-            <Customization
-                userData={userData} // Pass user data to Customization
-                onNavigateBack={() => setCurrentScreen("Settings")}
-                />
+          <Customization
+            userData={userData} // Pass user data to Customization
+            onNavigateBack={() => setCurrentScreen("Settings")}
+          />
+        );
+      case "FakeUserGenerator":
+        return (
+          <FakeUserGenerator
+            onNavigateBack={() => setCurrentScreen("Dashboard")}
+          />
         );
       case "Newsfeed":
-        return <Newsfeed />;
+        return (
+          <Newsfeed onNavigateBack={() => setCurrentScreen("Dashboard")} />
+        );
       case "Quiz": // Add this case to render the Quiz screen
         return <Quiz onNavigateBack={() => setCurrentScreen("Dashboard")} />;
+      case "Resources":
+        return (
+          <Resources onNavigateBack={() => setCurrentScreen("Settings")} />
+        );
       case "ChatRoom":
         return (
           <ChatRoom onNavigateBack={() => setCurrentScreen("Dashboard")} />

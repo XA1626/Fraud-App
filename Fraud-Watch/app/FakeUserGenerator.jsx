@@ -18,9 +18,7 @@ import { useNavigation } from "@react-navigation/native"; // Import useNavigatio
 // Utility function to generate a random item from an array
 const getRandomItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
-// Other functions (generateUsername, generatePassword, generateTempEmail) remain unchanged
-
-const FakeUserGenerator = () => {
+const FakeUserGenerator = ({ onNavigateBack }) => {
   const navigation = useNavigation(); // Hook to access navigation
 
   const [username, setUsername] = useState("");
@@ -46,7 +44,7 @@ const FakeUserGenerator = () => {
       {/* Back Button */}
       <TouchableOpacity
         style={styles.backButton}
-        onPress={() => navigation.navigate("Dashboard")} // Navigate directly to Dashboard screen
+        onPress={onNavigateBack} // Navigate directly to Dashboard screen
       >
         <FontAwesome name="arrow-left" size={24} color="#000" />
         <Text style={styles.backButtonText}>Back</Text>

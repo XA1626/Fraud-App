@@ -11,16 +11,273 @@ import {
   Alert,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons"; // For back arrow and copy icon
 import { Image } from "react-native";
-import { useNavigation } from "@react-navigation/native"; // Import useNavigation for navigation control
 
 // Utility function to generate a random item from an array
 const getRandomItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
-const FakeUserGenerator = ({ onNavigateBack }) => {
-  const navigation = useNavigation(); // Hook to access navigation
+// Generate a fake username
+const generateUsername = () => {
+  const animals = [
+    "Lion",
+    "Tiger",
+    "Elephant",
+    "Eagle",
+    "Shark",
+    "Giraffe",
+    "Penguin",
+    "Koala",
+    "Leopard",
+    "Cheetah",
+    "Crocodile",
+    "Bear",
+    "Wolf",
+    "Zebra",
+    "Kangaroo",
+    "Panda",
+    "Whale",
+    "Dolphin",
+    "Rhino",
+    "Hippo",
+    "Falcon",
+    "Fox",
+    "Otter",
+    "Ostrich",
+    "Buffalo",
+    "Jaguar",
+    "Bison",
+    "Pelican",
+    "Camel",
+    "Monkey",
+    "Rabbit",
+    "Hawk",
+    "Gecko",
+    "Seal",
+    "Horse",
+    "Antelope",
+    "Badger",
+    "Frog",
+    "Lynx",
+    "Mole",
+    "Moose",
+    "Orca",
+    "Swan",
+    "Turtle",
+    "Vulture",
+    "Beetle",
+    "Robin",
+    "Sparrow",
+    "Squirrel",
+    "Turkey",
+  ];
 
+  const vehicles = [
+    "Car",
+    "Bike",
+    "Jet",
+    "Truck",
+    "Boat",
+    "Helicopter",
+    "Submarine",
+    "Scooter",
+    "Bus",
+    "Train",
+    "Bicycle",
+    "Tractor",
+    "Motorcycle",
+    "Van",
+    "ATV",
+    "Skateboard",
+    "Rollerblade",
+    "Blimp",
+    "Spaceship",
+    "Segway",
+    "Hovercraft",
+    "Raft",
+    "Yacht",
+    "SUV",
+    "Skiff",
+    "Trolley",
+    "Moped",
+    "Cruiser",
+    "Ferry",
+    "JetSki",
+    "Skidoo",
+    "Minivan",
+    "GolfCart",
+    "Snowmobile",
+    "Canoe",
+    "Kayak",
+    "Lorry",
+    "Pickup",
+    "Dinghy",
+    "Tricycle",
+    "Rickshaw",
+    "Motorboat",
+    "Speedboat",
+    "Glider",
+    "Hoverboard",
+    "Unicycle",
+    "Rowboat",
+    "Sidecar",
+    "Tank",
+    "Cart",
+  ];
+
+  const firstNames = [
+    "John",
+    "Alice",
+    "Max",
+    "Emma",
+    "Sarah",
+    "James",
+    "Olivia",
+    "Liam",
+    "Sophia",
+    "Ethan",
+    "Isabella",
+    "Noah",
+    "Mia",
+    "William",
+    "Charlotte",
+    "Benjamin",
+    "Amelia",
+    "Lucas",
+    "Ava",
+    "Henry",
+    "Jack",
+    "Grace",
+    "Logan",
+    "Hannah",
+    "Mason",
+    "Ella",
+    "Jackson",
+    "Emily",
+    "Leo",
+    "Harper",
+    "Alexander",
+    "Aiden",
+    "Madison",
+    "Daniel",
+    "Scarlett",
+    "Matthew",
+    "Lily",
+    "Jacob",
+    "Aria",
+    "Samuel",
+    "Wyatt",
+    "Mila",
+    "David",
+    "Zoe",
+    "Isaac",
+    "Owen",
+    "Chloe",
+    "Elijah",
+    "Luna",
+    "Aaron",
+  ];
+
+  const fruitsOrVeggies = [
+    "Apple",
+    "Orange",
+    "Banana",
+    "Carrot",
+    "Potato",
+    "Strawberry",
+    "Broccoli",
+    "Cucumber",
+    "Tomato",
+    "Pineapple",
+    "Mango",
+    "Peach",
+    "Pear",
+    "Grapes",
+    "Watermelon",
+    "Lettuce",
+    "Spinach",
+    "Onion",
+    "Blueberry",
+    "Avocado",
+    "Celery",
+    "Radish",
+    "Garlic",
+    "Pumpkin",
+    "Turnip",
+    "Peas",
+    "Leek",
+    "Plum",
+    "Kiwi",
+    "Apricot",
+    "Cherries",
+    "Cabbage",
+    "Peppers",
+    "Fennel",
+    "Cauliflower",
+    "Corn",
+    "Beet",
+    "Melon",
+    "Kale",
+    "Fig",
+    "Papaya",
+    "Tangerine",
+    "Olives",
+    "Dates",
+    "Passionfrt",
+    "Coconut",
+    "Raspberry",
+    "Quince",
+    "Lemon",
+    "Lychee",
+  ];
+
+  const usernameParts = [
+    getRandomItem(animals),
+    getRandomItem(vehicles),
+    getRandomItem(firstNames),
+    getRandomItem(fruitsOrVeggies),
+  ];
+
+  // Shuffle parts randomly and join with a random 4-digit number
+  return (
+    usernameParts
+      .sort(() => Math.random() - 0.5)
+      .slice(0, 2)
+      .join("") + Math.floor(1000 + Math.random() * 9000)
+  );
+};
+
+// Generate a strong password
+const generatePassword = () => {
+  const chars =
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
+  let password = "";
+
+  while (
+    !(
+      /[A-Z]/.test(password) &&
+      /[a-z]/.test(password) &&
+      /[0-9]/.test(password) &&
+      /[!@#$%^&*()_+]/.test(password)
+    )
+  ) {
+    password = Array.from(
+      { length: 15 },
+      () => chars[Math.floor(Math.random() * chars.length)]
+    ).join("");
+  }
+
+  return password;
+};
+
+// Generate a temp email based on the username
+const generateTempEmail = (username) => {
+  const domains = ["@tempmail.com", "@example.com", "@mailinator.com"];
+  const randomDomain = domains[Math.floor(Math.random() * domains.length)];
+  return `${username}${randomDomain}`;
+};
+
+const FakeUserGenerator = ({ onNavigateBack }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [tempEmail, setTempEmail] = useState("");
@@ -28,7 +285,7 @@ const FakeUserGenerator = ({ onNavigateBack }) => {
   // Function to copy text to clipboard
   const copyToClipboard = (text) => {
     Clipboard.setString(text);
-    Alert.alert("Copied to clipboard!"); // Notification to user
+    alert("Copied to clipboard!");
   };
 
   // Generate fake user credentials on button click
@@ -42,15 +299,11 @@ const FakeUserGenerator = ({ onNavigateBack }) => {
   return (
     <View style={styles.container}>
       {/* Back Button */}
-      <TouchableOpacity
-        style={styles.backButton}
-        onPress={onNavigateBack} // Navigate directly to Dashboard screen
-      >
+      <TouchableOpacity style={styles.backButton} onPress={onNavigateBack}>
         <FontAwesome name="arrow-left" size={24} color="#000" />
-        <Text style={styles.backButtonText}>Back</Text>
+        <Text style={styles.backButtonText}></Text>
       </TouchableOpacity>
 
-      {/* Header Image */}
       <Image
         source={require("../assets/fakeusergen2.jpg")} // Adjust path to your image
         style={styles.image}
@@ -84,7 +337,7 @@ const FakeUserGenerator = ({ onNavigateBack }) => {
           secureTextEntry
         />
         <TouchableOpacity
-          onPress={() => copyToClipboard(password)}
+          onPress={() => copyToClipboard(username)}
           style={{ alignSelf: "flex-end", marginLeft: 10, top: -9 }}
         >
           <FontAwesome name="copy" size={24} color="#333" />
@@ -100,17 +353,24 @@ const FakeUserGenerator = ({ onNavigateBack }) => {
           placeholder="Temporary Email"
         />
         <TouchableOpacity
-          onPress={() => copyToClipboard(tempEmail)}
+          onPress={() => copyToClipboard(username)}
           style={{ alignSelf: "flex-end", marginLeft: 10, top: -9 }}
         >
           <FontAwesome name="copy" size={24} color="#333" />
         </TouchableOpacity>
       </View>
 
-      {/* Generate Button */}
-      <TouchableOpacity style={styles.button} onPress={generateFakeUser}>
-        <Text style={styles.buttonText}>Generate Fake User</Text>
-      </TouchableOpacity>
+      {/* Gradient Button */}
+      <LinearGradient
+        colors={["#6a11cb", "#f89b29"]} // Gradient colors for purple to orange
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }} // Horizontal gradient
+        style={styles.gradientButton}
+      >
+        <TouchableOpacity style={styles.button} onPress={generateFakeUser}>
+          <Text style={styles.buttonText}>Generate Fake User</Text>
+        </TouchableOpacity>
+      </LinearGradient>
     </View>
   );
 };
@@ -163,20 +423,30 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
   },
   button: {
-    backgroundColor: "#fff",
-    paddingVertical: 15,
-    paddingHorizontal: 40,
-    borderRadius: 30,
-    shadowColor: "#000",
-    shadowOffset: { width: 2, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    marginTop: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%", // Ensures the button text is centered in the gradient area
+    paddingVertical: 15, // Adds padding to the button text
   },
   buttonText: {
-    color: "#333",
+    color: "#fff",
     fontSize: 18,
     fontWeight: "600",
+    paddingHorizontal: 20, // Extra horizontal padding for a more defined button shape
+    paddingVertical: 5, // Add slight padding here to adjust text alignment
+  },
+
+  gradientButton: {
+    borderRadius: 30,
+    paddingVertical: 5, // Adjust padding here if needed to match the button size
+    paddingHorizontal: 20, // Creates extra space around the button for a rounded appearance
+    marginTop: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 4, // Adds shadow for Android
+    alignItems: "center", // Centers the button within the gradient area
   },
   image: {
     backgroundColor: "#fff",

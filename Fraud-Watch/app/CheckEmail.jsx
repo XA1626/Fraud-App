@@ -8,42 +8,61 @@ const CheckEmail = ({ onNavigateBack }) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const handleCheckEmail = async () => {
-    setError(''); // clears the error and sets it to nothing
-    setBreaches([]);
+    setError(''); // Clears the error and sets it to nothing
+    setBreaches([]); // Reset breaches array
     setIsChecked(false);
     
-    // checks email input if the @ was passed through, if not then return the error to enter valid email.
+    // Checks email input to see if the @ was passed through, if not, then return an error asking for a valid email.
     if (!email.includes('@')) {
       setError('Please enter a valid email address.');
       return;
     }
 
     try { 
-      // tries to fetch the API using the API key
+      console.log('Checking email:', email); // Debug log for checking email
+      
+      // Tries to fetch using the API key
       const response = await fetch(
-        `https://haveibeenpwned.com/api/v3/breachedaccount/${encodeURIComponent(email)}`,
+        `https://haveibeenpwned.com/api/v3/breachedaccount/${encodeURIComponent(email)}?truncateResponse=false`,
         {
           method: 'GET',
           headers: {
-            'hibp-api-key': 'TBA_API_KEY', 
-            'user-agent': 'FraudWatchApp', //  
+            'hibp-api-key': 'aa97b5b07a314a0dba9a838c8b1eac90', // Api Key
+            'user-agent': 'FraudWatchApp', // Required to specify a user agent
           },
         }
       );
 
-      // error case checking to see the response status. If 200, process the data, if 404, no breaches found, else handle the error.
+      console.log('Response status:', response.status); // Log the response status
+
+      // Error case checking based on the response status.
       if (response.status === 200) {
         const data = await response.json();
-        setBreaches(data);
+        console.log('Breach data:', data); // Debug log to check the data returned
+        setBreaches(data); // Set breaches if data is returned successfully
       } else if (response.status === 404) {
-        setBreaches([]); // no breaches found for the given email!
+        // No breaches found for the given email
+        console.log('No breaches found'); // Debug log for no breaches
+        setBreaches([]); 
+      } else if (response.status === 401) {
+        // Unauthorized, invalid API key
+        setError('Unauthorized. Please check your API key.');
+      } else if (response.status === 403) {
+        // Forbidden, likely due to missing or invalid user agent
+        setError('Forbidden. The request was blocked due to a missing or invalid user agent.');
+      } else if (response.status === 429) {
+        // Rate limit exceeded
+        setError('Too many requests. Please wait before trying again.');
       } else {
-        throw new Error('Unable to fetch breach data');
+        // Handle any other unexpected status codes
+        console.log('Unexpected response:', response.status); // Debug log for unexpected status
+        setError('Unable to fetch breach data. Please try again later.');
       }
     } catch (err) {
-      setError('Failed to check email. Please try again.');
+      console.log('Error occurred:', err); // Log the error details for debugging
+      setError('Failed to check email. Please try again.'); // General error message for the user
     } finally {
-      setIsChecked(true); // ensure the API was called and results are now ready to display
+      setIsChecked(true); // Ensure the API was called and results are now ready to display
     }
   };
 
@@ -58,8 +77,9 @@ const CheckEmail = ({ onNavigateBack }) => {
       />
       {error && <Text style={styles.error}>{error}</Text>}
       <Button title="Check if Pwned" onPress={handleCheckEmail} />
-
-      {/* show any breaches if found to ensure good data passing */}
+      {/* Creates a button for checking breaches */}
+      
+      {/* Show breach information if breaches were found */}
       {isChecked && breaches.length > 0 && (
         <View style={styles.breachContainer}>
           <Text style={styles.title}>Breaches for {email}:</Text>
@@ -67,13 +87,14 @@ const CheckEmail = ({ onNavigateBack }) => {
             <View key={breach.Name} style={styles.breachItem}>
               <Text style={styles.boldText}>Website: {breach.Domain}</Text>
               <Text style={styles.boldText}>Date Pwned: {breach.BreachDate}</Text>
+              <Text style={styles.boldText}>Compromised Data: {breach.DataClasses.join(', ')}</Text>
               <Text>{breach.Description}</Text>
             </View>
           ))}
         </View>
       )}
 
-      {/* display "No breaches found" only after checking */}
+      {/* Display "No breaches found" only after checking */}
       {isChecked && breaches.length === 0 && (
         <Text>No breaches found for this email.</Text>
       )}

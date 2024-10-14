@@ -15,6 +15,7 @@ import { firebase } from './firebase'; // Import Firebase config (assuming it is
 import { fetchUserProfile } from './firebase'; // Import the function to fetch profile
 import FakeUserGenerator from './FakeUserGenerator'; 
 import ScheduleConsultation from './scheduleConsultation';
+import ScamAlerts from './ScamAlerts';
 const isWeb = Platform.OS === 'web';
 
 const App = () => {
@@ -89,6 +90,8 @@ const App = () => {
                                 setCurrentScreen('ChatRoom')
                             }else if (screen == 'scheduleConsultation') {
                             setCurrentScreen('scheduleConsultation')
+                            }else if (screen == 'ScamAlerts') {
+                                setCurrentScreen('ScamAlerts')
                             }
                             
                         }}
@@ -142,11 +145,18 @@ const App = () => {
                 return(
                     <ScheduleConsultation
                     onNavigateBack={() => setCurrentScreen('Dashboard')}
+                    onPessSubmit={() => setCurrentScreen('Dashboard')}
                     />
                 );
                 case 'Resource':
                 return(
                     <Resource
+                    onNavigateBack={() => setCurrentScreen('Dashboard')}
+                    />
+                );
+                case 'ScamAlerts':
+                return(
+                    <ScamAlerts
                     onNavigateBack={() => setCurrentScreen('Dashboard')}
                     />
                 );

@@ -6,7 +6,7 @@
     const Dashboard = ({ userData, onNavigate }) => { 
         const [searchText, setSearchText] = useState('');
 
-        const [filteredFeatures, setFilteredFeatures] = useState(['URL Checker', 'Cybersecurity News', 'Quiz', 'Gmail Integration', 'Fake User Generator', 'Resource', 'scheduleConsultation']);
+        const [filteredFeatures, setFilteredFeatures] = useState(['URL Checker', 'Cybersecurity News', 'Quiz', 'Gmail Integration', 'Fake User Generator', 'Resource', 'scheduleConsultation','ScamAlerts']);
 
         useEffect(() => {
             // Optional: Add any effect to handle changes in userData if needed
@@ -15,7 +15,7 @@
         // Function to handle searching among features
         const handleSearch = (text) => {
             setSearchText(text);
-            const features = ['URL Checker', 'Cybersecurity News', 'Quiz', 'Gmail Integration', 'Fake User Generator', 'scheduleConsultation', 'Resource'];
+            const features = ['URL Checker', 'Cybersecurity News', 'Quiz', 'Gmail Integration', 'Fake User Generator', 'scheduleConsultation', 'Resource','ScamAlerts'];
             const filtered = features.filter(feature => feature.toLowerCase().includes(text.toLowerCase()));
             setFilteredFeatures(filtered);
         };
@@ -95,6 +95,13 @@
                         <TouchableOpacity style={styles.featureButton} onPress={() => onNavigate('scheduleConsultation')}>
                             <Image source={require('../assets/Schedule-Your-Free-Consultation.png')} style={styles.featureImage} />
                             <Text style={styles.featureText}>scheduleConsultation</Text>
+                        </TouchableOpacity>
+                    )}
+
+                    {filteredFeatures.includes('ScamAlerts') && (
+                        <TouchableOpacity style={styles.featureButton} onPress={() => onNavigate('ScamAlerts')}>
+                            <Image source={require('../assets/Schedule-Your-Free-Consultation.png')} style={styles.featureImage} />
+                            <Text style={styles.featureText}>ScamAlerts</Text>
                         </TouchableOpacity>
                     )}
 

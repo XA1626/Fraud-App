@@ -3,13 +3,13 @@ import cors from 'cors';
 import fetch from 'node-fetch';
 import dotenv from 'dotenv';
 
-// Load the custom .env file
+
 dotenv.config({ path: './apicall.env' });
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Allow CORS (for development purposes)
+
 app.use(cors());
 
 // Proxy endpoint to handle "Have I Been Pwned?" requests

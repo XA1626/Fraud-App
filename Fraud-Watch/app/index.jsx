@@ -4,14 +4,12 @@ import SplashScreen from './splashscreen';
 import LoginPage from './loginpage';
 import Dashboard from './dashboard';
 import CreateUser from './createuser';
-import UrlChecker from './urlchecker'; // Import the UrlChecker component
-import Settings from './settings'; // Import the Settings component
-import ChatRoom from './ChatRoom'; // This should work if it's in the same folder.
-import Newsfeed from './newsfeed'; // Import the Newsfeed component
-import Account from './account';  // Import the Account component
-import Quiz from './quiz';  // Import the Quiz component
-import { firebase } from './firebase'; // Import Firebase config (assuming it is set up)
-import { fetchUserProfile } from './firebase'; // Import the function to fetch profile
+import UrlChecker from './urlchecker'; 
+import Settings from './settings'; 
+import ChatRoom from './ChatRoom'; 
+import Newsfeed from './newsfeed'; 
+import { firebase } from './firebase'; 
+import { fetchUserProfile } from './firebase'; 
 import Resource from './resource';
 import FakeUserGenerator from './FakeUserGenerator';
 import CheckEmail from './CheckEmail';
@@ -152,6 +150,7 @@ const App = () => {
         </View>
     );
 };
+
 
 const styles = StyleSheet.create({
     container: {

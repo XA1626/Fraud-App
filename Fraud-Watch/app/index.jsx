@@ -148,6 +148,7 @@ const App = () => {
   return <View style={styles.container}>{renderScreen()}</View>;
 };
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

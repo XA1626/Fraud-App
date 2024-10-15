@@ -56,8 +56,19 @@ const Blacklist = ({ onNavigateBack }) => {
   };
 
   const addNewContact = () => {
+    const phoneRegex = /^\+?[1-9]\d{1,14}$/; // Basic international phone format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     if (newContact.trim() === "") {
       Alert.alert("Error", "Please enter a valid phone number or email.");
+      return;
+    }
+
+    if (!phoneRegex.test(newContact) && !emailRegex.test(newContact)) {
+      Alert.alert(
+        "Error",
+        "Please enter a valid phone number or email address."
+      );
       return;
     }
 
@@ -279,7 +290,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   submitButton: {
-    backgroundColor: "#28a745",
+    backgroundColor: "#007AFF",
     paddingVertical: 10,
     borderRadius: 5,
     alignItems: "center",

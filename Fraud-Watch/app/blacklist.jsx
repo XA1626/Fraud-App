@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import * as ImagePicker from "expo-image-picker"; // Import ImagePicker for photo upload
 import { FontAwesome } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient"; // Import LinearGradient for gradient buttons
 import { useNavigation } from "@react-navigation/native"; // Import useNavigation for navigation control
 
 const Blacklist = ({ onNavigateBack }) => {
@@ -106,14 +107,21 @@ const Blacklist = ({ onNavigateBack }) => {
         contentContainerStyle={styles.listContent}
       />
 
-      {/* Report Scam Button */}
-      <TouchableOpacity
-        style={styles.reportButton}
-        onPress={() => setModalVisible(true)}
+      {/* Report Scam Button with Gradient */}
+      <LinearGradient
+        colors={["#6a11cb", "#f7971e"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }}
+        style={styles.reportButtonGradient}
       >
-        <FontAwesome name="flag" size={24} color="white" />
-        <Text style={styles.reportButtonText}>Report Scam Contact</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.reportButton}
+          onPress={() => setModalVisible(true)}
+        >
+          <FontAwesome name="flag" size={24} color="white" />
+          <Text style={styles.reportButtonText}>Report Scam Contact</Text>
+        </TouchableOpacity>
+      </LinearGradient>
 
       {/* Report Modal */}
       <Modal
@@ -217,15 +225,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginLeft: 5,
   },
-  reportButton: {
-    backgroundColor: "#ff9500",
-    paddingVertical: 15,
-    paddingHorizontal: 20,
+  reportButtonGradient: {
     borderRadius: 10,
+    marginTop: 20,
+  },
+  reportButton: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 20,
+    paddingVertical: 15,
   },
   reportButtonText: {
     color: "white",

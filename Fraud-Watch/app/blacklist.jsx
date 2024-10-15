@@ -10,6 +10,7 @@ import {
   Modal,
   TextInput,
   Image,
+  Clipboard,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { FontAwesome } from "@expo/vector-icons";
@@ -26,8 +27,7 @@ const Blacklist = ({ onNavigateBack }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [blockModalVisible, setBlockModalVisible] = useState(false);
   const [selectedNumber, setSelectedNumber] = useState("");
-  const [reportContact, setReportContact] = useState("");
-  const [reportImage, setReportImage] = useState(null);
+  const [newContact, setNewContact] = useState("");
 
   const handleBlockOptions = (number) => {
     setSelectedNumber(number);
@@ -42,32 +42,30 @@ const Blacklist = ({ onNavigateBack }) => {
     setBlockModalVisible(false);
   };
 
-  const copyNumber = () => {
-    Alert.alert(
-      "Copied",
-      `${selectedNumber} has been copied to your clipboard.`
-    );
+  const copyNumber = async () => {
+    try {
+      await Clipboard.setString(selectedNumber);
+      Alert.alert(
+        "Copied",
+        `${selectedNumber} has been copied to your clipboard.`
+      );
+    } catch (error) {
+      Alert.alert("Error", "Failed to copy the number to clipboard.");
+    }
     setBlockModalVisible(false);
   };
 
-  const selectImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    if (!result.canceled) {
-      setReportImage(result.uri);
+  const addNewContact = () => {
+    if (newContact.trim() === "") {
+      Alert.alert("Error", "Please enter a valid phone number or email.");
+      return;
     }
-  };
 
-  const submitReport = () => {
-    Alert.alert("Report Submitted", `Reported: ${reportContact}`);
+    const newId = (parseInt(blacklist[blacklist.length - 1].id) + 1).toString();
+    setBlacklist([...blacklist, { id: newId, number: newContact.trim() }]);
+    setNewContact("");
     setModalVisible(false);
-    setReportContact("");
-    setReportImage(null);
+    Alert.alert("Success", "New scam contact added to the list.");
   };
 
   const renderItem = ({ item }) => (
@@ -88,7 +86,7 @@ const Blacklist = ({ onNavigateBack }) => {
       {/* Back Button */}
       <TouchableOpacity style={styles.backButton} onPress={onNavigateBack}>
         <FontAwesome name="arrow-left" size={24} color="#000" />
-        <Text style={styles.backButtonText}>Back</Text>
+        <Text style={styles.backButtonText}></Text>
       </TouchableOpacity>
 
       {/* Page Title */}
@@ -102,19 +100,19 @@ const Blacklist = ({ onNavigateBack }) => {
         contentContainerStyle={styles.listContent}
       />
 
-      {/* Report Scam Button with Gradient */}
+      {/* Add Scam Contact Button with Gradient */}
       <LinearGradient
         colors={["#6a11cb", "#f7971e"]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 0 }}
-        style={styles.reportButtonGradient}
+        style={styles.addButtonGradient}
       >
         <TouchableOpacity
-          style={styles.reportButton}
+          style={styles.addButton}
           onPress={() => setModalVisible(true)}
         >
-          <FontAwesome name="flag" size={18} color="white" />
-          <Text style={styles.reportButtonText}>Report Scam Contact</Text>
+          <FontAwesome name="plus" size={18} color="white" />
+          <Text style={styles.addButtonText}>Add Scam Contact</Text>
         </TouchableOpacity>
       </LinearGradient>
 
@@ -147,7 +145,7 @@ const Blacklist = ({ onNavigateBack }) => {
         </View>
       </Modal>
 
-      {/* Report Modal */}
+      {/* Add Contact Modal */}
       <Modal
         animationType="slide"
         transparent={true}
@@ -156,30 +154,20 @@ const Blacklist = ({ onNavigateBack }) => {
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Report Scam Contact</Text>
+            <Text style={styles.modalTitle}>Add Scam Contact</Text>
 
             <TextInput
               style={styles.input}
-              placeholder="Enter email or phone number"
-              value={reportContact}
-              onChangeText={(text) => setReportContact(text)}
+              placeholder="Enter phone number or email"
+              value={newContact}
+              onChangeText={(text) => setNewContact(text)}
             />
-
-            <TouchableOpacity style={styles.photoButton} onPress={selectImage}>
-              <Text style={styles.photoButtonText}>
-                {reportImage ? "Change Photo" : "Attach Proof Photo"}
-              </Text>
-            </TouchableOpacity>
-
-            {reportImage && (
-              <Image source={{ uri: reportImage }} style={styles.reportImage} />
-            )}
 
             <TouchableOpacity
               style={styles.submitButton}
-              onPress={submitReport}
+              onPress={addNewContact}
             >
-              <Text style={styles.submitButtonText}>Submit Report</Text>
+              <Text style={styles.submitButtonText}>Add to List</Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => setModalVisible(false)}>
@@ -249,19 +237,20 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginLeft: 5,
   },
-  reportButtonGradient: {
+  addButtonGradient: {
     borderRadius: 10,
     marginTop: 20,
   },
-  reportButton: {
+  addButton: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 15,
   },
-  reportButtonText: {
+  addButtonText: {
     color: "white",
     fontSize: 18,
+    fontWeight: "bold",
     marginLeft: 10,
   },
   modalContainer: {
@@ -288,23 +277,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     marginBottom: 10,
-  },
-  photoButton: {
-    backgroundColor: "#007bff",
-    paddingVertical: 10,
-    borderRadius: 5,
-    alignItems: "center",
-    marginVertical: 10,
-  },
-  photoButtonText: {
-    color: "white",
-    fontSize: 16,
-  },
-  reportImage: {
-    width: "100%",
-    height: 150,
-    borderRadius: 5,
-    marginTop: 10,
   },
   submitButton: {
     backgroundColor: "#28a745",

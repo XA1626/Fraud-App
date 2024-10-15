@@ -19,7 +19,7 @@ const Customization = ({ onNavigateBack }) => {
   };
 
   const applyDarkTheme = () => {
-    setBackgroundColor("#333");
+    setBackgroundColor("#111");
     setFontColor("#fff");
   };
 
@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   darkTheme: {
-    backgroundColor: "#333",
+    backgroundColor: "#111",
   },
   pinkTheme: {
     backgroundColor: "#ffd1dc",

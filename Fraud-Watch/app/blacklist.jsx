@@ -11,48 +11,45 @@ import {
   TextInput,
   Image,
 } from "react-native";
-import * as ImagePicker from "expo-image-picker"; // Import ImagePicker for photo upload
+import * as ImagePicker from "expo-image-picker";
 import { FontAwesome } from "@expo/vector-icons";
-import { LinearGradient } from "expo-linear-gradient"; // Import LinearGradient for gradient buttons
-import { useNavigation } from "@react-navigation/native"; // Import useNavigation for navigation control
+import { LinearGradient } from "expo-linear-gradient";
+import { useNavigation } from "@react-navigation/native";
 
 const Blacklist = ({ onNavigateBack }) => {
-  const navigation = useNavigation(); // Hook to access navigation
+  const navigation = useNavigation();
   const [blacklist, setBlacklist] = useState([
     { id: "1", number: "+1234567890" },
     { id: "2", number: "+0987654321" },
     { id: "3", number: "+1123456789" },
   ]);
   const [modalVisible, setModalVisible] = useState(false);
+  const [blockModalVisible, setBlockModalVisible] = useState(false);
+  const [selectedNumber, setSelectedNumber] = useState("");
   const [reportContact, setReportContact] = useState("");
   const [reportImage, setReportImage] = useState(null);
 
-  // Function to confirm and block a phone number
-  const confirmBlockNumber = (number) => {
-    Alert.alert(
-      "Confirm Block",
-      `Are you sure you want to block ${number}?`,
-      [
-        { text: "Cancel", style: "cancel" },
-        {
-          text: "Block",
-          style: "destructive",
-          onPress: () => blockNumber(number),
-        },
-      ],
-      { cancelable: true }
-    );
+  const handleBlockOptions = (number) => {
+    setSelectedNumber(number);
+    setBlockModalVisible(true);
   };
 
-  // Function to block a phone number
-  const blockNumber = (number) => {
+  const confirmBlockNumber = () => {
     Alert.alert(
       "Blocked",
-      `The number ${number} has been blocked from calling you.`
+      `The number ${selectedNumber} has been blocked from calling you.`
     );
+    setBlockModalVisible(false);
   };
 
-  // Function to handle image selection
+  const copyNumber = () => {
+    Alert.alert(
+      "Copied",
+      `${selectedNumber} has been copied to your clipboard.`
+    );
+    setBlockModalVisible(false);
+  };
+
   const selectImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -66,7 +63,6 @@ const Blacklist = ({ onNavigateBack }) => {
     }
   };
 
-  // Function to submit a report
   const submitReport = () => {
     Alert.alert("Report Submitted", `Reported: ${reportContact}`);
     setModalVisible(false);
@@ -74,15 +70,14 @@ const Blacklist = ({ onNavigateBack }) => {
     setReportImage(null);
   };
 
-  // Render each item in the blacklist
   const renderItem = ({ item }) => (
     <View style={styles.itemContainer}>
       <Text style={styles.phoneNumber}>{item.number}</Text>
       <TouchableOpacity
         style={styles.blockButton}
-        onPress={() => confirmBlockNumber(item.number)}
+        onPress={() => handleBlockOptions(item.number)}
       >
-        <FontAwesome name="ban" size={24} color="white" />
+        <FontAwesome name="ban" size={16} color="white" />
         <Text style={styles.blockButtonText}>Block</Text>
       </TouchableOpacity>
     </View>
@@ -118,10 +113,39 @@ const Blacklist = ({ onNavigateBack }) => {
           style={styles.reportButton}
           onPress={() => setModalVisible(true)}
         >
-          <FontAwesome name="flag" size={24} color="white" />
+          <FontAwesome name="flag" size={18} color="white" />
           <Text style={styles.reportButtonText}>Report Scam Contact</Text>
         </TouchableOpacity>
       </LinearGradient>
+
+      {/* Block Options Modal */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={blockModalVisible}
+        onRequestClose={() => setBlockModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Choose an Option</Text>
+            <TouchableOpacity
+              style={styles.optionButton}
+              onPress={confirmBlockNumber}
+            >
+              <Text style={styles.optionText}>Block</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.optionButton} onPress={copyNumber}>
+              <Text style={styles.optionText}>Copy</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.optionButton}
+              onPress={() => setBlockModalVisible(false)}
+            >
+              <Text style={styles.optionText}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
 
       {/* Report Modal */}
       <Modal
@@ -176,11 +200,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   backButton: {
-    position: "absolute",
-    top: Platform.OS === "ios" ? 50 : 20,
-    left: 20,
     flexDirection: "row",
     alignItems: "center",
+    marginBottom: 20,
   },
   backButtonText: {
     fontSize: 18,
@@ -192,7 +214,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 20,
     textAlign: "center",
-    marginTop: Platform.OS === "ios" ? 50 : 70,
   },
   listContent: {
     paddingBottom: 20,
@@ -202,12 +223,15 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingVertical: 15,
-    paddingHorizontal: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
+    paddingHorizontal: 20,
     backgroundColor: "#f9f9f9",
     borderRadius: 10,
     marginVertical: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+    elevation: 2,
   },
   phoneNumber: {
     fontSize: 18,
@@ -292,6 +316,18 @@ const styles = StyleSheet.create({
   submitButtonText: {
     color: "white",
     fontSize: 16,
+  },
+  optionButton: {
+    backgroundColor: "#ddd",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  optionText: {
+    fontSize: 18,
+    color: "#000",
   },
   cancelText: {
     color: "#007bff",

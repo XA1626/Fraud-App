@@ -7,6 +7,7 @@ import {
   TextInput,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+import { globalStyles, themeColors } from "./styles"; // Import global styles and theme colors
 
 const Settings = ({
   onNavigateBack,
@@ -16,12 +17,12 @@ const Settings = ({
 }) => {
   const [searchText, setSearchText] = useState("");
 
-  // List of settings, including the new "Customization" item
+  // List of settings
   const settings = [
-    { name: "Account", icon: "user" },
+    { name: "  Account", icon: "user" },
     { name: "Notifications", icon: "bell" },
-    { name: "Privacy & Security", icon: "lock" },
-    { name: "Customization", icon: "paint-brush" }, // New Customization item
+    { name: "  Privacy & Security", icon: "lock" },
+    { name: "Customization", icon: "paint-brush" },
   ];
 
   // Function to filter settings based on search input
@@ -30,7 +31,12 @@ const Settings = ({
   );
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        globalStyles.container,
+        { backgroundColor: themeColors.backgroundColor },
+      ]}
+    >
       {/* Back button and Settings Title */}
       <View style={styles.header}>
         <TouchableOpacity onPress={onNavigateBack}>
@@ -56,7 +62,7 @@ const Settings = ({
           key={index}
           style={styles.settingItem}
           onPress={() => {
-            if (setting.name === "Account") {
+            if (setting.name === "  Account") {
               onNavigateToAccount(); // Navigate to Account screen when "Account" is clicked
             } else if (setting.name === "Customization") {
               onNavigateToCustomization(); // Navigate to Customization screen when "Customization" is clicked

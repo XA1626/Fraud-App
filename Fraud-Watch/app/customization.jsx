@@ -54,7 +54,7 @@ const Customization = ({ onNavigateBack }) => {
   };
 
   const applyGreyTheme = () => {
-    setBackgroundColor("#4d4d4d"); // Dark Grey
+    setBackgroundColor("#888"); // Dark Grey
     setFontColor("#fff");
   };
 
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#001f3f",
   },
   greyTheme: {
-    backgroundColor: "#4d4d4d",
+    backgroundColor: "#888",
   },
   tealTheme: {
     backgroundColor: "#004d4d",

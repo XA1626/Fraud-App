@@ -98,7 +98,6 @@ const ChatRoom = ({ onNavigateBack }) => {
   };
 
   const forwardMessage = (text) => {
-    // Implement your forwarding logic here
     Alert.alert("Forward Message", `Forwarding message: "${text}"`);
   };
 
@@ -131,7 +130,7 @@ const ChatRoom = ({ onNavigateBack }) => {
 
   const goBack = () => {
     if (navigation.canGoBack()) {
-      navigation.goBack(); // Navigate back to the previous screen
+      navigation.goBack();
     } else {
       console.log("No previous screen in the navigation stack");
     }
@@ -139,8 +138,22 @@ const ChatRoom = ({ onNavigateBack }) => {
 
   const Dashboard = () => {
     if (onNavigateBack) {
-      onNavigateBack(); // Call the passed-in onNavigateBack prop to navigate back
+      onNavigateBack();
     }
+  };
+
+  const formatTimestamp = (timestamp) => {
+    const date = new Date(timestamp);
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear().toString().slice(-2);
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? "PM" : "AM";
+    const formattedHours = hours % 12 || 12; // Convert to 12-hour format
+    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+
+    return `${day}/${month}/${year} ${formattedHours}:${formattedMinutes} ${ampm}`;
   };
 
   return (
@@ -160,12 +173,23 @@ const ChatRoom = ({ onNavigateBack }) => {
               <View
                 style={
                   item.uid === user.uid
-                    ? styles.sentMessage
-                    : styles.receivedMessage
+                    ? styles.sentMessageContainer
+                    : styles.receivedMessageContainer
                 }
               >
-                <Text style={styles.sender}>{item.displayName}</Text>
-                <Text style={styles.message}>{item.text}</Text>
+                <Text style={styles.timestamp}>
+                  {formatTimestamp(item.createdAt?.toDate())}
+                </Text>
+                <View
+                  style={
+                    item.uid === user.uid
+                      ? styles.sentMessage
+                      : styles.receivedMessage
+                  }
+                >
+                  <Text style={styles.sender}>{item.displayName}</Text>
+                  <Text style={styles.message}>{item.text}</Text>
+                </View>
               </View>
             </TouchableOpacity>
           )}
@@ -178,18 +202,18 @@ const ChatRoom = ({ onNavigateBack }) => {
         placeholder="Type a message..."
         value={newMessage}
         onChangeText={(text) => setNewMessage(text)}
-        maxLength={charLimit} // Set character limit
-        onSubmitEditing={sendMessage} // Send message on Enter key press
-        returnKeyType="send" // Shows the "Send" button on the keyboard
+        maxLength={charLimit}
+        onSubmitEditing={sendMessage}
+        returnKeyType="send"
       />
       <Text
         style={styles.charCount}
       >{`${newMessage.length}/${charLimit}`}</Text>
 
       <LinearGradient
-        colors={["#6a11cb", "#f7971e"]} // Purple to orange gradient
+        colors={["#6a11cb", "#f7971e"]}
         start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 0 }} // Horizontal gradient direction
+        end={{ x: 1, y: 0 }}
         style={styles.gradientButton}
       >
         <TouchableOpacity
@@ -201,7 +225,6 @@ const ChatRoom = ({ onNavigateBack }) => {
         </TouchableOpacity>
       </LinearGradient>
 
-      {/* Custom styled back button */}
       <TouchableOpacity onPress={Dashboard} style={styles.backButton}>
         <Text style={styles.backButtonText}>Back</Text>
       </TouchableOpacity>
@@ -220,30 +243,46 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 20,
   },
-  sentMessage: {
+  sentMessageContainer: {
     alignSelf: "flex-end",
-    backgroundColor: "#007AFF", // iMessage blue bubble
+    marginVertical: 5,
+    maxWidth: "75%",
+  },
+  receivedMessageContainer: {
+    alignSelf: "flex-start",
+    marginVertical: 5,
+    maxWidth: "75%",
+  },
+  sentMessage: {
+    backgroundColor: "#007AFF",
     borderRadius: 10,
     padding: 10,
-    margin: 5,
-    maxWidth: "75%", // Limit message width
-    flexShrink: 1, // Allow text wrapping
+    maxWidth: "100%", // Ensure it doesn't exceed the container
+    flexShrink: 1,
+    flexDirection: "column",
   },
   receivedMessage: {
-    alignSelf: "flex-start",
-    backgroundColor: "#E5E5EA", // iMessage grey bubble
+    backgroundColor: "#E5E5EA",
     borderRadius: 10,
     padding: 10,
-    margin: 5,
-    maxWidth: "75%", // Limit message width
-    flexShrink: 1, // Allow text wrapping
+    maxWidth: "100%",
+    flexShrink: 1,
+    flexDirection: "column",
   },
   message: {
     fontSize: 16,
+    color: "#fff",
   },
   sender: {
     fontWeight: "bold",
-    marginBottom: 5,
+    marginBottom: 2,
+    color: "#fff",
+  },
+  timestamp: {
+    fontSize: 12,
+    color: "#888",
+    marginBottom: 2,
+    alignSelf: "flex-start",
   },
   input: {
     padding: 10,
@@ -267,14 +306,14 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 100,
     alignItems: "center",
-    width: "100%", // Matches the gradientButton width
+    width: "100%",
   },
   buttonText: {
     color: "#fff",
     fontSize: 18,
   },
   backButton: {
-    backgroundColor: "#000", // Change back button to black
+    backgroundColor: "#000",
     padding: 10,
     borderRadius: 100,
     width: 250,

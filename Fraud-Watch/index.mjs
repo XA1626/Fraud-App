@@ -1,8 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import path from 'path'; // Import path to handle file paths
-import fs from 'fs'; // Import the fs module to read the JSON file
+import crypto from 'crypto'; // To hash the password for the HIBP API
+import fetch from 'node-fetch'; // For making API requests
 
 dotenv.config({ path: './apicall.env' });
 
@@ -11,7 +11,43 @@ const PORT = process.env.PORT || 55000;
 
 app.use(cors());
 
-// Proxy endpoint to handle "Have I Been Pwned?" requests
+// Proxy endpoint to check if a password has been pwned
+app.get('/api/check-password', async (req, res) => {
+    const { password } = req.query;
+
+    if (!password || password.length === 0) {
+        return res.status(400).json({ error: 'Invalid password input' });
+    }
+
+    // Hash the password using SHA1 as required by HIBP API
+    const hashedPassword = crypto.createHash('sha1').update(password).digest('hex').toUpperCase();
+    const prefix = hashedPassword.slice(0, 5);
+    const suffix = hashedPassword.slice(5);
+
+    try {
+        // Check if the password hash exists in the pwned database
+        const response = await fetch(`https://api.pwnedpasswords.com/range/${prefix}`);
+
+        if (response.ok) {
+            const data = await response.text();
+            const found = data.split('\n').find(line => line.startsWith(suffix));
+
+            if (found) {
+                const [hash, count] = found.split(':');
+                return res.json({ pwned: true, count: parseInt(count) });
+            } else {
+                return res.json({ pwned: false });
+            }
+        } else {
+            return res.status(response.status).json({ error: 'Error checking password' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to fetch data from the API' });
+    }
+});
+
+// Existing endpoint for checking email breach
 app.get('/api/check-email', async (req, res) => {
     const { email } = req.query;
 
@@ -51,22 +87,6 @@ app.get('/api/check-email', async (req, res) => {
         console.error(error);
         res.status(500).json({ error: 'Failed to fetch data from the API' });
     }
-});
-
-// Add the /api/passwords endpoint
-app.get('/api/passwords', (req, res) => {
-    const filePath = path.join(__dirname, 'assets', 'passwords.json'); // Adjust the path if needed
-
-    // Read the passwords.json file
-    fs.readFile(filePath, 'utf8', (err, data) => {
-        if (err) {
-            console.error('Error reading passwords.json:', err);
-            return res.status(500).json({ error: 'Failed to load passwords' });
-        }
-
-        // Send the content of passwords.json as a response
-        res.json(JSON.parse(data));
-    });
 });
 
 // Start the server

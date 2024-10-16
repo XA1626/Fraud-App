@@ -21,6 +21,7 @@
     "expo": "^51.0.37",
     "expo-auth-session": "~5.5.2",
     "expo-constants": "~16.0.2",
+    "expo-file-system": "~17.0.1",
     "expo-image-manipulator": "~12.0.5",
     "expo-image-picker": "~15.0.7",
     "expo-linear-gradient": "~13.0.2",
@@ -51,7 +52,7 @@
     "rimraf": "^6.0.1",
     "uuid": "^10.0.0",
     "xml2js": "^0.6.2",
-    "expo-file-system": "~17.0.1"
+    "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

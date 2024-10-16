@@ -22,14 +22,14 @@ const Dashboard = ({ userData, onNavigate }) => {
     "Fake User Generator",
     "Resource",
     "Blacklist",
-    "CheckEmail", // Added CheckEmail to the default filtered features
+    "CheckEmail",
+    "PasswordStrengthChecker", 
   ]);
 
   useEffect(() => {
-    // Optional: Add any effect to handle changes in userData if needed
+    
   }, [userData]);
 
-  // Function to handle searching among features
   const handleSearch = (text) => {
     setSearchText(text);
     const features = [
@@ -40,7 +40,8 @@ const Dashboard = ({ userData, onNavigate }) => {
       "Fake User Generator",
       "Resource",
       "Blacklist",
-      "CheckEmail", // Added CheckEmail to the list of available features
+      "CheckEmail",
+      "PasswordStrengthChecker", 
     ];
     const filtered = features.filter((feature) =>
       feature.toLowerCase().includes(text.toLowerCase())
@@ -172,13 +173,26 @@ const Dashboard = ({ userData, onNavigate }) => {
         {filteredFeatures.includes("CheckEmail") && (
           <TouchableOpacity
             style={styles.featureButton}
-            onPress={() => onNavigate("CheckEmail")} // Add navigation for CheckEmail
+            onPress={() => onNavigate("CheckEmail")}
           >
             <Image
-              source={require("../assets/email-check.png")} // Add relevant image for CheckEmail
+              source={require("../assets/email-check.png")}
               style={styles.featureImage}
             />
             <Text style={styles.featureText}>Check Email</Text>
+          </TouchableOpacity>
+        )}
+
+        {filteredFeatures.includes("PasswordStrengthChecker") && (
+          <TouchableOpacity
+            style={styles.featureButton}
+            onPress={() => onNavigate("PasswordStrengthChecker")}
+          >
+            <Image
+              source={require("../assets/password-strength.png")} 
+              style={styles.featureImage}
+            />
+            <Text style={styles.featureText}>Password Strength Checker</Text>
           </TouchableOpacity>
         )}
 

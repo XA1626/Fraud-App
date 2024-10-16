@@ -1,36 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
-import * as FileSystem from 'expo-file-system'; // Use Expo FileSystem to read the file
+import commonPasswords from './passwords.json';
 
 const PasswordStrengthChecker = () => {
   const [password, setPassword] = useState('');
   const [strength, setStrength] = useState('');
-  const [commonPasswords, setCommonPasswords] = useState([]);
-
-  // Use useEffect to load common passwords from the local file
-  useEffect(() => {
-    const loadCommonPasswords = async () => {
-      try {
-        const fileUri = `${FileSystem.documentDirectory}assets/passwords.json`; // Ensure the path is correct
-        const fileContent = await FileSystem.readAsStringAsync(fileUri); // Read the file
-        console.log('File content:', fileContent); // Log the content of the file
-        const passwords = JSON.parse(fileContent); // Parse the JSON content
-        setCommonPasswords(passwords); // Set the list of common passwords
-        console.log('Common passwords loaded:', passwords); // Log the loaded common passwords
-      } catch (err) {
-        console.error('Error reading passwords.json:', err);
-      }
-    };
-
-    loadCommonPasswords(); // Load passwords when the component mounts
-  }, []);
 
   // Function to check the strength of the password
   const checkPasswordStrength = (password) => {
-    console.log('Checking password:', password); // Log the password being checked
+    console.log('Checking password:', password);
     let strength = 0;
 
-    const lowerCasePassword = password.toLowerCase(); // Convert the password to lowercase for comparison
+    const lowerCasePassword = password.toLowerCase(); // Convert the password to lowercase for comparison as whole file is lowercase
 
     if (password.length >= 8) strength += 1;
     if (/[A-Z]/.test(password)) strength += 1;
@@ -40,7 +21,7 @@ const PasswordStrengthChecker = () => {
 
     // Check if the password is in the common passwords list
     if (commonPasswords.map(p => p.toLowerCase()).includes(lowerCasePassword)) {
-      console.log('Password is a common password!'); // Log if the password is found in the common list
+      console.log('Password is a common password!'); // Log if the password is found in the common list to pull later
       return 'Common Password, Avoid!';
     }
 
@@ -50,7 +31,7 @@ const PasswordStrengthChecker = () => {
     return 'Very Weak';
   };
 
-  // Handle password change and update the strength
+  // Handle constant password change and update the strength, as user types
   const handlePasswordChange = (text) => {
     setPassword(text);
     setStrength(checkPasswordStrength(text));
@@ -75,7 +56,7 @@ const PasswordStrengthChecker = () => {
   );
 };
 
-// Function to return the color based on the password strength
+// Function to return the color based on the password strength, grey being neutral for default:
 const getStrengthColor = (strength) => {
   switch (strength) {
     case 'Weak':

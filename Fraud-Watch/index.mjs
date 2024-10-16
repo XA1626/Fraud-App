@@ -7,12 +7,12 @@ import dotenv from 'dotenv';
 dotenv.config({ path: './apicall.env' });
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 55000;
 
 
 app.use(cors());
 
-// Proxy endpoint to handle "Have I Been Pwned?" requests
+// Proxy endpoint to handle "Have I Been Pwned?" requests, So i dont get banned and lose my $
 app.get('/api/check-email', async (req, res) => {
   const { email } = req.query;
 
@@ -21,7 +21,7 @@ app.get('/api/check-email', async (req, res) => {
   }
 
   try {
-    const apiKey = process.env.HIBP_API_KEY; // Securely stored API key
+    const apiKey = process.env.HIBP_API_KEY; // Securely stored API key so it's not exposed
 
     const response = await fetch(
       `https://haveibeenpwned.com/api/v3/breachedaccount/${encodeURIComponent(email)}?truncateResponse=false`,
@@ -44,7 +44,7 @@ app.get('/api/check-email', async (req, res) => {
     } else if (response.status === 403) {
       return res.status(403).json({ error: 'Forbidden. Check user-agent or API key' });
     } else if (response.status === 429) {
-      return res.status(429).json({ error: 'Too many requests. Try again later.' });
+      return res.status(429).json({ error: 'Try another email address?.' });
     } else {
       return res.status(500).json({ error: 'Internal Server Error' });
     }

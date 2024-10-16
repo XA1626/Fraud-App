@@ -137,8 +137,8 @@ const App = () => {
         return <Newsfeed onNavigateBack={() => setCurrentScreen("Dashboard")} />;
       case "Quiz":
         return <Quiz onNavigateBack={() => setCurrentScreen("Dashboard")} />;
-      case "Resources":
-        return <Resource onNavigateBack={() => setCurrentScreen("Settings")} />;
+      case "Resource":
+        return <Resource onBack={() => setCurrentScreen("Dashboard")} />;
       case "ChatRoom":
         return <ChatRoom onNavigateBack={() => setCurrentScreen("Dashboard")} />;
       case "GmailIntegration":

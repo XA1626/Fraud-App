@@ -29,7 +29,9 @@ const CheckEmail = ({ onNavigateBack }) => {
     }
 
     try {
-      // Make the API request
+
+      // Make the API request with new localhost# due to conflict. using a higher one has a higherchance of it not being already used...
+
       const response = await fetch(`http://localhost:55000/api/check-email?email=${encodeURIComponent(email)}`);
 
       if (response.ok) {

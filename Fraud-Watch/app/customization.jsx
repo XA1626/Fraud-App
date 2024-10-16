@@ -19,7 +19,7 @@ const Customization = ({ onNavigateBack }) => {
   };
 
   const applyDarkTheme = () => {
-    setBackgroundColor("#333");
+    setBackgroundColor("#111");
     setFontColor("#fff");
   };
 
@@ -54,7 +54,7 @@ const Customization = ({ onNavigateBack }) => {
   };
 
   const applyGreyTheme = () => {
-    setBackgroundColor("#4d4d4d"); // Dark Grey
+    setBackgroundColor("#888"); // Dark Grey
     setFontColor("#fff");
   };
 
@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   darkTheme: {
-    backgroundColor: "#333",
+    backgroundColor: "#111",
   },
   pinkTheme: {
     backgroundColor: "#ffd1dc",
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#001f3f",
   },
   greyTheme: {
-    backgroundColor: "#4d4d4d",
+    backgroundColor: "#888",
   },
   tealTheme: {
     backgroundColor: "#004d4d",

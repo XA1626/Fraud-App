@@ -18,7 +18,8 @@ import Resource from "./resource";
 import FakeUserGenerator from "./FakeUserGenerator";
 import Customization from "./customization";
 import Blacklist from "./blacklist";
-import CheckEmail from "./CheckEmail"; // Import CheckEmail component
+import CheckEmail from "./CheckEmail";
+import PasswordStrengthChecker from "./PasswordStrengthChecker"; // Add this import
 
 const isWeb = Platform.OS === "web";
 
@@ -91,7 +92,9 @@ const App = () => {
               } else if (screen == "GmailIntegration") {
                 setCurrentScreen("GmailIntegration");
               } else if (screen == "CheckEmail") {
-                setCurrentScreen("CheckEmail"); 
+                setCurrentScreen("CheckEmail");
+              } else if (screen == "PasswordStrengthChecker") {
+                setCurrentScreen("PasswordStrengthChecker"); // Navigate to Password Strength Checker
               }
             }}
           />
@@ -143,8 +146,10 @@ const App = () => {
         return <ChatRoom onNavigateBack={() => setCurrentScreen("Dashboard")} />;
       case "GmailIntegration":
         return <GmailIntegration onNavigateBack={() => setCurrentScreen("Dashboard")} />;
-      case "CheckEmail": // Case to render CheckEmail component
+      case "CheckEmail":
         return <CheckEmail onNavigateBack={() => setCurrentScreen("Dashboard")} />;
+      case "PasswordStrengthChecker": 
+        return <PasswordStrengthChecker onNavigateBack={() => setCurrentScreen("Dashboard")} />;
       default:
         return <SplashScreen />;
     }
@@ -152,7 +157,6 @@ const App = () => {
 
   return <View style={styles.container}>{renderScreen()}</View>;
 };
-
 
 const styles = StyleSheet.create({
   container: {

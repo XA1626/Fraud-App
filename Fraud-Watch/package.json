@@ -15,8 +15,10 @@
     "@react-navigation/native": "^6.1.18",
     "@react-navigation/stack": "^6.4.1",
     "axios": "^1.7.7",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
     "expo": "^51.0.37",
-    "expo-cli": "^4.0.17",
+    "expo-auth-session": "~5.5.2",
     "expo-constants": "~16.0.2",
     "expo-image-manipulator": "~12.0.5",
     "expo-image-picker": "~15.0.7",
@@ -24,7 +26,10 @@
     "expo-linking": "~6.3.1",
     "expo-router": "^3.1.0",
     "expo-status-bar": "~1.12.1",
+    "expo-system-ui": "^3.0.7",
+    "expo-web-browser": "~13.0.3",
     "firebase": "^10.13.2",
+    "glob": "^11.0.0",
     "googleapis": "^144.0.0",
     "indent-string": "^5.0.0",
     "openai": "^4.63.0",
@@ -32,6 +37,7 @@
     "postcss-discard-overridden": "^7.0.0",
     "postcss-merge-longhand": "^7.0.4",
     "postcss-minify-font-values": "^7.0.0",
+    "qs": "^6.13.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.74.5",
@@ -40,11 +46,17 @@
     "react-native-screens": "^3.31.1",
     "react-native-vector-icons": "^10.2.0",
     "react-native-web": "~0.19.10",
-    "expo-auth-session": "~5.5.2",
-    "expo-web-browser": "~13.0.3"
+    "rimraf": "^6.0.1",
+    "uuid": "^10.0.0",
+    "xml2js": "^0.6.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "@babel/plugin-transform-class-properties": "^7.25.7",
+    "@babel/plugin-transform-nullish-coalescing-operator": "^7.25.8",
+    "@babel/plugin-transform-object-rest-spread": "^7.25.8",
+    "@babel/plugin-transform-optional-chaining": "^7.25.8",
+    "expo-cli": "^4.0.17"
   },
   "private": true
 }

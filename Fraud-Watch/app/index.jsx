@@ -18,6 +18,8 @@ import Resource from "./resource";
 import FakeUserGenerator from "./FakeUserGenerator";
 import Customization from "./customization";
 import Blacklist from "./blacklist";
+import CheckEmail from "./CheckEmail"; // Import CheckEmail component
+
 const isWeb = Platform.OS === "web";
 
 const App = () => {
@@ -88,8 +90,9 @@ const App = () => {
                 setCurrentScreen("Blacklist");
               } else if (screen == "GmailIntegration") {
                 setCurrentScreen("GmailIntegration");
-            }
-            
+              } else if (screen == "CheckEmail") {
+                setCurrentScreen("CheckEmail"); 
+              }
             }}
           />
         );
@@ -140,6 +143,8 @@ const App = () => {
         return <ChatRoom onNavigateBack={() => setCurrentScreen("Dashboard")} />;
       case "GmailIntegration":
         return <GmailIntegration onNavigateBack={() => setCurrentScreen("Dashboard")} />;
+      case "CheckEmail": // Case to render CheckEmail component
+        return <CheckEmail onNavigateBack={() => setCurrentScreen("Dashboard")} />;
       default:
         return <SplashScreen />;
     }

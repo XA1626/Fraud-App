@@ -22,6 +22,7 @@ const Dashboard = ({ userData, onNavigate }) => {
     "Fake User Generator",
     "Resource",
     "Blacklist",
+    "CheckEmail", // Added CheckEmail to the default filtered features
   ]);
 
   useEffect(() => {
@@ -39,6 +40,7 @@ const Dashboard = ({ userData, onNavigate }) => {
       "Fake User Generator",
       "Resource",
       "Blacklist",
+      "CheckEmail", // Added CheckEmail to the list of available features
     ];
     const filtered = features.filter((feature) =>
       feature.toLowerCase().includes(text.toLowerCase())
@@ -164,6 +166,19 @@ const Dashboard = ({ userData, onNavigate }) => {
               style={styles.featureImage}
             />
             <Text style={styles.featureText}>Blacklist</Text>
+          </TouchableOpacity>
+        )}
+
+        {filteredFeatures.includes("CheckEmail") && (
+          <TouchableOpacity
+            style={styles.featureButton}
+            onPress={() => onNavigate("CheckEmail")} // Add navigation for CheckEmail
+          >
+            <Image
+              source={require("../assets/email-check.png")} // Add relevant image for CheckEmail
+              style={styles.featureImage}
+            />
+            <Text style={styles.featureText}>Check Email</Text>
           </TouchableOpacity>
         )}
 

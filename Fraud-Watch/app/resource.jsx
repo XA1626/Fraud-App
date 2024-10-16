@@ -63,9 +63,10 @@ const Resource = ({ onBack }) => {
     return (
         <View style={styles.container}>
             {/* Back button */}
-            <TouchableOpacity onPress={onBack} style={styles.backButton}>
-                <Text style={styles.backButtonText}>{'←'}</Text>
-            </TouchableOpacity>
+<TouchableOpacity onPress={onBack} style={styles.backButton}>
+    <Text style={styles.backButtonText}>{'←'}</Text>
+</TouchableOpacity>
+
 
             {/* Title */}
             <Text style={styles.title}>Ask anything about cybersecurity</Text>

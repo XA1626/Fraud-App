@@ -22,7 +22,7 @@ const CheckEmail = ({ onNavigateBack }) => {
     }
     //try catch to check the api call wtih the error codes checked
     try {
-      const response = await fetch(`http://localhost:5000/api/check-email?email=${encodeURIComponent(email)}`);
+      const response = await fetch(`http://localhost:55000/api/check-email?email=${encodeURIComponent(email)}`);
 
       if (response.ok) {
         const data = await response.json();

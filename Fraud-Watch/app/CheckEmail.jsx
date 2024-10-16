@@ -9,34 +9,56 @@ const CheckEmail = ({ onNavigateBack }) => {
   const [error, setError] = useState('');
   const [breaches, setBreaches] = useState([]);
   const [isChecked, setIsChecked] = useState(false);
-  const [previousEmail, setPreviousEmail] = useState(''); 
+  const [isLoading, setIsLoading] = useState(false);
+  const [previousEmail, setPreviousEmail] = useState('');
 
   const handleCheckEmail = async () => {
+    // Prevent multiple requests at the same time
+    if (isLoading) return;
+
     setError('');
     setBreaches([]);
     setIsChecked(false);
+    setIsLoading(true);
 
+    // Check if the email is valid
     if (!email.includes('@')) {
       setError('Please enter a valid email address.');
+      setIsLoading(false);
       return;
     }
-    //try catch to check the api call wtih the error codes checked
+
     try {
+
+      // Make the API request with new localhost# due to conflict. using a higher one has a higherchance of it not being already used...
+
       const response = await fetch(`http://localhost:55000/api/check-email?email=${encodeURIComponent(email)}`);
 
       if (response.ok) {
         const data = await response.json();
-        setBreaches(data);
-        setPreviousEmail(email); 
+        setPreviousEmail(email);
+
+        if (data.length === 0) {
+          // No breaches found
+          setError('No breaches found for this email.');
+        } else {
+          // Breaches found
+          setBreaches(data);
+          setError(''); // Clear error
+        }
       } else {
+        // Handle non-OK responses
         const errorData = await response.json();
         setError(errorData.error || 'Failed to check email. Please try again.');
       }
+
+      setIsChecked(true);
     } catch (err) {
       console.error('Error checking email:', err);
       setError('Failed to check email. Please try again.');
+      setIsChecked(false);
     } finally {
-      setIsChecked(true);
+      setIsLoading(false); // Allow another request after completion
     }
   };
 
@@ -54,12 +76,16 @@ const CheckEmail = ({ onNavigateBack }) => {
           placeholder="Enter your email"
           value={email}
           onChangeText={setEmail}
-          editable={true} 
+          editable={!isLoading} // Disable input when loading
         />
         {error && <Text style={styles.error}>{error}</Text>}
 
-        <TouchableOpacity onPress={handleCheckEmail} style={styles.checkButton}>
-          <Text style={styles.checkButtonText}>Check if Pwned</Text>
+        <TouchableOpacity
+          onPress={handleCheckEmail}
+          style={styles.checkButton}
+          disabled={isLoading} // Disable button when loading
+        >
+          <Text style={styles.checkButtonText}>{isLoading ? 'Checking...' : 'Check if Pwned'}</Text>
         </TouchableOpacity>
 
         {isChecked && breaches.length > 0 && (
@@ -87,13 +113,13 @@ const CheckEmail = ({ onNavigateBack }) => {
 
 const styles = StyleSheet.create({
   scrollContainer: {
-    flex: 1, 
-    width: '100%', 
-    height: '100%', 
+    flex: 1,
+    width: '100%',
+    height: '100%',
   },
   container: {
     flex: 1,
-    width: '100%', 
+    width: '100%',
     alignItems: 'center',
     padding: 20,
     backgroundColor: '#f0f0f5',
@@ -110,7 +136,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 20,
     borderRadius: 8,
-    width: '100%', 
+    width: '100%',
   },
   error: {
     color: 'red',
@@ -122,7 +148,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
     borderRadius: 8,
     alignItems: 'center',
-    width: '100%', 
+    width: '100%',
   },
   checkButtonText: {
     color: '#fff',
@@ -146,13 +172,13 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderColor: 'red',
     borderWidth: 2,
-    width: '100%', 
+    width: '100%',
   },
   breachItem: {
     padding: 10,
     borderBottomColor: 'gray',
     borderBottomWidth: 1,
-    width: '100%', 
+    width: '100%',
   },
   breachLogo: {
     width: 50,

@@ -20,6 +20,8 @@ import Customization from "./customization";
 import Blacklist from "./blacklist";
 import CheckEmail from "./CheckEmail";
 import PasswordStrengthChecker from "./PasswordStrengthChecker"; // Add this import
+import ScheduleConsultation from "./ScheduleConsultation";
+import ScamAlerts from "./ScamAlerts";
 
 const isWeb = Platform.OS === "web";
 
@@ -27,6 +29,9 @@ const App = () => {
   const [currentScreen, setCurrentScreen] = useState("SplashScreen");
   const [userData, setUserData] = useState(null);
 
+  const goToDashboard = () => {
+      setCurrentScreen("Dashboard");
+  };
   useEffect(() => {
     const timer = setTimeout(() => {
       setCurrentScreen("LoginPage");
@@ -95,8 +100,12 @@ const App = () => {
                 setCurrentScreen("CheckEmail");
               } else if (screen == "PasswordStrengthChecker") {
                 setCurrentScreen("PasswordStrengthChecker"); // Navigate to Password Strength Checker
-              }
-            }}
+              }else if (screen == "ScheduleConsultation") { 
+                setCurrentScreen("ScheduleConsultation");
+            }else if (screen == "ScamAlerts"){
+              setCurrentScreen("ScamAlerts");
+            }
+          }}
           />
         );
       case "CreateUser":
@@ -150,6 +159,10 @@ const App = () => {
         return <CheckEmail onNavigateBack={() => setCurrentScreen("Dashboard")} />;
       case "PasswordStrengthChecker": 
         return <PasswordStrengthChecker onNavigateBack={() => setCurrentScreen("Dashboard")} />;
+      case "ScheduleConsultation":
+        return <ScheduleConsultation onNavigateBack={() => setCurrentScreen("Dashboard")} />
+      case "ScamAlerts":
+        return <ScamAlerts onNavigateBack={() => setCurrentScreen("Dashboard")} />;
       default:
         return <SplashScreen />;
     }

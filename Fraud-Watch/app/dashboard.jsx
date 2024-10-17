@@ -23,7 +23,9 @@ const Dashboard = ({ userData, onNavigate }) => {
     "Resource",
     "Blacklist",
     "CheckEmail",
-    "PasswordStrengthChecker", 
+    "PasswordStrengthChecker",
+    "ScheduleConsultation",
+    "ScamAlerts",
   ]);
 
   useEffect(() => {
@@ -42,6 +44,8 @@ const Dashboard = ({ userData, onNavigate }) => {
       "Blacklist",
       "CheckEmail",
       "PasswordStrengthChecker", 
+      //"ScheduleConsultation",
+      "ScamAlerts",
     ];
     const filtered = features.filter((feature) =>
       feature.toLowerCase().includes(text.toLowerCase())
@@ -183,6 +187,20 @@ const Dashboard = ({ userData, onNavigate }) => {
           </TouchableOpacity>
         )}
 
+        {filteredFeatures.includes("ScheduleConsultation") && (
+          <TouchableOpacity
+            style={styles.featureButton}
+            onPress={() => onNavigate("ScheduleConsultation")}
+          >
+            <Image
+              source={require("../assets/Schedule-Your-Free-Consultation.png")} 
+              style={styles.featureImage}
+            />
+            <Text style={styles.featureText}>Schedule  Consultation</Text>
+
+          </TouchableOpacity>
+        )}
+
         {filteredFeatures.includes("PasswordStrengthChecker") && (
           <TouchableOpacity
             style={styles.featureButton}
@@ -193,6 +211,19 @@ const Dashboard = ({ userData, onNavigate }) => {
               style={styles.featureImage}
             />
             <Text style={styles.featureText}>Password Strength Checker</Text>
+          </TouchableOpacity>
+        )}
+
+        {filteredFeatures.includes("ScamAlerts") && (
+          <TouchableOpacity
+            style={styles.featureButton}
+            onPress={() => onNavigate("ScamAlerts")}
+          >
+            <Image
+              source={require("../assets/ScamAlerts.png")} 
+              style={styles.featureImage}
+            />
+            <Text style={styles.featureText}>Scam Alert</Text>
           </TouchableOpacity>
         )}
 

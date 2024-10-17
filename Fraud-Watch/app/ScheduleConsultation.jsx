@@ -8,11 +8,12 @@ import { format } from 'date-fns';
 import emailjs from 'emailjs-com';
 import { ScrollView, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import { FontAwesome } from "@expo/vector-icons"; // For back arrow and copy icon
+import { useNavigation } from '@react-navigation/native'; // Importing useNavigation
 
-const ScheduleConsultation = () => {
+const ScheduleConsultation = ({ onNavigateBack }) => { // Use the prop for navigation back
     const db = getFirestore();
     const auth = getAuth();
-    
+    const navigation = useNavigation(); // Initialize navigation hook
 
     const [incidentType, setIncidentType] = useState('');
     const [description, setDescription] = useState('');
@@ -62,23 +63,23 @@ const ScheduleConsultation = () => {
                 Alert.alert('Error', 'User not authenticated.');
                 return;
             }
-
+    
             if (!preferredDate || !preferredTime) {
                 console.log("Invalid date or time");
                 Alert.alert('Error', 'Please select a valid date and time.');
                 return;
             }
-
+    
             const now = new Date();
             const selectedDate = new Date(preferredDate);
             selectedDate.setHours(preferredTime.hours, preferredTime.minutes, 0);
-
+    
             if (selectedDate < now) {
                 console.log("Selected date/time is in the past");
                 Alert.alert('Error', 'You cannot select a past date or time.');
                 return;
             }
-
+    
             const consultationRequest = {
                 userId: user.uid,
                 userName: user.displayName || user.email,
@@ -90,13 +91,13 @@ const ScheduleConsultation = () => {
                 status: 'pending',
                 createdAt: new Date().toISOString()
             };
-
+    
             await addDoc(collection(db, 'ConsultationRequests'), consultationRequest);
             console.log("Consultation added to Firestore successfully");
             
             // Send confirmation email
             sendEmail(consultantEmails[consultant]);
-
+    
             Alert.alert(
                 'Consultation Booked',
                 `Your consultation is booked for ${format(preferredDate, 'MMMM d, yyyy')} at ${preferredTime.hours}:${preferredTime.minutes < 10 ? '0' : ''}${preferredTime.minutes}.`,
@@ -112,19 +113,19 @@ const ScheduleConsultation = () => {
             );
         } catch (error) {
             console.error("Error scheduling consultation: ", error);
-            Alert.alert('Error', error.message);
+            Alert.alert('Error', error.message); // Adding a catch block to handle errors
         }
     };
-
 
     return (
         <PaperProvider>
             <ScrollView style={styles.container}>
-                 {/* Back Button */}
+                {/* Back Button */}
                 <TouchableOpacity style={styles.backButton} onPress={onNavigateBack}>
                     <FontAwesome name="arrow-left" size={24} color="#000" />
-                    <Text style={styles.backButtonText}></Text>
+                    <Text style={styles.backButtonText}>Back</Text>
                 </TouchableOpacity>
+
                 <Text style={styles.title}>Schedule a Consultation</Text>
 
                 <Text style={styles.label}>Incident Type:</Text>
@@ -173,7 +174,7 @@ const ScheduleConsultation = () => {
                     cancelLabel="Cancel"
                     confirmLabel="Ok"
                 />
-
+                
                 <Text style={styles.label}>Pick a Consultant:</Text>
                 <Picker
                     selectedValue={consultant}
@@ -181,7 +182,11 @@ const ScheduleConsultation = () => {
                     style={styles.input}
                 >
                     <Picker.Item label="Select a Consultant" value="" />
-                    <Picker.Item label="Dexter Jones" value="Consultant A" />
+                    <Picker.Item label="Dexter" value="Consultant A" />
+                    <Picker.Item label="Jeri" value="Consultant B" />
+                    <Picker.Item label="Asif" value="Consultant C" />
+                    <Picker.Item label="Owen" value="Consultant D" />
+                    <Picker.Item label="Bradley" value="Consultant E" />
                 </Picker>
 
                 <Button
@@ -192,6 +197,8 @@ const ScheduleConsultation = () => {
                 >
                     Submit
                 </Button>
+
+                {/* Other form components */}
             </ScrollView>
         </PaperProvider>
     );
@@ -201,6 +208,16 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20
+    },
+    backButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 10,
+    },
+    backButtonText: {
+        marginLeft: 10,
+        fontSize: 16,
+        color: '#000',
     },
     title: {
         fontSize: 20,
@@ -220,6 +237,5 @@ const styles = StyleSheet.create({
         marginBottom: 2,
     }
 });
-
 
 export default ScheduleConsultation;

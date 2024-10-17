@@ -123,7 +123,7 @@ const ScheduleConsultation = ({ onNavigateBack }) => { // Use the prop for navig
                 {/* Back Button */}
                 <TouchableOpacity style={styles.backButton} onPress={onNavigateBack}>
                     <FontAwesome name="arrow-left" size={24} color="#000" />
-                    <Text style={styles.backButtonText}>Back</Text>
+                <Text style={styles.backButtonText}>Back</Text>
                 </TouchableOpacity>
 
                 <Text style={styles.title}>Schedule a Consultation</Text>

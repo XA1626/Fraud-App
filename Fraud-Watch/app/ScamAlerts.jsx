@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, TextInput, StyleSheet, TouchableOpacity, Text, ScrollView, Platform, Alert as RNAlert } from 'react-native';
 import { WebView } from 'react-native-webview';
-import { useNavigation } from '@react-navigation/native'; // React Navigation hook
+import { FontAwesome } from "@expo/vector-icons"; // For back arrow and copy icon
+import { useNavigation } from '@react-navigation/native'; // Importing useNavigation
 
 const Button = ({ onPress, children }) => (
   <TouchableOpacity style={styles.button} onPress={onPress}>
@@ -48,11 +49,12 @@ const extractScamType = (text) => {
     return "General Scam";
   };
 
-export default function ScamAlert() {
+export default function ScamAlert({ onNavigateBack }) {
   const [location, setLocation] = useState('');
   const [mapCenter, setMapCenter] = useState({ lat: -36.8485, lng: 174.7633 }); // Default to Auckland
   const [mapHTML, setMapHTML] = useState('');
   const [scamArticles, setScamArticles] = useState([]);
+  const navigation = useNavigation(); // Initialize navigation hook
 
   useEffect(() => {
     generateMapHTML(mapCenter);
@@ -108,13 +110,15 @@ export default function ScamAlert() {
     setMapHTML(html);
   };
 
-  const goBackToDashboard = () => {
-    navigation.navigate('dashboard'); // Assuming 'Dashboard' is the route name
-  };
-
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Location Check</Text>
+        {/* Header Section */}
+      <View style={styles.headerContainer}>
+      <TouchableOpacity style={styles.backButton} onPress={onNavigateBack}>
+          <FontAwesome name="arrow-left" size={24} color="#000" />
+        </TouchableOpacity>
+        <Text style={styles.header}>Location Check</Text>
+      </View>
       <View style={styles.searchContainer}>
         <TextInput
           style={styles.input}
@@ -136,8 +140,6 @@ export default function ScamAlert() {
           accessibilityLabel="Map showing reported scams"
         />
       )}
-      
-      {/* Scam bubbles container */}
       <ScrollView style={styles.scamBubbleContainer}>
         {scamArticles.map((article, index) => (
           <View key={index} style={styles.scamBubble}>
@@ -145,27 +147,27 @@ export default function ScamAlert() {
             <Text style={styles.bubbleText}>Scam Type: {article.type}</Text>
             <Text style={styles.bubbleText}>Area: {article.area}</Text>
           </View>
+          
         ))}
       </ScrollView>
-      
-      {/* Back to Dashboard button placed outside the loop */}
-      <TouchableOpacity onPress={goBackToDashboard} style={styles.backButton}>
-        <Text style={styles.buttonText}>Back to Dashboard</Text>
-      </TouchableOpacity>
     </View>
   );
 }
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 10,
     backgroundColor: 'white',
   },
   header: {
     fontSize: 24,
     fontWeight: 'bold',
-    padding: 10,
+    padding: 20,
+  },
+  headerContainer: {
+    flexDirection: 'row', // Set children to be in a row
+    alignItems: 'center', // Align items in the center vertically
   },
   searchContainer: {
     flexDirection: 'row',
@@ -196,7 +198,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   scamBubble: {
-    backgroundColor: '#e0f7fa',
+    backgroundColor: '#ff74d3',
     padding: 10,
     borderRadius: 10,
     marginBottom: 10,
@@ -217,14 +219,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginBottom: 2,
     flexShrink: 1
-  },
-  backButton: {
-    backgroundColor: '#FF6347', // Different color for the back button
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    marginVertical: 20,
-    alignSelf: 'center',
   },
 });
 

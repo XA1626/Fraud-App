@@ -116,14 +116,13 @@ const App = () => {
                         onNavigateBack={() => setCurrentScreen('Settings')}
                     />
                 );  
-            case 'Newsfeed':
-                return <Newsfeed />;
-            case 'Quiz':  // Add this case to render the Quiz screen
-                return (
-                    <Quiz
-                    onNavigateBack={() => setCurrentScreen('Dashboard')}
-                    />
-                );
+                case 'Newsfeed':
+                    return (
+                        <Newsfeed 
+                            onNavigateBack={() => setCurrentScreen('Dashboard')} // 백 버튼을 누르면 대시보드로 이동
+                        />
+                    );
+                
             case 'ChatRoom':
                 return(
                     <ChatRoom

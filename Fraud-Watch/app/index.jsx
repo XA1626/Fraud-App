@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Text, Platform } from "react-native";
 import SplashScreen from "./splashscreen";
 import LoginPage from "./loginpage";
-import Dashboard from "./dashboard";
+import Dashboard from "./Dashboard";
 import CreateUser from "./createuser";
 import UrlChecker from "./urlchecker";
 import Settings from "./settings";
@@ -22,7 +22,7 @@ import CheckEmail from "./CheckEmail";
 import PasswordStrengthChecker from "./PasswordStrengthChecker"; // Add this import
 import ScheduleConsultation from "./ScheduleConsultation";
 import ScamAlerts from "./ScamAlerts";
-import dashboard from './Dashboard';
+
 
 const isWeb = Platform.OS === "web";
 

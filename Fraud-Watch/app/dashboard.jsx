@@ -193,7 +193,7 @@ const Dashboard = ({ userData, onNavigate }) => {
             onPress={() => onNavigate("ScheduleConsultation")}
           >
             <Image
-              source={require("../assets/Schedule-Your-Free-Consultation.png")} 
+              source={require("../assets/Free.png")} 
               style={styles.featureImage}
             />
             <Text style={styles.featureText}>Schedule  Consultation</Text>

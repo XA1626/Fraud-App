@@ -44,7 +44,7 @@ const Dashboard = ({ userData, onNavigate }) => {
       "Blacklist",
       "CheckEmail",
       "PasswordStrengthChecker", 
-      //"ScheduleConsultation",
+      "ScheduleConsultation",
       "ScamAlerts",
     ];
     const filtered = features.filter((feature) =>

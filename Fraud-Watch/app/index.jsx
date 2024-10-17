@@ -22,6 +22,7 @@ import CheckEmail from "./CheckEmail";
 import PasswordStrengthChecker from "./PasswordStrengthChecker"; // Add this import
 import ScheduleConsultation from "./ScheduleConsultation";
 import ScamAlerts from "./ScamAlerts";
+import dashboard from './Dashboard';
 
 const isWeb = Platform.OS === "web";
 
